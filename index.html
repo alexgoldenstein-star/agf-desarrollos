@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>AGF Desarrollos Inmobiliarios</title>
+<meta name="description" content="AGF Desarrollos Inmobiliarios — Proyectos residenciales en CABA. Invertí en tu futuro."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#D92B2B;--red2:#FF3C3C;--red3:#8B0000;
+  --black:#080808;--black2:#0F0F0F;--black3:#181818;--black4:#222;
+  --gray:#2A2A2A;--gray2:#3A3A3A;--gray3:#555;--gray4:#888;--gray5:#AAAAAA;
+  --white:#F5F5F5;--white2:#E0E0E0;
+  --grid:rgba(212,44,44,0.06);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--black);color:var(--white);overflow-x:hidden;cursor:none}
+
+/* CURSOR */
+#cursor{position:fixed;width:8px;height:8px;background:var(--red);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .15s,height .15s,background .15s}
+#cursor-ring{position:fixed;width:32px;height:32px;border:1px solid var(--red);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .08s ease;opacity:.6}
+body:hover #cursor{opacity:1}
+
+/* GRID OVERLAY */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:60px 60px;
+}
+
+/* SCANLINES */
+body::after{
+  content:'';position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.03) 2px,rgba(0,0,0,.03) 4px);
+  animation:scanmove 8s linear infinite;
+}
+@keyframes scanmove{from{background-position:0 0}to{background-position:0 100px}}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 3rem;height:64px;
+  background:rgba(8,8,8,.85);backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(217,43,43,.25);
+}
+.nav-logo{
+  font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:700;
+  letter-spacing:.12em;text-decoration:none;color:var(--white);
+  display:flex;align-items:center;gap:.6rem;
+}
+.nav-logo span{color:var(--red);font-weight:700}
+.nav-logo-bar{width:3px;height:22px;background:var(--red);display:block}
+.nav-links{display:flex;align-items:center;gap:2.5rem;list-style:none}
+.nav-links a{
+  text-decoration:none;font-size:.7rem;font-weight:500;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--gray4);
+  transition:color .2s;position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;
+  background:var(--red);transition:width .25s;
+}
+.nav-links a:hover{color:var(--white)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{
+  padding:9px 24px;background:var(--red);color:var(--white)!important;
+  clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+  font-size:.68rem!important;letter-spacing:.16em!important;
+  transition:background .2s,transform .15s!important;
+}
+.nav-cta:hover{background:var(--red2)!important;transform:translateY(-1px)}
+.nav-cta::after{display:none!important}
+.nav-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+.nav-burger span{display:block;width:22px;height:1.5px;background:var(--white);transition:all .3s}
+
+/* HERO */
+#hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  justify-content:center;align-items:flex-start;
+  padding:100px 3rem 80px;position:relative;overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;z-index:0;
+  background:url('https://static.wixstatic.com/media/1de452_a0ae189cfa3747d0b0240b3278fcdb3d~mv2.jpg') center/cover no-repeat;
+  filter:brightness(.25) saturate(.4);
+  transform:scale(1.05);animation:heroZoom 20s ease-in-out infinite alternate;
+}
+@keyframes heroZoom{from{transform:scale(1.05)}to{transform:scale(1.12)}}
+.hero-vignette{
+  position:absolute;inset:0;z-index:1;
+  background:radial-gradient(ellipse at 80% 50%,transparent 30%,rgba(8,8,8,.95) 80%);
+}
+.hero-content{position:relative;z-index:2;max-width:760px}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-size:.65rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--red);margin-bottom:1.8rem;
+}
+.hero-tag::before{content:'';width:24px;height:1px;background:var(--red)}
+.hero-title{
+  font-family:'Rajdhani',sans-serif;
+  font-size:clamp(3rem,7vw,6.5rem);font-weight:700;
+  line-height:.95;letter-spacing:-.01em;
+  color:var(--white);margin-bottom:.5rem;
+}
+.hero-title .accent{color:var(--red);display:block}
+.hero-title .thin{font-weight:300;color:var(--white2)}
+.hero-sub{
+  font-size:1rem;font-weight:300;color:var(--gray4);
+  line-height:1.7;margin-bottom:3rem;max-width:500px;margin-top:1.2rem;
+}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-red{
+  padding:14px 36px;background:var(--red);color:var(--white);border:none;
+  font-family:'Outfit',sans-serif;font-size:.72rem;font-weight:600;
+  letter-spacing:.16em;text-transform:uppercase;text-decoration:none;
+  clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);
+  transition:background .2s,transform .15s;display:inline-block;cursor:pointer;
+}
+.btn-red:hover{background:var(--red2);transform:translateY(-2px)}
+.btn-ghost{
+  padding:13px 35px;background:transparent;color:var(--white2);
+  border:1px solid var(--gray2);
+  font-family:'Outfit',sans-serif;font-size:.72rem;font-weight:400;
+  letter-spacing:.16em;text-transform:uppercase;text-decoration:none;
+  clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);
+  transition:border-color .2s,color .2s;display:inline-block;
+}
+.btn-ghost:hover{border-color:var(--red);color:var(--red)}
+
+/* HERO STATS */
+.hero-stats{
+  position:absolute;bottom:3rem;right:3rem;z-index:2;
+  display:flex;gap:3rem;
+}
+.hero-stat{text-align:right}
+.hero-stat-num{
+  font-family:'Rajdhani',sans-serif;font-size:2.5rem;font-weight:700;
+  color:var(--white);line-height:1;
+}
+.hero-stat-num span{color:var(--red)}
+.hero-stat-label{font-size:.65rem;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--gray4)}
+
+/* MARQUEE */
+.marquee-wrap{
+  background:var(--red);padding:10px 0;overflow:hidden;position:relative;z-index:3;
+}
+.marquee-track{
+  display:flex;gap:3rem;white-space:nowrap;
+  animation:marquee 25s linear infinite;
+}
+.marquee-track span{
+  font-family:'Rajdhani',sans-serif;font-size:.8rem;font-weight:600;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--white);
+}
+.marquee-track .dot{color:rgba(255,255,255,.4)}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* SECTION */
+section{padding:7rem 3rem;position:relative;z-index:2}
+.s-inner{max-width:1200px;margin:0 auto}
+.s-tag{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-size:.65rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--red);margin-bottom:1rem;
+}
+.s-tag::before{content:'';width:20px;height:1px;background:var(--red)}
+.s-title{
+  font-family:'Rajdhani',sans-serif;
+  font-size:clamp(2rem,4vw,3.5rem);font-weight:700;
+  color:var(--white);line-height:1.05;margin-bottom:2rem;
+}
+.s-title em{font-style:normal;color:var(--red)}
+.red-line{width:48px;height:2px;background:var(--red);margin-bottom:2.5rem}
+
+/* ABOUT */
+#nosotros{background:var(--black2)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start}
+.about-text p{
+  font-size:.92rem;font-weight:300;color:var(--gray4);
+  line-height:1.9;margin-bottom:1.1rem;
+}
+.about-text p strong{color:var(--white2);font-weight:500}
+.team-chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.8rem}
+.chip{
+  padding:5px 14px;border:1px solid var(--gray2);
+  font-size:.72rem;font-weight:400;color:var(--gray4);
+  letter-spacing:.06em;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
+  transition:border-color .2s,color .2s;
+}
+.chip:hover{border-color:var(--red);color:var(--red)}
+
+/* PROCESO */
+.proceso-stack{display:flex;flex-direction:column;gap:1px;margin-top:1rem}
+.paso{
+  padding:1.6rem 2rem;background:var(--black3);border-left:2px solid var(--gray2);
+  transition:border-color .3s,background .3s;
+  display:flex;gap:1.5rem;align-items:flex-start;
+}
+.paso:hover{background:var(--black4);border-color:var(--red)}
+.paso-num{
+  font-family:'Rajdhani',sans-serif;font-size:2rem;font-weight:700;
+  color:var(--gray2);line-height:1;min-width:40px;transition:color .3s;
+}
+.paso:hover .paso-num{color:var(--red)}
+.paso-body{}
+.paso-title{font-size:.95rem;font-weight:600;color:var(--white2);margin-bottom:.4rem}
+.paso-desc{font-size:.82rem;font-weight:300;color:var(--gray4);line-height:1.65}
+
+/* PROYECTOS */
+#proyectos{background:var(--black)}
+.proj-tabs{display:flex;gap:0;margin-bottom:3rem;border-bottom:1px solid var(--gray)}
+.tab-btn{
+  padding:12px 28px;background:none;border:none;cursor:pointer;
+  font-family:'Outfit',sans-serif;font-size:.72rem;font-weight:500;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--gray4);
+  border-bottom:2px solid transparent;margin-bottom:-1px;
+  transition:color .2s,border-color .2s;
+}
+.tab-btn.active{color:var(--red);border-color:var(--red)}
+.tab-btn:hover:not(.active){color:var(--white)}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:2px}
+.proj-card{
+  position:relative;overflow:hidden;aspect-ratio:4/3;background:var(--black3);
+  cursor:pointer;
+}
+.proj-card img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .6s ease,filter .4s;
+  filter:brightness(.55) saturate(.5);
+}
+.proj-card:hover img{transform:scale(1.06);filter:brightness(.4) saturate(.6)}
+.proj-overlay{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  justify-content:flex-end;padding:1.8rem;
+  background:linear-gradient(to top,rgba(8,8,8,.92) 0%,transparent 55%);
+}
+.proj-status{
+  display:inline-block;padding:3px 10px;
+  font-size:.6rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--white);background:var(--red);margin-bottom:.7rem;width:fit-content;
+  clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);
+}
+.proj-status.done{background:var(--gray2);color:var(--gray5)}
+.proj-name{
+  font-family:'Rajdhani',sans-serif;font-size:1.5rem;font-weight:700;
+  color:var(--white);line-height:1.1;margin-bottom:.3rem;
+}
+.proj-loc{font-size:.75rem;font-weight:300;color:var(--gray4);letter-spacing:.06em}
+.proj-hover-info{
+  position:absolute;inset:0;background:rgba(8,8,8,.92);
+  padding:2rem;display:flex;flex-direction:column;justify-content:center;
+  opacity:0;transition:opacity .35s;
+}
+.proj-card:hover .proj-hover-info{opacity:1}
+.proj-hover-title{
+  font-family:'Rajdhani',sans-serif;font-size:1.4rem;font-weight:700;
+  color:var(--white);margin-bottom:1rem;
+}
+.proj-hover-list{list-style:none;margin-bottom:1.5rem}
+.proj-hover-list li{
+  font-size:.78rem;font-weight:300;color:var(--gray4);
+  padding:5px 0;border-bottom:1px solid var(--gray);
+  display:flex;gap:.5rem;align-items:flex-start;line-height:1.5;
+}
+.proj-hover-list li::before{content:'›';color:var(--red);flex-shrink:0}
+.proj-hover-cta{
+  display:inline-block;padding:9px 22px;background:var(--red);
+  color:var(--white);font-size:.68rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;text-decoration:none;
+  clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+  transition:background .2s;width:fit-content;cursor:pointer;border:none;
+  font-family:'Outfit',sans-serif;
+}
+.proj-hover-cta:hover{background:var(--red2)}
+
+/* TESTIMONIOS */
+#testimonios{background:var(--black2)}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:3rem}
+.testi-card{
+  padding:2rem 2rem 2.5rem;background:var(--black3);
+  border-top:2px solid transparent;transition:border-color .3s;
+}
+.testi-card:hover{border-color:var(--red)}
+.testi-marks{
+  font-family:'Rajdhani',sans-serif;font-size:3rem;font-weight:700;
+  color:var(--red);line-height:.8;margin-bottom:1.2rem;opacity:.7;
+}
+.testi-text{
+  font-size:.88rem;font-weight:300;color:var(--gray4);
+  line-height:1.8;margin-bottom:1.5rem;
+}
+.testi-author{
+  font-family:'Rajdhani',sans-serif;font-size:.9rem;font-weight:600;
+  color:var(--white2);letter-spacing:.08em;
+}
+
+/* CONTACT */
+#contacto{background:var(--black)}
+.contact-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:5rem;align-items:start}
+.contact-data{display:flex;flex-direction:column;gap:2rem}
+.c-item{display:flex;gap:1.2rem;align-items:flex-start}
+.c-icon{
+  width:40px;height:40px;flex-shrink:0;
+  border:1px solid var(--gray2);display:flex;align-items:center;justify-content:center;
+  clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
+  transition:background .2s,border-color .2s;
+}
+.c-item:hover .c-icon{background:var(--red);border-color:var(--red)}
+.c-icon svg{width:16px;height:16px;stroke:var(--red);fill:none;stroke-width:1.5;transition:stroke .2s}
+.c-item:hover .c-icon svg{stroke:var(--white)}
+.c-label{font-size:.65rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gray3);margin-bottom:4px}
+.c-val{font-size:.88rem;font-weight:300;color:var(--gray4);line-height:1.6}
+.c-val a{color:var(--red);text-decoration:none}
+.c-val a:hover{color:var(--red2)}
+.contact-form{display:flex;flex-direction:column;gap:.9rem}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.f-group{display:flex;flex-direction:column;gap:6px}
+.f-group label{font-size:.65rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gray3)}
+.f-group input,.f-group textarea,.f-group select{
+  background:var(--black3);border:1px solid var(--gray2);color:var(--white);
+  padding:12px 14px;font-family:'Outfit',sans-serif;font-size:.88rem;font-weight:300;
+  outline:none;transition:border-color .2s;width:100%;
+  clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+}
+.f-group input:focus,.f-group textarea:focus,.f-group select:focus{border-color:var(--red)}
+.f-group input::placeholder,.f-group textarea::placeholder{color:var(--gray3)}
+.f-group textarea{resize:vertical;min-height:110px}
+.f-group select option{background:var(--black3)}
+.form-row-end{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+#fstatus{font-size:.78rem;color:var(--red)}
+
+/* FOOTER */
+footer{background:var(--black2);border-top:1px solid rgba(217,43,43,.2);padding:3rem}
+.foot-inner{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:1.5rem;text-align:center}
+.foot-logo{font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:700;letter-spacing:.1em;color:var(--white)}
+.foot-logo span{color:var(--red)}
+.foot-links{display:flex;gap:2rem;flex-wrap:wrap;justify-content:center}
+.foot-links a{text-decoration:none;font-size:.68rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--gray3);transition:color .2s}
+.foot-links a:hover{color:var(--red)}
+.foot-copy{font-size:.7rem;color:var(--gray3);font-weight:300}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* ---- MODAL PROYECTO ---- */
+#modal{
+  position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.92);
+  display:none;align-items:center;justify-content:center;padding:2rem;
+}
+#modal.open{display:flex}
+.modal-box{
+  background:var(--black2);border:1px solid var(--gray2);
+  width:100%;max-width:900px;max-height:90vh;overflow-y:auto;
+  position:relative;
+}
+.modal-close{
+  position:sticky;top:0;right:0;float:right;
+  width:44px;height:44px;background:var(--gray);border:none;cursor:pointer;
+  color:var(--white);font-size:1.2rem;display:flex;align-items:center;justify-content:center;
+  transition:background .2s;z-index:10;
+}
+.modal-close:hover{background:var(--red)}
+.modal-imgs{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.modal-imgs img{width:100%;aspect-ratio:4/3;object-fit:cover;filter:brightness(.8)}
+.modal-imgs img.wide{grid-column:span 2;aspect-ratio:16/7}
+.modal-body{padding:2rem}
+.modal-status-badge{
+  display:inline-block;padding:4px 14px;
+  font-size:.65rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--white);background:var(--red);margin-bottom:1rem;
+  clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
+}
+.modal-status-badge.done{background:var(--gray2);color:var(--gray5)}
+.modal-title{font-family:'Rajdhani',sans-serif;font-size:2rem;font-weight:700;color:var(--white);margin-bottom:.3rem}
+.modal-subtitle{font-size:.82rem;font-weight:300;color:var(--gray4);margin-bottom:1.5rem}
+.modal-specs{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-bottom:1.5rem}
+.spec-box{background:var(--black3);padding:1rem 1.2rem}
+.spec-val{font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:700;color:var(--red)}
+.spec-lbl{font-size:.65rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--gray4)}
+.modal-feats{columns:2;gap:2rem}
+.modal-feats li{
+  font-size:.8rem;font-weight:300;color:var(--gray4);
+  line-height:1.6;margin-bottom:.5rem;list-style:none;
+  padding-left:1rem;position:relative;
+}
+.modal-feats li::before{content:'›';position:absolute;left:0;color:var(--red)}
+
+/* ---- ADMIN PANEL ---- */
+#admin{display:none;position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.95);overflow-y:auto;padding:2rem}
+#admin.open{display:block}
+.admin-inner{max-width:900px;margin:0 auto}
+.admin-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;padding-bottom:1rem;border-bottom:1px solid var(--gray)}
+.admin-title{font-family:'Rajdhani',sans-serif;font-size:1.6rem;font-weight:700;color:var(--white);letter-spacing:.08em}
+.admin-title span{color:var(--red)}
+.admin-section{margin-bottom:2.5rem}
+.admin-section-title{font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:1.2rem;padding-bottom:.5rem;border-bottom:1px solid var(--gray)}
+.admin-proj-list{display:flex;flex-direction:column;gap:1px}
+.admin-proj-row{
+  display:flex;align-items:center;gap:1.5rem;padding:1rem 1.2rem;
+  background:var(--black3);transition:background .2s;
+}
+.admin-proj-row:hover{background:var(--black4)}
+.admin-proj-thumb{width:60px;height:40px;object-fit:cover;filter:brightness(.7);flex-shrink:0}
+.admin-proj-name{font-size:.88rem;font-weight:500;color:var(--white2);flex:1}
+.admin-proj-status{
+  font-size:.62rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  padding:3px 10px;
+  clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);
+}
+.status-construction{background:var(--red);color:var(--white)}
+.status-done{background:var(--gray2);color:var(--gray5)}
+.admin-proj-btn{
+  padding:6px 14px;background:none;border:1px solid var(--gray2);
+  color:var(--gray4);font-family:'Outfit',sans-serif;font-size:.65rem;
+  font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
+  transition:border-color .2s,color .2s;
+  clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);
+}
+.admin-proj-btn:hover{border-color:var(--red);color:var(--red)}
+.admin-form{display:flex;flex-direction:column;gap:1rem}
+.admin-form .f-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.admin-form .f-group input,.admin-form .f-group textarea,.admin-form .f-group select{
+  background:var(--black3);border:1px solid var(--gray2);color:var(--white);
+  padding:10px 14px;font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:300;
+  outline:none;transition:border-color .2s;width:100%;
+}
+.admin-form .f-group input:focus,.admin-form .f-group textarea:focus{border-color:var(--red)}
+.admin-form .f-group label{font-size:.65rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gray3);margin-bottom:4px;display:block}
+.admin-hint{font-size:.72rem;color:var(--gray3);margin-top:.3rem;font-weight:300}
+.admin-form .f-group textarea{min-height:80px;resize:vertical}
+.admin-save-btn{
+  padding:12px 28px;background:var(--red);color:var(--white);border:none;
+  font-family:'Outfit',sans-serif;font-size:.72rem;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;cursor:pointer;
+  clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+  transition:background .2s;margin-top:.5rem;
+}
+.admin-save-btn:hover{background:var(--red2)}
+.admin-msg{font-size:.78rem;color:var(--red);margin-top:.5rem}
+
+/* LOGIN */
+#login{display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.97);align-items:center;justify-content:center}
+#login.open{display:flex}
+.login-box{
+  background:var(--black2);border:1px solid var(--gray2);
+  padding:3rem;width:100%;max-width:380px;text-align:center;
+}
+.login-title{font-family:'Rajdhani',sans-serif;font-size:1.6rem;font-weight:700;color:var(--white);margin-bottom:.5rem}
+.login-title span{color:var(--red)}
+.login-sub{font-size:.78rem;color:var(--gray4);margin-bottom:2rem}
+.login-input{
+  width:100%;background:var(--black3);border:1px solid var(--gray2);color:var(--white);
+  padding:12px 14px;font-family:'Outfit',sans-serif;font-size:.9rem;
+  outline:none;margin-bottom:.8rem;transition:border-color .2s;
+}
+.login-input:focus{border-color:var(--red)}
+.login-err{font-size:.75rem;color:var(--red);margin-bottom:.8rem;min-height:1rem}
+.login-btn{
+  width:100%;padding:13px;background:var(--red);color:var(--white);border:none;
+  font-family:'Outfit',sans-serif;font-size:.75rem;font-weight:600;
+  letter-spacing:.16em;text-transform:uppercase;cursor:pointer;
+  clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+  transition:background .2s;
+}
+.login-btn:hover{background:var(--red2)}
+.login-cancel{margin-top:1rem;display:block;font-size:.72rem;color:var(--gray4);cursor:pointer;text-decoration:none;transition:color .2s}
+.login-cancel:hover{color:var(--red)}
+
+/* SECRET TRIGGER */
+#admin-trigger{
+  position:fixed;bottom:1.5rem;right:1.5rem;z-index:300;
+  width:40px;height:40px;background:var(--black3);border:1px solid var(--gray);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  font-size:.65rem;color:var(--gray3);letter-spacing:.08em;
+  clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
+  transition:border-color .2s,color .2s;
+  font-family:'Rajdhani',sans-serif;font-weight:700;
+}
+#admin-trigger:hover{border-color:var(--red);color:var(--red)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{padding:0 1.5rem}
+  .nav-links{display:none}
+  .nav-burger{display:flex}
+  .nav-links.open{
+    display:flex;flex-direction:column;position:fixed;
+    top:64px;left:0;right:0;background:var(--black2);
+    padding:2rem;border-top:1px solid var(--gray);gap:1.5rem;
+  }
+  section{padding:5rem 1.5rem}
+  #hero{padding:100px 1.5rem 80px}
+  .hero-stats{display:none}
+  .about-grid,.contact-grid{grid-template-columns:1fr;gap:3rem}
+  .testi-grid{grid-template-columns:1fr}
+  .proj-grid{grid-template-columns:1fr}
+  .f-row,.admin-form .f-row{grid-template-columns:1fr}
+  .modal-imgs{grid-template-columns:1fr 1fr}
+  .modal-imgs img.wide{grid-column:span 1;aspect-ratio:4/3}
+  .modal-specs{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- LOGIN -->
+<div id="login">
+  <div class="login-box">
+    <p class="login-title">AGF <span>Admin</span></p>
+    <p class="login-sub">Acceso restringido al panel de gestión</p>
+    <input class="login-input" type="password" id="login-pwd" placeholder="Contraseña" onkeydown="if(event.key==='Enter')doLogin()"/>
+    <p class="login-err" id="login-err"></p>
+    <button class="login-btn" onclick="doLogin()">Ingresar</button>
+    <a class="login-cancel" onclick="closeLogin()">Cancelar</a>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="admin">
+  <div class="admin-inner">
+    <div class="admin-header">
+      <p class="admin-title">Panel <span>Admin</span></p>
+      <button class="admin-proj-btn" onclick="closeAdmin()">✕ Cerrar</button>
+    </div>
+
+    <div class="admin-section">
+      <p class="admin-section-title">Proyectos actuales</p>
+      <div class="admin-proj-list" id="adminProjList"></div>
+    </div>
+
+    <div class="admin-section">
+      <p class="admin-section-title">Agregar / Editar proyecto</p>
+      <div class="admin-form">
+        <input type="hidden" id="editId" value=""/>
+        <div class="f-row">
+          <div class="f-group">
+            <label>Nombre del proyecto</label>
+            <input type="text" id="pNombre" placeholder="Ej: Humahuaca 4628"/>
+          </div>
+          <div class="f-group">
+            <label>Barrio / Dirección corta</label>
+            <input type="text" id="pBarrio" placeholder="Ej: Almagro"/>
+          </div>
+        </div>
+        <div class="f-row">
+          <div class="f-group">
+            <label>Estado</label>
+            <select id="pEstado">
+              <option value="En Construcción">En Construcción</option>
+              <option value="Terminado">Terminado</option>
+            </select>
+          </div>
+          <div class="f-group">
+            <label>Fecha entrega</label>
+            <input type="text" id="pFecha" placeholder="Ej: Marzo 2026 / En obra"/>
+          </div>
+        </div>
+        <div class="f-row">
+          <div class="f-group">
+            <label>Pisos</label>
+            <input type="text" id="pPisos" placeholder="Ej: 7"/>
+          </div>
+          <div class="f-group">
+            <label>Unidades</label>
+            <input type="text" id="pUnidades" placeholder="Ej: 21"/>
+          </div>
+        </div>
+        <div class="f-group">
+          <label>Descripción completa</label>
+          <textarea id="pDesc" placeholder="Descripción del edificio, ubicación, amenities..."></textarea>
+        </div>
+        <div class="f-group">
+          <label>Características (una por línea)</label>
+          <textarea id="pCaracts" placeholder="SUM con patio&#10;Cocheras cubiertas&#10;Ascensor automático"></textarea>
+        </div>
+        <div class="f-group">
+          <label>URL imagen principal</label>
+          <input type="url" id="pImg1" placeholder="https://..."/>
+          <p class="admin-hint">Pegá la URL directa de la imagen (Wix, Drive, etc.)</p>
+        </div>
+        <div class="f-group">
+          <label>URL imagen 2 (opcional)</label>
+          <input type="url" id="pImg2" placeholder="https://..."/>
+        </div>
+        <div class="f-group">
+          <label>URL imagen 3 (opcional)</label>
+          <input type="url" id="pImg3" placeholder="https://..."/>
+        </div>
+        <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+          <button class="admin-save-btn" onclick="saveProject()">Guardar proyecto</button>
+          <button class="admin-proj-btn" onclick="clearForm()">Limpiar</button>
+          <span class="admin-msg" id="adminMsg"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="admin-section">
+      <p class="admin-section-title">Información de contacto</p>
+      <div class="admin-form">
+        <div class="f-row">
+          <div class="f-group">
+            <label>Teléfono</label>
+            <input type="text" id="cTel" placeholder="011 4581-7706"/>
+          </div>
+          <div class="f-group">
+            <label>Email</label>
+            <input type="email" id="cEmail" placeholder="info@agfinmobiliaria.com"/>
+          </div>
+        </div>
+        <div class="f-group">
+          <label>Dirección</label>
+          <input type="text" id="cDir" placeholder="Batalla del Pari 1053, CABA"/>
+        </div>
+        <button class="admin-save-btn" onclick="saveContact()">Guardar contacto</button>
+        <span class="admin-msg" id="contactMsg"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PROYECTO -->
+<div id="modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">
+    <span class="nav-logo-bar"></span>
+    AGF <span>DESARROLLOS</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#hero" onclick="closeMenu()">Inicio</a></li>
+    <li><a href="#nosotros" onclick="closeMenu()">Nosotros</a></li>
+    <li><a href="#proyectos" onclick="closeMenu()">Proyectos</a></li>
+    <li><a href="#testimonios" onclick="closeMenu()">Testimonios</a></li>
+    <li><a href="#contacto" class="nav-cta" onclick="closeMenu()">Contactate</a></li>
+  </ul>
+  <button class="nav-burger" id="burger" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-content">
+    <p class="hero-tag reveal">Desarrollos Inmobiliarios · CABA</p>
+    <h1 class="hero-title reveal">
+      <span class="thin">INVERTÍ EN</span>
+      <span class="accent">TU FUTURO</span>
+      <span class="thin">EN BUENOS AIRES</span>
+    </h1>
+    <p class="hero-sub reveal">Proyectos residenciales de calidad en los barrios más buscados de la Ciudad. Experiencia, equipo multidisciplinario y entrega comprobada.</p>
+    <div class="hero-actions reveal">
+      <a href="#proyectos" class="btn-red">Ver proyectos</a>
+      <a href="#contacto" class="btn-ghost">Hablar con un asesor</a>
+    </div>
+  </div>
+  <div class="hero-stats reveal">
+    <div class="hero-stat">
+      <p class="hero-stat-num">5<span>+</span></p>
+      <p class="hero-stat-label">Proyectos</p>
+    </div>
+    <div class="hero-stat">
+      <p class="hero-stat-num">14<span>P</span></p>
+      <p class="hero-stat-label">Pisos máx.</p>
+    </div>
+    <div class="hero-stat">
+      <p class="hero-stat-num">2<span>+</span></p>
+      <p class="hero-stat-label">Barrios CABA</p>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track" id="marqueeTrack">
+    <span>AGF DESARROLLOS</span><span class="dot">·</span>
+    <span>ALMAGRO</span><span class="dot">·</span>
+    <span>VILLA CRESPO</span><span class="dot">·</span>
+    <span>PALERMO</span><span class="dot">·</span>
+    <span>EN CONSTRUCCIÓN</span><span class="dot">·</span>
+    <span>ENTREGADOS</span><span class="dot">·</span>
+    <span>CALIDAD PREMIUM</span><span class="dot">·</span>
+    <span>INVERTÍ EN CABA</span><span class="dot">·</span>
+    <span>AGF DESARROLLOS</span><span class="dot">·</span>
+    <span>ALMAGRO</span><span class="dot">·</span>
+    <span>VILLA CRESPO</span><span class="dot">·</span>
+    <span>PALERMO</span><span class="dot">·</span>
+    <span>EN CONSTRUCCIÓN</span><span class="dot">·</span>
+    <span>ENTREGADOS</span><span class="dot">·</span>
+    <span>CALIDAD PREMIUM</span><span class="dot">·</span>
+    <span>INVERTÍ EN CABA</span><span class="dot">·</span>
+  </div>
+</div>
+
+<!-- NOSOTROS -->
+<section id="nosotros">
+  <div class="s-inner">
+    <div class="about-grid">
+      <div class="reveal">
+        <span class="s-tag">Acerca de nosotros</span>
+        <h2 class="s-title">AGF <em>Desarrollos</em><br>Inmobiliarios</h2>
+        <div class="red-line"></div>
+        <div class="about-text">
+          <p>En <strong>AGF Desarrollos Inmobiliarios</strong>, somos una empresa sólida con trayectoria que respalda cada uno de nuestros proyectos. Contamos con un equipo multidisciplinario con visión integral y foco permanente en el futuro.</p>
+          <p>Nuestros socios fundadores — un reconocido empresario de la importación y un experimentado contador — aportan décadas de expertise empresarial. <strong>Dos generaciones</strong> trabajan hoy de la mano para garantizar que cada proyecto sea único, innovador y adaptado a las necesidades de cada cliente.</p>
+          <p>Somos más que una empresa: somos un equipo comprometido con el éxito de nuestros clientes y la construcción de un futuro sólido.</p>
+          <div class="team-chips">
+            <span class="chip">Arquitecto</span>
+            <span class="chip">Ingeniero</span>
+            <span class="chip">Lic. Marketing</span>
+            <span class="chip">Diseño Gráfico</span>
+            <span class="chip">Martillero Público</span>
+            <span class="chip">Contador</span>
+          </div>
+        </div>
+      </div>
+      <div class="reveal">
+        <span class="s-tag">Cómo trabajamos</span>
+        <div class="proceso-stack" style="margin-top:.5rem">
+          <div class="paso">
+            <div class="paso-num">01</div>
+            <div class="paso-body">
+              <p class="paso-title">Pre-Desarrollo</p>
+              <p class="paso-desc">Evaluación de zona y proyecto. Elaboración de presupuesto, estimación de rentabilidad y planificación integral.</p>
+            </div>
+          </div>
+          <div class="paso">
+            <div class="paso-num">02</div>
+            <div class="paso-body">
+              <p class="paso-title">Construcción</p>
+              <p class="paso-desc">Control de obra, administración del proyecto y gestión integral de gremios con seguimiento profesional continuo.</p>
+            </div>
+          </div>
+          <div class="paso">
+            <div class="paso-num">03</div>
+            <div class="paso-body">
+              <p class="paso-title">Post-Desarrollo</p>
+              <p class="paso-desc">Garantía, gestión completa del post venta y acompañamiento en la puesta en marcha del proyecto.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROYECTOS -->
+<section id="proyectos">
+  <div class="s-inner">
+    <span class="s-tag reveal">Nuestros desarrollos</span>
+    <h2 class="s-title reveal">Proyectos</h2>
+    <div class="red-line"></div>
+    <div class="proj-tabs">
+      <button class="tab-btn active" onclick="filterProjects('all',this)">Todos</button>
+      <button class="tab-btn" onclick="filterProjects('En Construcción',this)">En Construcción</button>
+      <button class="tab-btn" onclick="filterProjects('Terminado',this)">Terminados</button>
+    </div>
+    <div class="proj-grid" id="projGrid"></div>
+  </div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section id="testimonios">
+  <div class="s-inner">
+    <span class="s-tag reveal">Lo que dicen</span>
+    <h2 class="s-title reveal">Nuestros <em>clientes</em></h2>
+    <div class="red-line"></div>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="testi-marks">"</div>
+        <p class="testi-text">Trabajar con AGF fue excelente. Me ayudaron en todas las compras buscando soluciones personalizadas y comentando todo el proceso de las obras. ¡Recomiendo totalmente!</p>
+        <p class="testi-author">— Ernesto O.</p>
+      </div>
+      <div class="testi-card reveal">
+        <div class="testi-marks">"</div>
+        <p class="testi-text">Gracias a la desarrolladora, hice mi primera inversión inmobiliaria con total confianza. El proceso fue fácil y mi unidad es perfecta.</p>
+        <p class="testi-author">— Alejandro A.</p>
+      </div>
+      <div class="testi-card reveal">
+        <div class="testi-marks">"</div>
+        <p class="testi-text">AGF no solo es un desarrollador, es un verdadero socio estratégico. Su visión y atención a los detalles hicieron la diferencia.</p>
+        <p class="testi-author">— Daniel S.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="s-inner">
+    <div class="contact-grid">
+      <div class="reveal">
+        <span class="s-tag">Hablemos</span>
+        <h2 class="s-title">Queremos<br><em>conocerte</em></h2>
+        <div class="red-line"></div>
+        <p style="font-size:.88rem;color:var(--gray4);font-weight:300;line-height:1.8;margin-bottom:2.5rem">Dejanos un mensaje y un representante de AGF te responderá a la brevedad.</p>
+        <div class="contact-data" id="contactData">
+          <div class="c-item">
+            <div class="c-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg></div>
+            <div>
+              <p class="c-label">Dirección</p>
+              <p class="c-val" id="cValDir">Batalla del Pari 1053, CABA, Argentina</p>
+            </div>
+          </div>
+          <div class="c-item">
+            <div class="c-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div>
+            <div>
+              <p class="c-label">Email</p>
+              <p class="c-val"><a href="mailto:info@agfinmobiliaria.com" id="cValEmail">info@agfinmobiliaria.com</a></p>
+            </div>
+          </div>
+          <div class="c-item">
+            <div class="c-icon"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></div>
+            <div>
+              <p class="c-label">Teléfonos</p>
+              <p class="c-val" id="cValTel">011 4581-7706 / 011 458-8922</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form reveal">
+        <div class="f-row">
+          <div class="f-group">
+            <label>Nombre completo</label>
+            <input type="text" id="cNombre" placeholder="Tu nombre"/>
+          </div>
+          <div class="f-group">
+            <label>Teléfono</label>
+            <input type="tel" id="cTelForm" placeholder="Tu teléfono"/>
+          </div>
+        </div>
+        <div class="f-group">
+          <label>Email</label>
+          <input type="email" id="cEmailForm" placeholder="tu@email.com"/>
+        </div>
+        <div class="f-group">
+          <label>Me interesa</label>
+          <select id="cInteres">
+            <option value="">Seleccioná una opción</option>
+            <option>Quiero comprar un departamento</option>
+            <option>Quiero invertir en un proyecto</option>
+            <option>Información sobre proyectos en construcción</option>
+            <option>Información general</option>
+          </select>
+        </div>
+        <div class="f-group">
+          <label>Mensaje</label>
+          <textarea id="cMsg" placeholder="Contanos qué buscás..."></textarea>
+        </div>
+        <div class="form-row-end">
+          <button class="btn-red" onclick="sendContact()">Enviar mensaje</button>
+          <span id="fstatus"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <p class="foot-logo">AGF <span>DESARROLLOS</span> INMOBILIARIOS</p>
+    <nav class="foot-links">
+      <a href="#hero">Inicio</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#testimonios">Testimonios</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <p class="foot-copy">© 2025 AGF Desarrollos Inmobiliarios. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<!-- ADMIN TRIGGER -->
+<div id="admin-trigger" onclick="openLogin()" title="Admin">ADM</div>
+
+<script>
+// ===================== DATA =====================
+const DEFAULT_PROJECTS = [
+  {
+    id:1, nombre:"Humahuaca 4628", barrio:"Almagro",
+    estado:"En Construcción", fecha:"En obra",
+    pisos:"7", unidades:"21",
+    desc:"Entre Av. Estado de Israel y Lambaré, Almagro. Sobre lote 8,64 x 18,05. Edificio de 7 pisos, 3 deptos por piso, 1 ascensor, SUM con patio, 2 cocheras, bicicletero y bauleras.",
+    caract:"SUM en PB con patio\nBauleras y Bicicleteros en subsuelo\n2 cocheras en PB\nTermotanques eléctricos individuales\nPre-instalación Aire Ac en todos los ambientes\nPlacards completos en melamina 18mm\nMuebles de cocina en melamina con vidrio y aluminio\nArtefactos y grifería de 1ª marcas\nPisos living Porcelanato · Dormitorios SPC\nArtefactos cocina eléctricos (horno y anafe)\nVentanas línea Módena\n1 ascensor automático de acero con espejo",
+    img1:"https://static.wixstatic.com/media/1de452_ce498208050e4765951c5a414013425d~mv2.jpg/v1/fit/w_1440,h_735,q_90,enc_avif,quality_auto/1de452_ce498208050e4765951c5a414013425d~mv2.jpg",
+    img2:"https://static.wixstatic.com/media/1de452_a0ae189cfa3747d0b0240b3278fcdb3d~mv2.jpg/v1/fit/w_960,h_607,q_90,enc_avif,quality_auto/1de452_a0ae189cfa3747d0b0240b3278fcdb3d~mv2.jpg",
+    img3:"https://static.wixstatic.com/media/1de452_a2f32bdcea774cf6a07f61264384865d~mv2.png/v1/fit/w_480,h_655,q_90,enc_avif,quality_auto/1de452_a2f32bdcea774cf6a07f61264384865d~mv2.png"
+  },
+  {
+    id:2, nombre:"Nicolás Repeto 1506", barrio:"Villa Crespo",
+    estado:"En Construcción", fecha:"En obra",
+    pisos:"7", unidades:"21",
+    desc:"Entre Galicia y Tres Arroyos, Villa Crespo. Venta de pozo. Edificio de 7 pisos, 3 deptos por piso, 1 ascensor, 1 Local comercial en PB, bicicletero y bauleras.",
+    caract:"Local comercial en PB\nTermotanques eléctricos individuales\nPre-instalación Aire Ac en todos los ambientes\nPlacards completos en melamina 18mm\nMuebles de cocina en melamina con vidrio y aluminio\nArtefactos y grifería de 1ª marcas\nPisos living Porcelanato · Dormitorios SPC\nArtefactos cocina eléctricos (horno y anafe)\nVentanas línea Módena\n1 ascensor automático de acero con espejo",
+    img1:"https://static.wixstatic.com/media/1de452_e3e7e5572d7f4ba0b3105b666fc1fa8b~mv2.jpg/v1/fit/w_1032,h_527,q_90,enc_avif,quality_auto/1de452_e3e7e5572d7f4ba0b3105b666fc1fa8b~mv2.jpg",
+    img2:"https://static.wixstatic.com/media/1de452_8bce47c65cfd44f5b392ecacec2f42f8~mv2.jpg/v1/fit/w_480,h_745,q_90,enc_avif,quality_auto/1de452_8bce47c65cfd44f5b392ecacec2f42f8~mv2.jpg",
+    img3:"https://static.wixstatic.com/media/1de452_35edea14416049cf8fe3927ed1008078~mv2.jpg/v1/fit/w_1440,h_798,q_90,enc_avif,quality_auto/1de452_35edea14416049cf8fe3927ed1008078~mv2.jpg"
+  },
+  {
+    id:3, nombre:"Bogado 4461", barrio:"Almagro",
+    estado:"En Construcción", fecha:"En obra",
+    pisos:"7", unidades:"28",
+    desc:"Entre Yatay y Pringles, Almagro. Sobre lote 8,66 x 19,15. Edificio de 7 pisos, 4 deptos por piso, 1 ascensor, 2 cocheras, bicicletero y bauleras.",
+    caract:"Acceso en PB con bauleras, bicicleteros y cocheras\nTermotanques eléctricos individuales\nPre-instalación Aire Ac en todos los ambientes\nPlacards completos en melamina 18mm\nMuebles de cocina en melamina con vidrio y aluminio\nArtefactos y grifería de 1ª marcas\nPisos living Porcelanato · Dormitorios SPC\nArtefactos cocina eléctricos (horno y anafe)\nVentanas línea Módena\n1 ascensor automático de acero con espejo",
+    img1:"https://static.wixstatic.com/media/1de452_632152097b4041518c4cb8cad9251bad~mv2.jpg/v1/fit/w_1440,h_735,q_90,enc_avif,quality_auto/1de452_632152097b4041518c4cb8cad9251bad~mv2.jpg",
+    img2:"https://static.wixstatic.com/media/1de452_7034a253ce064dd0aaca3dc42235293d~mv2.jpg/v1/fit/w_960,h_1323,q_90,enc_avif,quality_auto/1de452_7034a253ce064dd0aaca3dc42235293d~mv2.jpg",
+    img3:""
+  },
+  {
+    id:4, nombre:"Estado de Israel 4334", barrio:"Palermo",
+    estado:"Terminado", fecha:"Entregado Marzo 2024",
+    pisos:"14", unidades:"50+",
+    desc:"Entre Pringles y Yatay. Importante edificio de 14 pisos distribuidos en 1, 2, 3 y 4 ambientes. Ubicado sobre una de las arterias principales de la Ciudad de Buenos Aires.",
+    caract:"Cocheras individuales cubiertas y semicubiertas opcionales\nEspacio para bicicletas\nHall de acceso con finas terminaciones\nEstacionamiento de cortesía\nParrilla al carbón\nToilette para uso común\nFuturo SUM en vivienda de encargado\nDucha exterior en terraza\nPiscina con deck de madera perimetral\nSolárium",
+    img1:"https://static.wixstatic.com/media/1de452_cdaa8021c10f4bc38ce2f4d3e2a639bf~mv2.jpg/v1/fit/w_326,h_500,q_90,enc_avif,quality_auto/1de452_cdaa8021c10f4bc38ce2f4d3e2a639bf~mv2.jpg",
+    img2:"https://static.wixstatic.com/media/1de452_1781ef305bf74a59a9d70bc56cc3b7c3~mv2.jpg/v1/fit/w_1440,h_914,q_90,enc_avif,quality_auto/1de452_1781ef305bf74a59a9d70bc56cc3b7c3~mv2.jpg",
+    img3:"https://static.wixstatic.com/media/1de452_643820c7135d49eba75f637c58655ea5~mv2.jpg/v1/fit/w_1440,h_914,q_90,enc_avif,quality_auto/1de452_643820c7135d49eba75f637c58655ea5~mv2.jpg"
+  },
+  {
+    id:5, nombre:"Avenida Gaona 2466", barrio:"Villa del Parque",
+    estado:"Terminado", fecha:"Entregado Marzo 2020",
+    pisos:"14", unidades:"50+",
+    desc:"Gaona Park. Ubicado en Av. Gaona 2466, entre Terrero y Manuel Ricardo Trelles. Importante edificio de 14 pisos distribuidos en 1, 2, 3 y 4 ambientes en una sola planta.",
+    caract:"Cocheras individuales cubiertas y semicubiertas opcionales\nEspacio para bicicletas\nSalón de usos múltiples con expansión al aire libre\nSolárium\nParrilla iluminada con mesada de preparación\nSector de pileta\nUbicado sobre arteria principal de CABA",
+    img1:"https://static.wixstatic.com/media/1de452_33f7d4845087414cbac77f2de2ccea84~mv2.jpg/v1/fit/w_1440,h_735,q_90,enc_avif,quality_auto/1de452_33f7d4845087414cbac77f2de2ccea84~mv2.jpg",
+    img2:"https://static.wixstatic.com/media/1de452_a470aa5c309a41409ea8e160791a75d4~mv2.jpg/v1/fit/w_960,h_718,q_90,enc_avif,quality_auto/1de452_a470aa5c309a41409ea8e160791a75d4~mv2.jpg",
+    img3:"https://static.wixstatic.com/media/1de452_0d2602df6f6c4e9aba0582dd650c5214~mv2.jpg/v1/fit/w_1400,h_789,q_90,enc_avif,quality_auto/1de452_0d2602df6f6c4e9aba0582dd650c5214~mv2.jpg"
+  }
+];
+
+const DEFAULT_CONTACT = {
+  tel:"011 4581-7706 / 011 458-8922",
+  email:"info@agfinmobiliaria.com",
+  dir:"Batalla del Pari 1053, CABA, Argentina"
+};
+
+// ===================== STATE =====================
+function loadProjects(){
+  try{ const s=localStorage.getItem('agf_projects'); return s?JSON.parse(s):JSON.parse(JSON.stringify(DEFAULT_PROJECTS)); }catch(e){ return JSON.parse(JSON.stringify(DEFAULT_PROJECTS)); }
+}
+function saveProjects(p){ localStorage.setItem('agf_projects',JSON.stringify(p)); }
+function loadContact(){
+  try{ const s=localStorage.getItem('agf_contact'); return s?JSON.parse(s):{...DEFAULT_CONTACT}; }catch(e){ return {...DEFAULT_CONTACT}; }
+}
+function saveContactData(c){ localStorage.setItem('agf_contact',JSON.stringify(c)); }
+
+let projects = loadProjects();
+let currentFilter = 'all';
+
+// ===================== RENDER PROJECTS =====================
+function renderProjects(){
+  const grid = document.getElementById('projGrid');
+  const filtered = currentFilter==='all' ? projects : projects.filter(p=>p.estado===currentFilter);
+  grid.innerHTML = filtered.map(p => {
+    const done = p.estado==='Terminado';
+    return `<div class="proj-card" onclick="openModal(${p.id})">
+      <img src="${p.img1}" alt="${p.nombre}" loading="lazy"/>
+      <div class="proj-overlay">
+        <span class="proj-status ${done?'done':''}">${p.estado}</span>
+        <p class="proj-name">${p.nombre}</p>
+        <p class="proj-loc">${p.barrio} · ${p.pisos} pisos</p>
+      </div>
+      <div class="proj-hover-info">
+        <p class="proj-hover-title">${p.nombre}</p>
+        <ul class="proj-hover-list">
+          ${p.caract.split('\n').slice(0,4).map(c=>`<li>${c}</li>`).join('')}
+        </ul>
+        <button class="proj-hover-cta">Ver detalles →</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function filterProjects(f,btn){
+  currentFilter=f;
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderProjects();
+}
+
+// ===================== MODAL =====================
+function openModal(id){
+  const p = projects.find(x=>x.id===id); if(!p) return;
+  const done = p.estado==='Terminado';
+  const imgs = [p.img1,p.img2,p.img3].filter(Boolean);
+  document.getElementById('modal-content').innerHTML = `
+    <div class="modal-imgs">
+      ${imgs[0]?`<img src="${imgs[0]}" class="wide" alt="${p.nombre}"/>`:''}
+      ${imgs[1]?`<img src="${imgs[1]}" alt="${p.nombre} 2"/>`:''}
+      ${imgs[2]?`<img src="${imgs[2]}" alt="${p.nombre} 3"/>`:''}
+    </div>
+    <div class="modal-body">
+      <span class="modal-status-badge ${done?'done':''}">${p.estado}</span>
+      <p class="modal-title">${p.nombre}</p>
+      <p class="modal-subtitle">${p.barrio} · ${p.fecha}</p>
+      <div class="modal-specs">
+        <div class="spec-box"><p class="spec-val">${p.pisos}</p><p class="spec-lbl">Pisos</p></div>
+        <div class="spec-box"><p class="spec-val">${p.unidades}</p><p class="spec-lbl">Unidades</p></div>
+        <div class="spec-box"><p class="spec-val">${done?'✓':'🔨'}</p><p class="spec-lbl">${p.fecha}</p></div>
+      </div>
+      <p style="font-size:.85rem;font-weight:300;color:var(--gray4);line-height:1.75;margin-bottom:1.5rem">${p.desc}</p>
+      <ul class="modal-feats">${p.caract.split('\n').filter(Boolean).map(c=>`<li>${c}</li>`).join('')}</ul>
+      <div style="margin-top:2rem">
+        <a href="#contacto" class="proj-hover-cta" onclick="closeModal()">Consultar disponibilidad →</a>
+      </div>
+    </div>`;
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal()});
+
+// ===================== CONTACT DATA =====================
+function renderContactData(){
+  const c = loadContact();
+  document.getElementById('cValDir').textContent = c.dir;
+  const em = document.getElementById('cValEmail');
+  em.textContent = c.email; em.href = 'mailto:'+c.email;
+  document.getElementById('cValTel').textContent = c.tel;
+}
+
+// ===================== ADMIN =====================
+const ADMIN_PASS = 'agf2025';
+
+function openLogin(){ document.getElementById('login').classList.add('open'); document.getElementById('login-pwd').focus(); }
+function closeLogin(){ document.getElementById('login').classList.remove('open'); document.getElementById('login-err').textContent=''; }
+function doLogin(){
+  const pwd = document.getElementById('login-pwd').value;
+  if(pwd===ADMIN_PASS){ closeLogin(); openAdmin(); document.getElementById('login-pwd').value=''; }
+  else{ document.getElementById('login-err').textContent='Contraseña incorrecta.'; }
+}
+
+function openAdmin(){
+  document.getElementById('admin').classList.add('open');
+  renderAdminList();
+  const c = loadContact();
+  document.getElementById('cTel').value=c.tel;
+  document.getElementById('cEmail').value=c.email;
+  document.getElementById('cDir').value=c.dir;
+}
+function closeAdmin(){ document.getElementById('admin').classList.remove('open'); clearForm(); }
+
+function renderAdminList(){
+  document.getElementById('adminProjList').innerHTML = projects.map(p=>`
+    <div class="admin-proj-row">
+      <img class="admin-proj-thumb" src="${p.img1}" alt="${p.nombre}" onerror="this.style.display='none'"/>
+      <span class="admin-proj-name">${p.nombre}</span>
+      <span class="admin-proj-status ${p.estado==='Terminado'?'status-done':'status-construction'}">${p.estado}</span>
+      <button class="admin-proj-btn" onclick="editProject(${p.id})">Editar</button>
+      <button class="admin-proj-btn" onclick="deleteProject(${p.id})">Eliminar</button>
+    </div>`).join('');
+}
+
+function editProject(id){
+  const p = projects.find(x=>x.id===id); if(!p) return;
+  document.getElementById('editId').value=p.id;
+  document.getElementById('pNombre').value=p.nombre;
+  document.getElementById('pBarrio').value=p.barrio;
+  document.getElementById('pEstado').value=p.estado;
+  document.getElementById('pFecha').value=p.fecha;
+  document.getElementById('pPisos').value=p.pisos;
+  document.getElementById('pUnidades').value=p.unidades;
+  document.getElementById('pDesc').value=p.desc;
+  document.getElementById('pCaracts').value=p.caract;
+  document.getElementById('pImg1').value=p.img1;
+  document.getElementById('pImg2').value=p.img2||'';
+  document.getElementById('pImg3').value=p.img3||'';
+  document.getElementById('pNombre').scrollIntoView({behavior:'smooth'});
+}
+
+function deleteProject(id){
+  if(!confirm('¿Eliminar este proyecto?')) return;
+  projects = projects.filter(x=>x.id!==id);
+  saveProjects(projects);
+  renderAdminList(); renderProjects();
+}
+
+function saveProject(){
+  const editId = document.getElementById('editId').value;
+  const obj = {
+    id: editId ? parseInt(editId) : Date.now(),
+    nombre: document.getElementById('pNombre').value.trim(),
+    barrio: document.getElementById('pBarrio').value.trim(),
+    estado: document.getElementById('pEstado').value,
+    fecha: document.getElementById('pFecha').value.trim(),
+    pisos: document.getElementById('pPisos').value.trim(),
+    unidades: document.getElementById('pUnidades').value.trim(),
+    desc: document.getElementById('pDesc').value.trim(),
+    caract: document.getElementById('pCaracts').value.trim(),
+    img1: document.getElementById('pImg1').value.trim(),
+    img2: document.getElementById('pImg2').value.trim(),
+    img3: document.getElementById('pImg3').value.trim(),
+  };
+  if(!obj.nombre){ document.getElementById('adminMsg').textContent='El nombre es requerido.'; return; }
+  if(editId){ projects = projects.map(p=>p.id===obj.id?obj:p); }
+  else{ projects.push(obj); }
+  saveProjects(projects);
+  clearForm(); renderAdminList(); renderProjects();
+  document.getElementById('adminMsg').textContent='✓ Guardado correctamente.';
+  setTimeout(()=>document.getElementById('adminMsg').textContent='',3000);
+}
+
+function clearForm(){
+  ['editId','pNombre','pBarrio','pFecha','pPisos','pUnidades','pDesc','pCaracts','pImg1','pImg2','pImg3'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('pEstado').value='En Construcción';
+  document.getElementById('adminMsg').textContent='';
+}
+
+function saveContact(){
+  const c = { tel:document.getElementById('cTel').value.trim(), email:document.getElementById('cEmail').value.trim(), dir:document.getElementById('cDir').value.trim() };
+  saveContactData(c); renderContactData();
+  document.getElementById('contactMsg').textContent='✓ Contacto actualizado.';
+  setTimeout(()=>document.getElementById('contactMsg').textContent='',3000);
+}
+
+// ===================== CONTACT FORM =====================
+function sendContact(){
+  const n=document.getElementById('cNombre').value;
+  const e=document.getElementById('cEmailForm').value;
+  const t=document.getElementById('cTelForm').value;
+  const i=document.getElementById('cInteres').value;
+  const m=document.getElementById('cMsg').value;
+  if(!n||!e){ document.getElementById('fstatus').textContent='Completá nombre y email.'; return; }
+  const c = loadContact();
+  const body = encodeURIComponent(`Nombre: ${n}\nTeléfono: ${t}\nInterés: ${i}\n\n${m}`);
+  window.location.href=`mailto:${c.email}?subject=Consulta desde sitio web - ${n}&body=${body}`;
+  document.getElementById('fstatus').textContent='✓ Abriendo tu correo...';
+}
+
+// ===================== CURSOR =====================
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+document.addEventListener('mousemove',e=>{
+  cur.style.left=e.clientX+'px'; cur.style.top=e.clientY+'px';
+  ring.style.left=e.clientX+'px'; ring.style.top=e.clientY+'px';
+});
+document.querySelectorAll('a,button,.proj-card,.tab-btn,.chip,.paso,.testi-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='14px';cur.style.height='14px';ring.style.width='44px';ring.style.height='44px'});
+  el.addEventListener('mouseleave',()=>{cur.style.width='8px';cur.style.height='8px';ring.style.width='32px';ring.style.height='32px'});
+});
+
+// ===================== REVEAL =====================
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('in'); obs.unobserve(e.target);} });
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// ===================== NAV =====================
+const burger=document.getElementById('burger'),navLinks=document.getElementById('navLinks');
+burger.addEventListener('click',()=>navLinks.classList.toggle('open'));
+function closeMenu(){ navLinks.classList.remove('open'); }
+
+// ===================== INIT =====================
+renderProjects();
+renderContactData();
+</script>
+</body>
+</html>
