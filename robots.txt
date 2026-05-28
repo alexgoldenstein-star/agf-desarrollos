@@ -1,0 +1,10 @@
+# AGF Desarrollos Inmobiliarios — robots.txt
+User-agent: *
+Allow: /
+Disallow: /admin/
+
+# Sitemap
+Sitemap: https://www.agfdesarrollos.com/sitemap.xml
+
+# Crawl-delay sugerido
+Crawl-delay: 1
