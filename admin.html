@@ -445,12 +445,12 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
         <div class="form-card">
           <p class="form-card-title">Datos de <span>contacto</span></p>
           <div class="fgrid2">
-            <div class="fg"><label class="fl">Teléfono principal</label><input class="fi" id="cTel1" placeholder="011 4581-7706"/></div>
-            <div class="fg"><label class="fl">Teléfono secundario</label><input class="fi" id="cTel2" placeholder="011 458-8922"/></div>
+            <div class="fg"><label class="fl">Teléfono principal</label><input class="fi" id="cTel1" placeholder="+54 9 11 5061-4489"/></div>
+            <div class="fg"><label class="fl">Teléfono secundario</label><input class="fi" id="cTel2" placeholder=""/></div>
           </div>
           <div class="fgrid2">
             <div class="fg"><label class="fl">Email</label><input class="fi" id="cEmail" type="email" placeholder="info@agfdesarrollos.com"/></div>
-            <div class="fg"><label class="fl">WhatsApp (con código país, sin +)</label><input class="fi" id="cWa" placeholder="5491145817706"/></div>
+            <div class="fg"><label class="fl">WhatsApp (con código país, sin +)</label><input class="fi" id="cWa" placeholder="5491150614489"/></div>
           </div>
           <div class="fg"><label class="fl">Dirección</label><input class="fi" id="cDir" placeholder="Batalla del Pari 1053, CABA, Argentina"/></div>
           <div class="fgrid2">
@@ -534,8 +534,7 @@ async function loadAll(){
 // ═══════════════════ PROYECTOS ═══════════════════
 async function loadProjects(){
   try{
-    const q=query(collection(db,"proyectos"),orderBy("orden","asc"));
-    const snap=await getDocs(q);
+    const snap=await getDocs(collection(db,"proyectos"));
     projects=snap.docs.map(d=>({id:d.id,...d.data()}));
     renderTable(); updateDashboard();
     const seedCard=document.getElementById('seedCard');
