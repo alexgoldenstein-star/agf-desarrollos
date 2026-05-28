@@ -745,6 +745,9 @@ async function loadProjects(){
   }
 }
 
+function toSlug(n){
+  return n.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-');
+}
 function renderProjects(){
   const grid=document.getElementById('projGrid');
   let list=currentFilter==='all'?[...allProjects]:allProjects.filter(p=>p.estado===currentFilter);
@@ -762,7 +765,7 @@ function renderProjects(){
     const done=p.estado==='Terminado';
     const feats=(p.caract||'').split('\n').filter(Boolean).slice(0,4);
     const thumb=(p.imagenes&&p.imagenes[0])||p.img1||'';
-    return `<div class="proj-card" onclick="window._openModal('${p.id}')">
+    return `<div class="proj-card" onclick="window.location.href='proyecto.html?id='+toSlug(p.nombre)">
       ${thumb?`<img src="${thumb}" alt="${p.nombre}" loading="lazy"/>`:'<div style="width:100%;height:100%;background:var(--black4)"></div>'}
       <div class="proj-overlay">
         <span class="proj-status ${done?'done':''}">${p.estado}</span>
