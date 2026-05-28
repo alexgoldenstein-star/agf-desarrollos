@@ -720,14 +720,29 @@ const SEED = [
 ];
 
 async function loadProjects(){
+  const grid=document.getElementById('projGrid');
   try{
-    // Sin orderBy en Firestore — ordenamos en cliente para evitar errores de índice
     const snap=await getDocs(collection(db,"proyectos"));
-    if(snap.empty){ for(const p of SEED) await addDoc(collection(db,"proyectos"),p); allProjects=SEED.map((p,i)=>({id:'s'+i,...p})); }
-    else allProjects=snap.docs.map(d=>({id:d.id,...d.data()}));
-    renderProjects(); renderFooterProjects();
-    document.getElementById('statNum').innerHTML=allProjects.length+'<span>+</span>';
-  }catch(e){ document.getElementById('projGrid').innerHTML='<p style="grid-column:1/-1;padding:3rem;text-align:center;color:var(--gray3)">Error al cargar. Revisá las reglas de Firestore.</p>'; }
+    if(snap.empty){
+      for(const p of SEED) await addDoc(collection(db,"proyectos"),p);
+      allProjects=SEED.map((p,i)=>({id:'s'+i,...p}));
+    } else {
+      allProjects=snap.docs.map(d=>({id:d.id,...d.data()}));
+    }
+  }catch(e){
+    console.error('Firestore error:',e);
+    grid.innerHTML='<p style="grid-column:1/-1;padding:3rem;text-align:center;color:var(--gray3)">Error al conectar con Firebase. Revisá las reglas de Firestore.<br><small style=\'color:var(--gray3);font-size:.7rem\'>'+e.message+'</small></p>';
+    return;
+  }
+  try{
+    renderProjects();
+    renderFooterProjects();
+    const sn=document.getElementById('statNum');
+    if(sn) sn.innerHTML=allProjects.length+'<span>+</span>';
+  }catch(e2){
+    console.error('Render error:',e2);
+    grid.innerHTML='<p style="grid-column:1/-1;padding:3rem;text-align:center;color:var(--gray3)">Error al renderizar proyectos: '+e2.message+'</p>';
+  }
 }
 
 function renderProjects(){
@@ -746,8 +761,9 @@ function renderProjects(){
   grid.innerHTML=list.map(p=>{
     const done=p.estado==='Terminado';
     const feats=(p.caract||'').split('\n').filter(Boolean).slice(0,4);
+    const thumb=(p.imagenes&&p.imagenes[0])||p.img1||'';
     return `<div class="proj-card" onclick="window._openModal('${p.id}')">
-      <img src="${p.img1}" alt="${p.nombre}" loading="lazy"/>
+      ${thumb?`<img src="${thumb}" alt="${p.nombre}" loading="lazy"/>`:'<div style="width:100%;height:100%;background:var(--black4)"></div>'}
       <div class="proj-overlay">
         <span class="proj-status ${done?'done':''}">${p.estado}</span>
         <p class="proj-name">${p.nombre}</p>
