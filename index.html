@@ -445,6 +445,19 @@ footer{background:var(--black2);border-top:1px solid rgba(217,43,43,.15);padding
   .foot-top{grid-template-columns:1fr}
   .modal-body{padding:1.5rem}
 }
+
+/* CAROUSEL */
+.modal-carousel{position:relative;width:100%;background:var(--black);overflow:hidden;aspect-ratio:16/7;max-height:400px;}
+.car-track{display:flex;height:100%;transition:transform .4s cubic-bezier(.4,0,.2,1);}
+.car-slide{flex:0 0 100%;height:100%;}
+.car-slide img{width:100%;height:100%;object-fit:cover;filter:brightness(.9);}
+.car-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.6);border:none;color:var(--white);font-size:1.8rem;width:44px;height:44px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;z-index:5;}
+.car-btn:hover{background:var(--red)}
+.car-prev{left:0}.car-next{right:0}
+.car-dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:5;}
+.car-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.4);cursor:pointer;transition:background .2s;}
+.car-dot.active{background:var(--red)}
+.car-count{position:absolute;bottom:10px;right:12px;font-size:.65rem;font-weight:600;letter-spacing:.1em;color:rgba(255,255,255,.7);background:rgba(0,0,0,.5);padding:2px 8px;z-index:5;}
 </style>
 </head>
 <body>
@@ -684,7 +697,7 @@ footer{background:var(--black2);border-top:1px solid rgba(217,43,43,.15);padding
 <!-- FIREBASE -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-import { getFirestore, collection, getDocs, addDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+import { getFirestore, collection, getDocs, addDoc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey:"AIzaSyA6g3Zyj8J5mQCxt3vd-LcmlmugkpurnMo",
@@ -756,17 +769,23 @@ function renderFooterProjects(){
 window._openModal=function(id){
   const p=allProjects.find(x=>x.id===id); if(!p) return;
   const done=p.estado==='Terminado';
-  const imgs=[p.img1,p.img2,p.img3].filter(Boolean);
+  const imgs=(p.imagenes&&p.imagenes.length)?p.imagenes:[p.img1,p.img2,p.img3].filter(Boolean);
   const zona=ZONA_INFO[p.barrio]||{desc:`Excelente ubicación en ${p.barrio}, CABA.`,tags:[p.barrio,'CABA']};
   const mapsQ=p.mapsQuery||(p.nombre.replace(/ /g,'+')+'+Buenos+Aires');
   const mapsEmbed=`https://maps.google.com/maps?q=${mapsQ}&output=embed&hl=es&z=16`;
-  const galClass=imgs.length===1?'one-img':'';
-  document.getElementById('modal-content').innerHTML=`
-    <div class="modal-gallery ${galClass}">
-      ${imgs[0]?`<img class="img-main" src="${imgs[0]}" alt="${p.nombre}"/>`:''}
-      ${imgs[1]?`<img class="img-sub" src="${imgs[1]}" alt="${p.nombre} 2"/>`:''}
-      ${imgs[2]?`<img class="img-sub" src="${imgs[2]}" alt="${p.nombre} 3"/>`:''}
-    </div>
+  // Galería carousel para múltiples imágenes
+  const galHtml = imgs.length===0 ? '' :
+    imgs.length===1 ? `<div class="modal-gallery one-img"><img class="img-main" src="${imgs[0]}" alt="${p.nombre}"/></div>` :
+    `<div class="modal-carousel" id="car_${id}">
+      <div class="car-track" id="carTrack_${id}">
+        ${imgs.map((src,i)=>`<div class="car-slide"><img src="${src}" alt="${p.nombre} ${i+1}" loading="${i===0?'eager':'lazy'}"/></div>`).join('')}
+      </div>
+      <button class="car-btn car-prev" onclick="carMove('${id}',-1)">‹</button>
+      <button class="car-btn car-next" onclick="carMove('${id}',1)">›</button>
+      <div class="car-dots">${imgs.map((_,i)=>`<span class="car-dot ${i===0?'active':''}" onclick="carGo('${id}',${i})"></span>`).join('')}</div>
+      <span class="car-count"><span id="carIdx_${id}">1</span>/${imgs.length}</span>
+    </div>`;
+  document.getElementById('modal-content').innerHTML=galHtml+`
     <div class="modal-body">
       <span class="modal-badge ${done?'done':''}">${p.estado}</span>
       <p class="modal-title">${p.nombre}</p>
@@ -814,13 +833,31 @@ loadProjects();
 function filterProjects(f,btn){window._filterProjects&&window._filterProjects(f,btn);}
 function closeModal(){document.getElementById('modal').classList.remove('open');document.body.style.overflow='';}
 function handleModalBg(e){if(e.target===document.getElementById('modal'))closeModal();}
-function sendContact(){
-  const n=document.getElementById('cNombre').value,e=document.getElementById('cEmail').value;
-  const t=document.getElementById('cTel').value,i=document.getElementById('cInteres').value,m=document.getElementById('cMsg').value;
+async function sendContact(){
+  const n=document.getElementById('cNombre').value.trim();
+  const e=document.getElementById('cEmail').value.trim();
+  const t=document.getElementById('cTel').value.trim();
+  const i=document.getElementById('cInteres').value;
+  const m=document.getElementById('cMsg').value.trim();
   if(!n||!e){document.getElementById('fstatus').textContent='Completá nombre y email.';return;}
-  const body=encodeURIComponent(`Nombre: ${n}\nTeléfono: ${t}\nInterés: ${i}\n\n${m}`);
-  window.location.href=`mailto:info@agfdesarrollos.com?subject=Consulta web - ${n}&body=${body}`;
-  document.getElementById('fstatus').textContent='✓ Abriendo tu correo...';
+  const btn=document.querySelector('#contacto .btn-red');
+  btn.textContent='Enviando...';btn.disabled=true;
+  try{
+    await addDoc(collection(db,"contactos"),{
+      nombre:n,email:e,telefono:t,interes:i,mensaje:m,
+      estado:'nuevo',fecha:serverTimestamp()
+    });
+    document.getElementById('fstatus').textContent='✓ Mensaje enviado. Te contactamos pronto.';
+    document.getElementById('fstatus').style.color='#4CAF50';
+    ['cNombre','cEmail','cTel','cMsg'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('cInteres').value='';
+  }catch(ex){
+    // Fallback mailto si Firestore falla
+    const body=encodeURIComponent(`Nombre: ${n}\nTeléfono: ${t}\nInterés: ${i}\n\n${m}`);
+    window.location.href=`mailto:info@agfdesarrollos.com?subject=Consulta web - ${n}&body=${body}`;
+    document.getElementById('fstatus').textContent='✓ Abriendo tu correo...';
+  }
+  btn.textContent='Enviar mensaje';btn.disabled=false;
 }
 const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
 document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';});
@@ -833,6 +870,30 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 const burger=document.getElementById('burger'),navLinks=document.getElementById('navLinks');
 burger.addEventListener('click',()=>navLinks.classList.toggle('open'));
 function closeMenu(){navLinks.classList.remove('open');}
+// CAROUSEL
+const carStates = {};
+window.carMove = function(id, dir) {
+  const imgs = allProjects.find(x=>x.id===id);
+  const total = (imgs?.imagenes?.length)||(imgs?[imgs.img1,imgs.img2,imgs.img3].filter(Boolean).length:0)||1;
+  if(!carStates[id]) carStates[id]=0;
+  carStates[id] = (carStates[id]+dir+total)%total;
+  applyCar(id,total);
+};
+window.carGo = function(id, idx) {
+  const imgs = allProjects.find(x=>x.id===id);
+  const total = (imgs?.imagenes?.length)||1;
+  carStates[id]=idx;
+  applyCar(id,total);
+};
+function applyCar(id,total){
+  const i=carStates[id]||0;
+  const track=document.getElementById('carTrack_'+id);
+  if(track) track.style.transform=`translateX(-${i*100}%)`;
+  document.querySelectorAll(`#car_${id} .car-dot`).forEach((d,idx)=>d.classList.toggle('active',idx===i));
+  const idxEl=document.getElementById('carIdx_'+id);
+  if(idxEl) idxEl.textContent=i+1;
+}
+
 </script>
 </body>
 </html>

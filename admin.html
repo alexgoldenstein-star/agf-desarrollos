@@ -34,19 +34,18 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .admin-logo-bar{width:3px;height:18px;background:var(--red);}
 .header-right{display:flex;align-items:center;gap:1rem;}
 .user-badge{font-size:.72rem;color:var(--gray4);font-weight:300;}
-.logout-btn{padding:7px 16px;background:none;border:1px solid var(--gray2);color:var(--gray4);font-family:'Outfit',sans-serif;font-size:.65rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);transition:border-color .2s,color .2s;}
-.logout-btn:hover{border-color:var(--red);color:var(--red)}
-.back-btn{text-decoration:none;padding:7px 16px;background:none;border:1px solid var(--gray2);color:var(--gray4);font-size:.65rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);transition:border-color .2s,color .2s;}
-.back-btn:hover{border-color:var(--red);color:var(--red)}
+.hbtn{text-decoration:none;padding:7px 16px;background:none;border:1px solid var(--gray2);color:var(--gray4);font-family:'Outfit',sans-serif;font-size:.65rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);transition:border-color .2s,color .2s;}
+.hbtn:hover{border-color:var(--red);color:var(--red)}
 
 .admin-body{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 60px);}
 .sidebar{background:var(--black2);border-right:1px solid var(--gray);padding:1.5rem 0;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;}
 .sidebar-section{margin-bottom:.5rem}
 .sidebar-title{font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gray3);padding:.5rem 1.5rem;margin-bottom:.3rem;}
-.sidebar-btn{display:flex;align-items:center;gap:.7rem;width:100%;padding:.75rem 1.5rem;background:none;border:none;cursor:pointer;font-family:'Outfit',sans-serif;font-size:.82rem;font-weight:400;color:var(--gray4);text-align:left;transition:background .2s,color .2s;border-left:2px solid transparent;}
-.sidebar-btn:hover{background:var(--black3);color:var(--white)}
-.sidebar-btn.active{background:var(--black3);color:var(--red);border-color:var(--red)}
-.sidebar-btn svg{width:14px;height:14px;fill:currentColor;flex-shrink:0}
+.sbtn{display:flex;align-items:center;gap:.7rem;width:100%;padding:.75rem 1.5rem;background:none;border:none;cursor:pointer;font-family:'Outfit',sans-serif;font-size:.82rem;font-weight:400;color:var(--gray4);text-align:left;transition:background .2s,color .2s;border-left:2px solid transparent;}
+.sbtn:hover{background:var(--black3);color:var(--white)}
+.sbtn.active{background:var(--black3);color:var(--red);border-color:var(--red)}
+.sbtn svg{width:14px;height:14px;fill:currentColor;flex-shrink:0}
+.sbtn .badge-count{margin-left:auto;background:var(--red);color:var(--white);font-size:.6rem;font-weight:700;padding:2px 6px;border-radius:10px;min-width:18px;text-align:center;}
 
 .main-content{padding:2rem;position:relative;z-index:1;}
 .panel{display:none;}
@@ -54,7 +53,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .panel-title{font-family:'Rajdhani',sans-serif;font-size:1.6rem;font-weight:700;color:var(--white);margin-bottom:.4rem;}
 .panel-sub{font-size:.82rem;font-weight:300;color:var(--gray4);margin-bottom:2rem;}
 
-/* CARDS */
+/* STATS */
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-bottom:2rem;}
 .stat-card{background:var(--black2);padding:1.4rem 1.6rem;border-top:2px solid var(--gray);}
 .stat-card.red{border-color:var(--red)}
@@ -62,7 +61,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .stat-num span{color:var(--red)}
 .stat-lbl{font-size:.65rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--gray4);}
 
-/* TABLA PROYECTOS */
+/* TABLE */
 .proj-table{width:100%;border-collapse:collapse;background:var(--black2);}
 .proj-table th{font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gray3);padding:.8rem 1rem;border-bottom:1px solid var(--gray);text-align:left;}
 .proj-table td{padding:.9rem 1rem;border-bottom:1px solid rgba(42,42,42,.5);font-size:.82rem;font-weight:300;color:var(--gray4);vertical-align:middle;}
@@ -72,43 +71,74 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .badge{display:inline-block;padding:2px 10px;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);}
 .badge-red{background:var(--red);color:var(--white)}
 .badge-gray{background:var(--gray2);color:var(--gray5)}
-.action-btn{padding:5px 12px;background:none;border:1px solid var(--gray2);color:var(--gray4);font-family:'Outfit',sans-serif;font-size:.62rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);transition:border-color .2s,color .2s,background .2s;margin-right:4px;}
-.action-btn:hover{border-color:var(--red);color:var(--red)}
-.action-btn.danger:hover{background:var(--red);border-color:var(--red);color:var(--white)}
+.abtn{padding:5px 12px;background:none;border:1px solid var(--gray2);color:var(--gray4);font-family:'Outfit',sans-serif;font-size:.62rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);transition:border-color .2s,color .2s,background .2s;margin-right:4px;}
+.abtn:hover{border-color:var(--red);color:var(--red)}
+.abtn.danger:hover{background:var(--red);border-color:var(--red);color:var(--white)}
+.abtn.ok{border-color:#4CAF50;color:#4CAF50}
 
 /* FORM */
-.form-card{background:var(--black2);border:1px solid var(--gray2);padding:2rem;margin-bottom:2rem;}
+.form-card{background:var(--black2);border:1px solid var(--gray2);padding:2rem;margin-bottom:1.5rem;}
 .form-card-title{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:600;color:var(--white);margin-bottom:1.5rem;padding-bottom:.8rem;border-bottom:1px solid var(--gray);}
 .form-card-title span{color:var(--red)}
-.f-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
-.f-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1rem;}
-.f-grid-1{margin-bottom:1rem;}
-.f-group{display:flex;flex-direction:column;gap:5px;}
-.f-label{font-size:.63rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gray3);}
-.f-input,.f-textarea,.f-select{background:var(--black3);border:1px solid var(--gray2);color:var(--white);padding:10px 13px;font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:300;outline:none;transition:border-color .2s;width:100%;}
-.f-input:focus,.f-textarea:focus,.f-select:focus{border-color:var(--red)}
-.f-input::placeholder,.f-textarea::placeholder{color:var(--gray3)}
-.f-textarea{resize:vertical;min-height:90px;}
-.f-hint{font-size:.68rem;color:var(--gray3);font-weight:300;margin-top:3px;}
-.f-select option{background:var(--black3)}
-.img-preview{width:100%;height:120px;object-fit:cover;border:1px solid var(--gray2);filter:brightness(.7);margin-top:.5rem;display:none;}
-.img-preview.show{display:block;}
-.form-actions{display:flex;gap:.8rem;align-items:center;flex-wrap:wrap;padding-top:1rem;border-top:1px solid var(--gray);}
+.fg{display:flex;flex-direction:column;gap:5px;margin-bottom:.9rem;}
+.fg:last-child{margin-bottom:0}
+.fl{font-size:.63rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gray3);}
+.fi,.fta,.fse{background:var(--black3);border:1px solid var(--gray2);color:var(--white);padding:10px 13px;font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:300;outline:none;transition:border-color .2s;width:100%;}
+.fi:focus,.fta:focus,.fse:focus{border-color:var(--red)}
+.fi::placeholder,.fta::placeholder{color:var(--gray3)}
+.fta{resize:vertical;min-height:85px;}
+.fse option{background:var(--black3)}
+.fhint{font-size:.68rem;color:var(--gray3);font-weight:300;margin-top:3px;}
+.fgrid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.fgrid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;}
+.form-actions{display:flex;gap:.8rem;align-items:center;flex-wrap:wrap;padding-top:1rem;border-top:1px solid var(--gray);margin-top:1rem;}
 .save-btn{padding:11px 28px;background:var(--red);color:var(--white);border:none;font-family:'Outfit',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:background .2s;}
 .save-btn:hover{background:var(--red2)}
 .cancel-btn{padding:10px 20px;background:none;border:1px solid var(--gray2);color:var(--gray4);font-family:'Outfit',sans-serif;font-size:.68rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);transition:border-color .2s,color .2s;}
 .cancel-btn:hover{border-color:var(--red);color:var(--red)}
-.form-msg{font-size:.78rem;color:var(--red);}
-.form-msg.ok{color:#4CAF50}
+.fmsg{font-size:.78rem;color:var(--red);}
+.fmsg.ok{color:#4CAF50}
+
+/* GALERÍA UPLOAD */
+.gallery-zone{border:2px dashed var(--gray2);padding:2rem;text-align:center;cursor:pointer;transition:border-color .2s;margin-bottom:1rem;position:relative;}
+.gallery-zone:hover,.gallery-zone.dragover{border-color:var(--red)}
+.gallery-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.gallery-zone-text{font-size:.82rem;color:var(--gray4);font-weight:300;pointer-events:none;}
+.gallery-zone-text strong{color:var(--red)}
+.gallery-previews{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:.6rem;margin-bottom:1rem;}
+.gallery-item{position:relative;aspect-ratio:4/3;background:var(--black3);}
+.gallery-item img{width:100%;height:100%;object-fit:cover;filter:brightness(.8);}
+.gallery-item-del{position:absolute;top:4px;right:4px;width:22px;height:22px;background:rgba(0,0,0,.8);border:none;color:var(--white);font-size:.75rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+.gallery-item-del:hover{background:var(--red)}
+.gallery-item-main{position:absolute;bottom:4px;left:4px;font-size:.55rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--red);color:white;padding:2px 6px;}
+.upload-progress{width:100%;height:3px;background:var(--gray2);margin-bottom:.5rem;display:none;}
+.upload-progress-bar{height:100%;background:var(--red);transition:width .3s;width:0%;}
+
+/* CONTACTOS */
+.contact-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:1rem;align-items:center;padding:1rem 1.2rem;background:var(--black3);border-bottom:1px solid var(--gray);font-size:.82rem;}
+.contact-row:first-child{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gray3);background:var(--black2);padding:.7rem 1.2rem;}
+.contact-row .c-name{color:var(--white2);font-weight:500;}
+.contact-row .c-interes{font-size:.72rem;color:var(--red);}
+.contact-row .c-date{font-size:.72rem;color:var(--gray3);}
+.contact-expand{background:none;border:none;color:var(--gray4);cursor:pointer;font-size:1rem;transition:color .2s;padding:0;}
+.contact-expand:hover{color:var(--red)}
+.contact-msg-row{display:none;padding:.8rem 1.2rem 1.2rem;background:var(--black3);border-bottom:1px solid var(--gray);}
+.contact-msg-row.open{display:block;}
+.contact-msg-text{font-size:.8rem;font-weight:300;color:var(--gray4);line-height:1.7;background:var(--black4);padding:1rem;border-left:2px solid var(--red);}
+.contact-filter-row{display:flex;gap:.8rem;margin-bottom:1.5rem;flex-wrap:wrap;align-items:center;}
+.filter-btn{padding:6px 16px;background:none;border:1px solid var(--gray2);color:var(--gray4);font-family:'Outfit',sans-serif;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);transition:all .2s;}
+.filter-btn.active,.filter-btn:hover{border-color:var(--red);color:var(--red)}
+.export-btn{padding:6px 16px;background:var(--gray2);border:none;color:var(--white2);font-family:'Outfit',sans-serif;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);transition:background .2s;margin-left:auto;}
+.export-btn:hover{background:var(--red)}
+.unread-dot{width:7px;height:7px;background:var(--red);border-radius:50%;display:inline-block;margin-right:6px;}
 
 /* TOAST */
-.toast{position:fixed;bottom:2rem;right:2rem;z-index:999;background:var(--black2);border:1px solid var(--gray2);border-left:3px solid var(--red);padding:1rem 1.5rem;font-size:.82rem;color:var(--white);display:none;animation:slideIn .3s ease;}
+.toast{position:fixed;bottom:2rem;right:2rem;z-index:999;background:var(--black2);border:1px solid var(--gray2);border-left:3px solid var(--red);padding:1rem 1.5rem;font-size:.82rem;color:var(--white);display:none;max-width:320px;}
 .toast.show{display:block;}
-.toast.ok{border-color:#4CAF50}
-@keyframes slideIn{from{transform:translateX(20px);opacity:0}to{transform:none;opacity:1}}
+.toast.ok{border-left-color:#4CAF50}
 
 /* CONFIRM */
-.confirm-overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;}
+.confirm-overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;}
 .confirm-overlay.open{display:flex}
 .confirm-box{background:var(--black2);border:1px solid var(--gray2);padding:2rem;max-width:400px;width:100%;text-align:center;}
 .confirm-title{font-family:'Rajdhani',sans-serif;font-size:1.2rem;font-weight:700;color:var(--white);margin-bottom:.6rem;}
@@ -119,23 +149,18 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
   .admin-body{grid-template-columns:1fr}
   .sidebar{display:none}
   .stats-row{grid-template-columns:1fr 1fr}
-  .f-grid,.f-grid-3{grid-template-columns:1fr}
-  .proj-table thead{display:none}
-  .proj-table tr{display:block;margin-bottom:1rem;border:1px solid var(--gray)}
-  .proj-table td{display:flex;justify-content:space-between;border-bottom:1px solid var(--gray)}
+  .fgrid2,.fgrid3{grid-template-columns:1fr}
+  .contact-row{grid-template-columns:1fr 1fr;gap:.5rem}
 }
 </style>
 </head>
 <body>
 
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
-
-<!-- CONFIRM -->
 <div class="confirm-overlay" id="confirmOverlay">
   <div class="confirm-box">
-    <p class="confirm-title">Confirmar acción</p>
-    <p class="confirm-sub" id="confirmMsg">¿Estás seguro?</p>
+    <p class="confirm-title">Confirmar</p>
+    <p class="confirm-sub" id="confirmMsg"></p>
     <div class="confirm-actions">
       <button class="save-btn" id="confirmOk">Confirmar</button>
       <button class="cancel-btn" onclick="closeConfirm()">Cancelar</button>
@@ -164,207 +189,278 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
     <div class="admin-logo"><span class="admin-logo-bar"></span>AGF <span>ADMIN</span></div>
     <div class="header-right">
       <span class="user-badge" id="userBadge"></span>
-      <a class="back-btn" href="../">Ver sitio ↗</a>
-      <button class="logout-btn" onclick="doLogout()">Cerrar sesión</button>
+      <a class="hbtn" href="../" target="_blank">Ver sitio ↗</a>
+      <button class="hbtn" onclick="doLogout()">Cerrar sesión</button>
     </div>
   </header>
 
   <div class="admin-body">
-    <!-- SIDEBAR -->
     <aside class="sidebar">
       <div class="sidebar-section">
         <p class="sidebar-title">General</p>
-        <button class="sidebar-btn active" onclick="showPanel('dashboard',this)">
+        <button class="sbtn active" onclick="showPanel('dashboard',this)">
           <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>Dashboard
         </button>
       </div>
       <div class="sidebar-section">
         <p class="sidebar-title">Proyectos</p>
-        <button class="sidebar-btn" onclick="showPanel('listaProyectos',this)">
-          <svg viewBox="0 0 24 24"><path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm0 5h-2V5h2v3zM4 19h16v2H4z"/></svg>Lista de proyectos
+        <button class="sbtn" onclick="showPanel('listaProyectos',this)">
+          <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>Lista
         </button>
-        <button class="sidebar-btn" onclick="showPanel('nuevoProyecto',this);clearForm()">
-          <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>Nuevo proyecto
+        <button class="sbtn" onclick="showPanel('nuevoProyecto',this);clearForm()">
+          <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>Nuevo proyecto
         </button>
       </div>
       <div class="sidebar-section">
-        <p class="sidebar-title">Configuración</p>
-        <button class="sidebar-btn" onclick="showPanel('configContacto',this)">
-          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>Datos de contacto
+        <p class="sidebar-title">Contactos</p>
+        <button class="sbtn" id="sbtnContactos" onclick="showPanel('contactos',this)">
+          <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>Consultas recibidas
+          <span class="badge-count" id="unreadCount" style="display:none">0</span>
+        </button>
+      </div>
+      <div class="sidebar-section">
+        <p class="sidebar-title">Contenido del sitio</p>
+        <button class="sbtn" onclick="showPanel('editHero',this)">
+          <svg viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14z"/></svg>Hero / Portada
+        </button>
+        <button class="sbtn" onclick="showPanel('editNosotros',this)">
+          <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>Nosotros
+        </button>
+        <button class="sbtn" onclick="showPanel('editTestimonios',this)">
+          <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>Testimonios
+        </button>
+        <button class="sbtn" onclick="showPanel('editContactoInfo',this)">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>Contacto e Info
         </button>
       </div>
     </aside>
 
-    <!-- MAIN -->
     <main class="main-content">
 
-      <!-- DASHBOARD -->
+      <!-- ══════════════ DASHBOARD ══════════════ -->
       <div class="panel active" id="panel-dashboard">
         <p class="panel-title">Dashboard</p>
         <p class="panel-sub">Resumen del sitio web de AGF Desarrollos</p>
         <div class="stats-row">
-          <div class="stat-card red"><p class="stat-num" id="dashTotal">—</p><p class="stat-lbl">Total proyectos</p></div>
+          <div class="stat-card red"><p class="stat-num" id="dashTotal">—</p><p class="stat-lbl">Proyectos</p></div>
           <div class="stat-card"><p class="stat-num" id="dashEn">—</p><p class="stat-lbl">En Construcción</p></div>
           <div class="stat-card"><p class="stat-num" id="dashTerm">—</p><p class="stat-lbl">Terminados</p></div>
-          <div class="stat-card"><p class="stat-num"><span>✓</span></p><p class="stat-lbl">Firebase activo</p></div>
+          <div class="stat-card"><p class="stat-num" id="dashContacts">—</p><p class="stat-lbl">Consultas</p></div>
         </div>
-
-        <!-- CARGA INICIAL -->
-        <div class="form-card" id="seedCard">
+        <div class="form-card" id="seedCard" style="display:none">
           <p class="form-card-title">⚡ Carga <span>inicial de proyectos</span></p>
-          <p style="font-size:.82rem;color:var(--gray4);font-weight:300;line-height:1.7;margin-bottom:1.2rem">
-            Firestore está vacío. Hacé clic para cargar los <strong style="color:var(--white2)">5 proyectos reales de AGF</strong> con toda la información completa. Después podés editarlos uno por uno desde el panel.
-          </p>
-          <div style="background:var(--black3);border:1px solid var(--gray2);padding:1rem 1.2rem;margin-bottom:1.2rem;font-size:.78rem;color:var(--gray4)">
-            <strong style="color:var(--white2);display:block;margin-bottom:.5rem">Se van a cargar:</strong>
-            1. Humahuaca 4628 — Almagro (En Construcción)<br>
-            2. Nicolás Repeto 1506 — Villa Crespo (En Construcción)<br>
-            3. Bogado 4461 — Almagro (En Construcción)<br>
-            4. Estado de Israel 4334 — Palermo (Terminado)<br>
-            5. Avenida Gaona 2466 — Villa del Parque (Terminado)
-          </div>
+          <p style="font-size:.82rem;color:var(--gray4);font-weight:300;line-height:1.7;margin-bottom:1.2rem">Firestore está vacío. Cargá los 5 proyectos reales de AGF con toda la información completa.</p>
           <div style="display:flex;gap:.8rem;align-items:center;flex-wrap:wrap">
             <button class="save-btn" id="seedBtn" onclick="seedProjects()">Cargar los 5 proyectos →</button>
-            <span class="form-msg" id="seedMsg"></span>
+            <span class="fmsg" id="seedMsg"></span>
           </div>
         </div>
-
         <div class="form-card">
           <p class="form-card-title">Acceso rápido</p>
           <div style="display:flex;gap:.8rem;flex-wrap:wrap">
             <button class="save-btn" onclick="showPanel('nuevoProyecto',null);clearForm()">+ Nuevo proyecto</button>
-            <button class="cancel-btn" onclick="showPanel('listaProyectos',null)">Ver lista de proyectos</button>
-            <a href="../" target="_blank" class="cancel-btn" style="text-decoration:none;display:inline-block;padding:10px 20px">Ver sitio web ↗</a>
+            <button class="cancel-btn" onclick="showPanel('listaProyectos',null)">Ver proyectos</button>
+            <button class="cancel-btn" onclick="showPanel('contactos',null)">Ver consultas</button>
+            <a href="../" target="_blank" class="cancel-btn" style="text-decoration:none;display:inline-block;padding:10px 20px">Ver sitio ↗</a>
           </div>
         </div>
       </div>
 
-      <!-- LISTA PROYECTOS -->
+      <!-- ══════════════ LISTA PROYECTOS ══════════════ -->
       <div class="panel" id="panel-listaProyectos">
         <p class="panel-title">Proyectos</p>
-        <p class="panel-sub">Todos los proyectos cargados en el sitio</p>
+        <p class="panel-sub">Todos los proyectos del sitio</p>
+        <div style="margin-bottom:1rem"><button class="save-btn" onclick="showPanel('nuevoProyecto',null);clearForm()">+ Nuevo proyecto</button></div>
         <div style="overflow-x:auto">
           <table class="proj-table">
-            <thead><tr>
-              <th>Imagen</th><th>Proyecto</th><th>Barrio</th><th>Estado</th><th>Pisos</th><th>Unidades</th><th>Acciones</th>
-            </tr></thead>
-            <tbody id="projTableBody"><tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--gray3)">Cargando...</td></tr></tbody>
+            <thead><tr><th>Imagen</th><th>Proyecto</th><th>Barrio</th><th>Estado</th><th>Fotos</th><th>Acciones</th></tr></thead>
+            <tbody id="projTableBody"><tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--gray3)">Cargando...</td></tr></tbody>
           </table>
         </div>
       </div>
 
-      <!-- NUEVO / EDITAR PROYECTO -->
+      <!-- ══════════════ NUEVO / EDITAR PROYECTO ══════════════ -->
       <div class="panel" id="panel-nuevoProyecto">
         <p class="panel-title" id="formPanelTitle">Nuevo Proyecto</p>
-        <p class="panel-sub">Completá todos los campos. Los cambios se reflejan en el sitio inmediatamente.</p>
+        <p class="panel-sub">Los cambios se reflejan en el sitio inmediatamente.</p>
         <input type="hidden" id="editDocId"/>
 
         <div class="form-card">
           <p class="form-card-title">Información <span>básica</span></p>
-          <div class="f-grid">
-            <div class="f-group"><label class="f-label">Nombre del proyecto *</label><input class="f-input" id="pNombre" placeholder="Ej: Humahuaca 4628"/></div>
-            <div class="f-group"><label class="f-label">Barrio *</label><input class="f-input" id="pBarrio" placeholder="Ej: Almagro"/></div>
+          <div class="fgrid2">
+            <div class="fg"><label class="fl">Nombre *</label><input class="fi" id="pNombre" placeholder="Ej: Humahuaca 4628"/></div>
+            <div class="fg"><label class="fl">Barrio *</label><input class="fi" id="pBarrio" placeholder="Ej: Almagro"/></div>
           </div>
-          <div class="f-grid">
-            <div class="f-group"><label class="f-label">Estado *</label>
-              <select class="f-select" id="pEstado">
-                <option value="En Construcción">En Construcción</option>
-                <option value="Terminado">Terminado</option>
-              </select>
+          <div class="fgrid2">
+            <div class="fg"><label class="fl">Estado *</label>
+              <select class="fse" id="pEstado"><option value="En Construcción">En Construcción</option><option value="Terminado">Terminado</option></select>
             </div>
-            <div class="f-group"><label class="f-label">Fecha / Entrega</label><input class="f-input" id="pFecha" placeholder="Ej: Marzo 2026 / En obra"/></div>
+            <div class="fg"><label class="fl">Fecha / Entrega</label><input class="fi" id="pFecha" placeholder="Ej: Marzo 2026 / En obra"/></div>
           </div>
-          <div class="f-grid-3">
-            <div class="f-group"><label class="f-label">Pisos</label><input class="f-input" id="pPisos" placeholder="Ej: 7"/></div>
-            <div class="f-group"><label class="f-label">Unidades</label><input class="f-input" id="pUnidades" placeholder="Ej: 21"/></div>
-            <div class="f-group"><label class="f-label">Superficie</label><input class="f-input" id="pSup" placeholder="Ej: Desde 35m²"/></div>
+          <div class="fgrid3">
+            <div class="fg"><label class="fl">Pisos</label><input class="fi" id="pPisos" placeholder="7"/></div>
+            <div class="fg"><label class="fl">Unidades</label><input class="fi" id="pUnidades" placeholder="21"/></div>
+            <div class="fg"><label class="fl">Superficie</label><input class="fi" id="pSup" placeholder="Desde 35m²"/></div>
           </div>
-          <div class="f-grid-1">
-            <div class="f-group"><label class="f-label">Orden de aparición</label><input class="f-input" id="pOrden" placeholder="1, 2, 3... (menor número aparece primero)" type="number" min="1"/></div>
-          </div>
+          <div class="fg"><label class="fl">Orden de aparición</label><input class="fi" id="pOrden" type="number" min="1" placeholder="1 = primero"/></div>
         </div>
 
         <div class="form-card">
           <p class="form-card-title">Descripción y <span>características</span></p>
-          <div class="f-grid-1">
-            <div class="f-group"><label class="f-label">Descripción del proyecto *</label><textarea class="f-textarea" id="pDesc" placeholder="Describí la ubicación, características del edificio, amenities..." style="min-height:100px"></textarea></div>
-          </div>
-          <div class="f-grid-1">
-            <div class="f-group">
-              <label class="f-label">Características (una por línea)</label>
-              <textarea class="f-textarea" id="pCaracts" placeholder="SUM con patio&#10;Cocheras cubiertas&#10;Ascensor automático&#10;Pisos porcelanato" style="min-height:150px"></textarea>
-              <p class="f-hint">Cada línea se muestra como un ítem separado en el listado del proyecto.</p>
-            </div>
+          <div class="fg"><label class="fl">Descripción *</label><textarea class="fta" id="pDesc" style="min-height:90px" placeholder="Describí ubicación, edificio, amenities..."></textarea></div>
+          <div class="fg">
+            <label class="fl">Características (una por línea)</label>
+            <textarea class="fta" id="pCaracts" style="min-height:140px" placeholder="SUM con patio&#10;Cocheras cubiertas&#10;Ascensor automático"></textarea>
+            <p class="fhint">Cada línea = un ítem en el listado del proyecto.</p>
           </div>
         </div>
 
         <div class="form-card">
-          <p class="form-card-title">Imágenes <span>(URLs)</span></p>
-          <p style="font-size:.78rem;color:var(--gray4);font-weight:300;margin-bottom:1.2rem;line-height:1.6">Pegá las URLs de las imágenes. Recomendamos subirlas a <strong style="color:var(--white2)">Cloudinary</strong> (gratis) o usar Google Drive con acceso público. La imagen 1 es la principal y aparece en la grilla.</p>
-          <div class="f-grid-1">
-            <div class="f-group">
-              <label class="f-label">Imagen principal *</label>
-              <input class="f-input" id="pImg1" placeholder="https://..." oninput="previewImg(this,'prev1')"/>
-              <img class="img-preview" id="prev1"/>
+          <p class="form-card-title">Galería de <span>imágenes</span></p>
+          <p style="font-size:.78rem;color:var(--gray4);font-weight:300;line-height:1.65;margin-bottom:1rem">
+            Subí todas las fotos que quieras. La <strong style="color:var(--white2)">primera imagen</strong> es la portada del proyecto. Arrastrá las fotos o hacé clic para seleccionarlas.
+          </p>
+          <div class="gallery-zone" id="dropZone">
+            <input type="file" id="imgFiles" multiple accept="image/*" onchange="handleFiles(this.files)"/>
+            <div class="gallery-zone-text">
+              <strong>Arrastrá imágenes aquí</strong> o hacé clic para seleccionar<br/>
+              <span style="font-size:.72rem;color:var(--gray3)">JPG, PNG, WEBP — máx. 5MB por imagen</span>
             </div>
           </div>
-          <div class="f-grid">
-            <div class="f-group">
-              <label class="f-label">Imagen 2 (opcional)</label>
-              <input class="f-input" id="pImg2" placeholder="https://..." oninput="previewImg(this,'prev2')"/>
-              <img class="img-preview" id="prev2"/>
-            </div>
-            <div class="f-group">
-              <label class="f-label">Imagen 3 (opcional)</label>
-              <input class="f-input" id="pImg3" placeholder="https://..." oninput="previewImg(this,'prev3')"/>
-              <img class="img-preview" id="prev3"/>
-            </div>
-          </div>
+          <div class="upload-progress" id="uploadProgress"><div class="upload-progress-bar" id="uploadBar"></div></div>
+          <div class="gallery-previews" id="galleryPreviews"></div>
+          <p class="fhint" id="galleryCount"></p>
         </div>
 
         <div class="form-card">
           <p class="form-card-title">Google Maps / <span>Ubicación</span></p>
-          <div class="f-grid-1">
-            <div class="f-group">
-              <label class="f-label">Query de búsqueda en Google Maps</label>
-              <input class="f-input" id="pMaps" placeholder="Ej: Humahuaca+4628+Almagro+Buenos+Aires"/>
-              <p class="f-hint">Se usa para mostrar el mapa en el modal del proyecto. Reemplazá espacios con +</p>
-            </div>
+          <div class="fg">
+            <label class="fl">Query de búsqueda</label>
+            <input class="fi" id="pMaps" placeholder="Ej: Humahuaca+4628+Almagro+Buenos+Aires"/>
+            <p class="fhint">Reemplazá espacios con +. Se usa para el mapa en el modal.</p>
           </div>
         </div>
 
         <div class="form-actions">
           <button class="save-btn" onclick="saveProject()">Guardar proyecto</button>
           <button class="cancel-btn" onclick="showPanel('listaProyectos',null);clearForm()">Cancelar</button>
-          <span class="form-msg" id="formMsg"></span>
+          <span class="fmsg" id="formMsg"></span>
         </div>
       </div>
 
-      <!-- CONFIG CONTACTO -->
-      <div class="panel" id="panel-configContacto">
-        <p class="panel-title">Datos de Contacto</p>
-        <p class="panel-sub">Esta información aparece en la sección de contacto y en el footer del sitio.</p>
+      <!-- ══════════════ CONTACTOS ══════════════ -->
+      <div class="panel" id="panel-contactos">
+        <p class="panel-title">Consultas recibidas</p>
+        <p class="panel-sub">Mensajes enviados desde el formulario de contacto del sitio</p>
+        <div class="contact-filter-row">
+          <button class="filter-btn active" onclick="filterContacts('all',this)">Todas</button>
+          <button class="filter-btn" onclick="filterContacts('nuevo',this)">Sin leer</button>
+          <button class="filter-btn" onclick="filterContacts('leído',this)">Leídas</button>
+          <button class="export-btn" onclick="exportCSV()">Exportar CSV ↓</button>
+        </div>
+        <div id="contactsList"><p style="color:var(--gray3);font-size:.85rem">Cargando...</p></div>
+      </div>
+
+      <!-- ══════════════ EDIT HERO ══════════════ -->
+      <div class="panel" id="panel-editHero">
+        <p class="panel-title">Hero / <span style="color:var(--red)">Portada</span></p>
+        <p class="panel-sub">Texto principal que se ve al entrar al sitio.</p>
         <div class="form-card">
-          <p class="form-card-title">Información de <span>contacto</span></p>
-          <div class="f-grid">
-            <div class="f-group"><label class="f-label">Teléfono principal</label><input class="f-input" id="cTel1" placeholder="011 4581-7706"/></div>
-            <div class="f-group"><label class="f-label">Teléfono secundario</label><input class="f-input" id="cTel2" placeholder="011 458-8922"/></div>
-          </div>
-          <div class="f-grid">
-            <div class="f-group"><label class="f-label">Email</label><input class="f-input" id="cEmail" placeholder="info@agfdesarrollos.com" type="email"/></div>
-            <div class="f-group"><label class="f-label">WhatsApp (con código de país)</label><input class="f-input" id="cWa" placeholder="5491145817706"/></div>
-          </div>
-          <div class="f-grid-1">
-            <div class="f-group"><label class="f-label">Dirección</label><input class="f-input" id="cDir" placeholder="Batalla del Pari 1053, CABA, Argentina"/></div>
-          </div>
-          <div class="f-grid">
-            <div class="f-group"><label class="f-label">Instagram (URL)</label><input class="f-input" id="cIg" placeholder="https://instagram.com/agfdesarrollos"/></div>
-            <div class="f-group"><label class="f-label">Facebook (URL)</label><input class="f-input" id="cFb" placeholder="https://facebook.com/agfdesarrollos"/></div>
+          <p class="form-card-title">Textos del <span>hero</span></p>
+          <div class="fg"><label class="fl">Etiqueta superior (ej: Desarrollos Inmobiliarios · CABA)</label><input class="fi" id="hTag" placeholder="Desarrollos Inmobiliarios · CABA"/></div>
+          <div class="fg"><label class="fl">Línea 1 del título (delgada)</label><input class="fi" id="hT1" placeholder="INVERTÍ EN"/></div>
+          <div class="fg"><label class="fl">Línea 2 del título (rojo/acento)</label><input class="fi" id="hT2" placeholder="TU FUTURO"/></div>
+          <div class="fg"><label class="fl">Línea 3 del título (delgada)</label><input class="fi" id="hT3" placeholder="EN BUENOS AIRES"/></div>
+          <div class="fg"><label class="fl">Subtítulo / descripción</label><textarea class="fta" id="hSub" placeholder="Proyectos residenciales de calidad..."></textarea></div>
+          <div class="fgrid2">
+            <div class="fg"><label class="fl">Botón primario (texto)</label><input class="fi" id="hBtn1" placeholder="Ver proyectos"/></div>
+            <div class="fg"><label class="fl">Botón secundario (texto)</label><input class="fi" id="hBtn2" placeholder="Hablar con un asesor"/></div>
           </div>
           <div class="form-actions">
-            <button class="save-btn" onclick="saveContact()">Guardar cambios</button>
-            <span class="form-msg" id="contactMsg"></span>
+            <button class="save-btn" onclick="saveSection('hero')">Guardar cambios</button>
+            <span class="fmsg" id="heroMsg"></span>
           </div>
+        </div>
+      </div>
+
+      <!-- ══════════════ EDIT NOSOTROS ══════════════ -->
+      <div class="panel" id="panel-editNosotros">
+        <p class="panel-title">Sección <span style="color:var(--red)">Nosotros</span></p>
+        <p class="panel-sub">Texto sobre la empresa y el proceso de trabajo.</p>
+        <div class="form-card">
+          <p class="form-card-title">Texto de la <span>empresa</span></p>
+          <div class="fg"><label class="fl">Párrafo 1</label><textarea class="fta" id="nP1"></textarea></div>
+          <div class="fg"><label class="fl">Párrafo 2</label><textarea class="fta" id="nP2"></textarea></div>
+          <div class="fg"><label class="fl">Párrafo 3</label><textarea class="fta" id="nP3"></textarea></div>
+          <div class="fg"><label class="fl">Chips del equipo (separados por coma)</label><input class="fi" id="nChips" placeholder="Arquitecto, Ingeniero, Contador..."/></div>
+          <div class="form-actions"><button class="save-btn" onclick="saveSection('nosotros')">Guardar</button><span class="fmsg" id="nosotrosMsg"></span></div>
+        </div>
+        <div class="form-card">
+          <p class="form-card-title">Proceso de <span>trabajo</span></p>
+          <div class="fgrid2">
+            <div class="fg"><label class="fl">Paso 1 — Título</label><input class="fi" id="paso1t" placeholder="Pre-Desarrollo"/></div>
+            <div class="fg"><label class="fl">Paso 1 — Descripción</label><textarea class="fta" id="paso1d"></textarea></div>
+          </div>
+          <div class="fgrid2">
+            <div class="fg"><label class="fl">Paso 2 — Título</label><input class="fi" id="paso2t" placeholder="Construcción"/></div>
+            <div class="fg"><label class="fl">Paso 2 — Descripción</label><textarea class="fta" id="paso2d"></textarea></div>
+          </div>
+          <div class="fgrid2">
+            <div class="fg"><label class="fl">Paso 3 — Título</label><input class="fi" id="paso3t" placeholder="Post-Desarrollo"/></div>
+            <div class="fg"><label class="fl">Paso 3 — Descripción</label><textarea class="fta" id="paso3d"></textarea></div>
+          </div>
+          <div class="form-actions"><button class="save-btn" onclick="saveSection('proceso')">Guardar</button><span class="fmsg" id="procesoMsg"></span></div>
+        </div>
+      </div>
+
+      <!-- ══════════════ EDIT TESTIMONIOS ══════════════ -->
+      <div class="panel" id="panel-editTestimonios">
+        <p class="panel-title">Sección <span style="color:var(--red)">Testimonios</span></p>
+        <p class="panel-sub">Los tres testimonios que aparecen en el sitio.</p>
+        <div class="form-card">
+          <p class="form-card-title">Testimonio <span>1</span></p>
+          <div class="fg"><label class="fl">Texto</label><textarea class="fta" id="test1t"></textarea></div>
+          <div class="fg"><label class="fl">Autor</label><input class="fi" id="test1a" placeholder="— Ernesto O."/></div>
+        </div>
+        <div class="form-card">
+          <p class="form-card-title">Testimonio <span>2</span></p>
+          <div class="fg"><label class="fl">Texto</label><textarea class="fta" id="test2t"></textarea></div>
+          <div class="fg"><label class="fl">Autor</label><input class="fi" id="test2a" placeholder="— Alejandro A."/></div>
+        </div>
+        <div class="form-card">
+          <p class="form-card-title">Testimonio <span>3</span></p>
+          <div class="fg"><label class="fl">Texto</label><textarea class="fta" id="test3t"></textarea></div>
+          <div class="fg"><label class="fl">Autor</label><input class="fi" id="test3a" placeholder="— Daniel S."/></div>
+        </div>
+        <div class="form-actions"><button class="save-btn" onclick="saveSection('testimonios')">Guardar los 3 testimonios</button><span class="fmsg" id="testimMsg"></span></div>
+      </div>
+
+      <!-- ══════════════ EDIT CONTACTO INFO ══════════════ -->
+      <div class="panel" id="panel-editContactoInfo">
+        <p class="panel-title">Contacto e <span style="color:var(--red)">Info</span></p>
+        <p class="panel-sub">Información de contacto visible en el sitio y footer.</p>
+        <div class="form-card">
+          <p class="form-card-title">Datos de <span>contacto</span></p>
+          <div class="fgrid2">
+            <div class="fg"><label class="fl">Teléfono principal</label><input class="fi" id="cTel1" placeholder="011 4581-7706"/></div>
+            <div class="fg"><label class="fl">Teléfono secundario</label><input class="fi" id="cTel2" placeholder="011 458-8922"/></div>
+          </div>
+          <div class="fgrid2">
+            <div class="fg"><label class="fl">Email</label><input class="fi" id="cEmail" type="email" placeholder="info@agfdesarrollos.com"/></div>
+            <div class="fg"><label class="fl">WhatsApp (con código país, sin +)</label><input class="fi" id="cWa" placeholder="5491145817706"/></div>
+          </div>
+          <div class="fg"><label class="fl">Dirección</label><input class="fi" id="cDir" placeholder="Batalla del Pari 1053, CABA, Argentina"/></div>
+          <div class="fgrid2">
+            <div class="fg"><label class="fl">URL Instagram</label><input class="fi" id="cIg" placeholder="https://instagram.com/agfdesarrollos"/></div>
+            <div class="fg"><label class="fl">URL Facebook</label><input class="fi" id="cFb" placeholder="https://facebook.com/agfdesarrollos"/></div>
+          </div>
+          <div class="form-actions"><button class="save-btn" onclick="saveSection('contactoInfo')">Guardar</button><span class="fmsg" id="contactInfoMsg"></span></div>
+        </div>
+        <div class="form-card">
+          <p class="form-card-title">Textos de la <span>sección contacto</span></p>
+          <div class="fg"><label class="fl">Título sección (ej: Queremos conocerte)</label><input class="fi" id="cSecTitle" placeholder="Queremos conocerte"/></div>
+          <div class="fg"><label class="fl">Subtítulo / descripción</label><textarea class="fta" id="cSecDesc" placeholder="Dejanos un mensaje..."></textarea></div>
+          <div class="form-actions"><button class="save-btn" onclick="saveSection('contactoTextos')">Guardar</button><span class="fmsg" id="contactTexMsg"></span></div>
         </div>
       </div>
 
@@ -376,318 +472,448 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
-import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc, query, orderBy, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc, query, orderBy, setDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-storage.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyA6g3Zyj8J5mQCxt3vd-LcmlmugkpurnMo",
-  authDomain: "agf-desarrollos.firebaseapp.com",
-  projectId: "agf-desarrollos",
-  storageBucket: "agf-desarrollos.firebasestorage.app",
-  messagingSenderId: "589200838716",
-  appId: "1:589200838716:web:2a5f01ca043d29b66bf339"
+  apiKey:"AIzaSyA6g3Zyj8J5mQCxt3vd-LcmlmugkpurnMo",
+  authDomain:"agf-desarrollos.firebaseapp.com",
+  projectId:"agf-desarrollos",
+  storageBucket:"agf-desarrollos.firebasestorage.app",
+  messagingSenderId:"589200838716",
+  appId:"1:589200838716:web:2a5f01ca043d29b66bf339"
 };
 
 const fbApp = initializeApp(firebaseConfig);
 const auth = getAuth(fbApp);
 const db = getFirestore(fbApp);
+const storage = getStorage(fbApp);
 
 let projects = [];
+let contacts = [];
+let contactFilter = 'all';
+// imagenesActuales: array de {url, storagePath} para el proyecto en edición
+let imagenesActuales = [];
 
-// --- AUTH ---
+// ═══════════════════ AUTH ═══════════════════
 window.doLogin = async function() {
   const email = document.getElementById('loginEmail').value.trim();
   const pwd = document.getElementById('loginPwd').value;
   const btn = document.getElementById('loginBtn');
   const err = document.getElementById('loginErr');
-  if (!email || !pwd) { err.textContent = 'Completá email y contraseña.'; return; }
-  btn.textContent = 'Ingresando...'; btn.disabled = true; err.textContent = '';
-  try {
-    await signInWithEmailAndPassword(auth, email, pwd);
-  } catch(e) {
-    let msg = 'Credenciales incorrectas.';
-    if (e.code === 'auth/too-many-requests') msg = 'Demasiados intentos. Intentá más tarde.';
-    err.textContent = msg;
-    btn.textContent = 'Ingresar al panel'; btn.disabled = false;
+  if (!email||!pwd){err.textContent='Completá email y contraseña.';return;}
+  btn.textContent='Ingresando...';btn.disabled=true;err.textContent='';
+  try{ await signInWithEmailAndPassword(auth,email,pwd); }
+  catch(e){
+    err.textContent = e.code==='auth/too-many-requests'?'Demasiados intentos.':'Credenciales incorrectas.';
+    btn.textContent='Ingresar al panel';btn.disabled=false;
   }
 };
-
-window.doLogout = async function() {
-  await signOut(auth);
-};
+window.doLogout = async()=>{ await signOut(auth); };
 
 onAuthStateChanged(auth, user => {
-  if (user) {
-    document.getElementById('loginWrap').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    document.getElementById('userBadge').textContent = user.email;
+  if(user){
+    document.getElementById('loginWrap').style.display='none';
+    document.getElementById('app').style.display='block';
+    document.getElementById('userBadge').textContent=user.email;
     loadAll();
   } else {
-    document.getElementById('loginWrap').style.display = 'flex';
-    document.getElementById('app').style.display = 'none';
+    document.getElementById('loginWrap').style.display='flex';
+    document.getElementById('app').style.display='none';
   }
 });
 
-// --- LOAD ---
-async function loadAll() {
-  await loadProjects();
-  await loadContact();
+// ═══════════════════ LOAD ALL ═══════════════════
+async function loadAll(){
+  await Promise.all([loadProjects(), loadContacts(), loadAllSections()]);
 }
 
-async function loadProjects() {
-  try {
-    const q = query(collection(db, "proyectos"), orderBy("orden","asc"));
-    const snap = await getDocs(q);
-    projects = snap.docs.map(d => ({id:d.id,...d.data()}));
-    renderTable();
-    updateDashboard();
-    // Mostrar/ocultar card de carga inicial
-    const seedCard = document.getElementById('seedCard');
-    if (seedCard) seedCard.style.display = projects.length === 0 ? 'block' : 'none';
-  } catch(e) { showToast('Error cargando proyectos: '+e.message); }
+// ═══════════════════ PROYECTOS ═══════════════════
+async function loadProjects(){
+  try{
+    const q=query(collection(db,"proyectos"),orderBy("orden","asc"));
+    const snap=await getDocs(q);
+    projects=snap.docs.map(d=>({id:d.id,...d.data()}));
+    renderTable(); updateDashboard();
+    const seedCard=document.getElementById('seedCard');
+    if(seedCard) seedCard.style.display=projects.length===0?'block':'none';
+  }catch(e){showToast('Error cargando proyectos: '+e.message);}
 }
 
-const SEED_DATA = [
-  {orden:1,nombre:"Humahuaca 4628",barrio:"Almagro",estado:"En Construcción",fecha:"En obra",pisos:"7",unidades:"21",superficie:"Desde 35m²",
-   desc:"Ubicado entre Av. Estado de Israel y Lambaré, en el corazón de Almagro. Edificio de 7 pisos, 3 departamentos por piso con excelentes terminaciones. SUM con patio, 2 cocheras, bicicletero y bauleras.",
-   caract:"SUM en PB con patio\nBauleras y Bicicleteros en subsuelo\n2 cocheras en PB\nTermotanques eléctricos individuales\nPre-instalación Aire Ac en todos los ambientes\nPlacards completos en melamina 18mm\nMuebles de cocina en melamina con vidrio y aluminio\nArtefactos y grifería de 1ª marcas\nPisos living Porcelanato · Dormitorios SPC\nArtefactos cocina eléctricos (horno y anafe)\nVentanas línea Módena\n1 ascensor automático de acero con espejo",
-   img1:"https://static.wixstatic.com/media/1de452_ce498208050e4765951c5a414013425d~mv2.jpg/v1/fit/w_1440,h_735,q_90,enc_avif,quality_auto/1de452_ce498208050e4765951c5a414013425d~mv2.jpg",
-   img2:"https://static.wixstatic.com/media/1de452_a0ae189cfa3747d0b0240b3278fcdb3d~mv2.jpg/v1/fit/w_960,h_607,q_90,enc_avif,quality_auto/1de452_a0ae189cfa3747d0b0240b3278fcdb3d~mv2.jpg",
-   img3:"https://static.wixstatic.com/media/1de452_a2f32bdcea774cf6a07f61264384865d~mv2.png/v1/fit/w_480,h_655,q_90,enc_avif,quality_auto/1de452_a2f32bdcea774cf6a07f61264384865d~mv2.png",
-   mapsQuery:"Humahuaca+4628+Almagro+Buenos+Aires"},
-
-  {orden:2,nombre:"Nicolás Repeto 1506",barrio:"Villa Crespo",estado:"En Construcción",fecha:"En obra",pisos:"7",unidades:"21",superficie:"Desde 35m²",
-   desc:"Entre Galicia y Tres Arroyos en Villa Crespo. Venta de pozo. Edificio de 7 pisos, 3 deptos por piso, ascensor, local comercial en PB, bicicletero y bauleras.",
-   caract:"Local comercial en PB\nTermotanques eléctricos individuales\nPre-instalación Aire Ac en todos los ambientes\nPlacards completos en melamina 18mm\nMuebles de cocina en melamina con vidrio y aluminio\nArtefactos y grifería de 1ª marcas\nPisos living Porcelanato · Dormitorios SPC\nArtefactos cocina eléctricos (horno y anafe)\nVentanas línea Módena\n1 ascensor automático de acero con espejo",
-   img1:"https://static.wixstatic.com/media/1de452_e3e7e5572d7f4ba0b3105b666fc1fa8b~mv2.jpg/v1/fit/w_1032,h_527,q_90,enc_avif,quality_auto/1de452_e3e7e5572d7f4ba0b3105b666fc1fa8b~mv2.jpg",
-   img2:"https://static.wixstatic.com/media/1de452_8bce47c65cfd44f5b392ecacec2f42f8~mv2.jpg/v1/fit/w_480,h_745,q_90,enc_avif,quality_auto/1de452_8bce47c65cfd44f5b392ecacec2f42f8~mv2.jpg",
-   img3:"https://static.wixstatic.com/media/1de452_35edea14416049cf8fe3927ed1008078~mv2.jpg/v1/fit/w_1440,h_798,q_90,enc_avif,quality_auto/1de452_35edea14416049cf8fe3927ed1008078~mv2.jpg",
-   mapsQuery:"Nicolas+Repeto+1506+Villa+Crespo+Buenos+Aires"},
-
-  {orden:3,nombre:"Bogado 4461",barrio:"Almagro",estado:"En Construcción",fecha:"En obra",pisos:"7",unidades:"28",superficie:"Desde 30m²",
-   desc:"Entre Yatay y Pringles, Almagro. Sobre lote 8,66 x 19,15. Edificio de 7 pisos, 4 departamentos por piso, ascensor, 2 cocheras, bicicletero y bauleras.",
-   caract:"Acceso en PB con bauleras, bicicleteros y cocheras\nTermotanques eléctricos individuales\nPre-instalación Aire Ac en todos los ambientes\nPlacards completos en melamina 18mm\nMuebles de cocina en melamina con vidrio y aluminio\nArtefactos y grifería de 1ª marcas\nPisos living Porcelanato · Dormitorios SPC\nArtefactos cocina eléctricos (horno y anafe)\nVentanas línea Módena\n1 ascensor automático de acero con espejo",
-   img1:"https://static.wixstatic.com/media/1de452_632152097b4041518c4cb8cad9251bad~mv2.jpg/v1/fit/w_1440,h_735,q_90,enc_avif,quality_auto/1de452_632152097b4041518c4cb8cad9251bad~mv2.jpg",
-   img2:"https://static.wixstatic.com/media/1de452_7034a253ce064dd0aaca3dc42235293d~mv2.jpg/v1/fit/w_960,h_1323,q_90,enc_avif,quality_auto/1de452_7034a253ce064dd0aaca3dc42235293d~mv2.jpg",
-   img3:"",
-   mapsQuery:"Bogado+4461+Almagro+Buenos+Aires"},
-
-  {orden:4,nombre:"Estado de Israel 4334",barrio:"Palermo",estado:"Terminado",fecha:"Entregado Marzo 2024",pisos:"14",unidades:"50+",superficie:"1 a 4 ambientes",
-   desc:"Entre Pringles y Yatay. Importante edificio de 14 pisos distribuidos en 1, 2, 3 y 4 ambientes sobre una de las arterias principales de CABA.",
-   caract:"Cocheras individuales cubiertas y semicubiertas opcionales\nEspacio para bicicletas\nHall de acceso con finas terminaciones\nEstacionamiento de cortesía\nParrilla al carbón\nToilette para uso común\nFuturo SUM en vivienda de encargado\nDucha exterior en terraza\nPiscina con deck de madera perimetral\nSolárium",
-   img1:"https://static.wixstatic.com/media/1de452_cdaa8021c10f4bc38ce2f4d3e2a639bf~mv2.jpg/v1/fit/w_326,h_500,q_90,enc_avif,quality_auto/1de452_cdaa8021c10f4bc38ce2f4d3e2a639bf~mv2.jpg",
-   img2:"https://static.wixstatic.com/media/1de452_1781ef305bf74a59a9d70bc56cc3b7c3~mv2.jpg/v1/fit/w_1440,h_914,q_90,enc_avif,quality_auto/1de452_1781ef305bf74a59a9d70bc56cc3b7c3~mv2.jpg",
-   img3:"https://static.wixstatic.com/media/1de452_643820c7135d49eba75f637c58655ea5~mv2.jpg/v1/fit/w_1440,h_914,q_90,enc_avif,quality_auto/1de452_643820c7135d49eba75f637c58655ea5~mv2.jpg",
-   mapsQuery:"Av.+Estado+de+Israel+4334+Palermo+Buenos+Aires"},
-
-  {orden:5,nombre:"Avenida Gaona 2466",barrio:"Villa del Parque",estado:"Terminado",fecha:"Entregado Marzo 2020",pisos:"14",unidades:"50+",superficie:"1 a 4 ambientes",
-   desc:"Gaona Park. Av. Gaona 2466 entre Terrero y Manuel Ricardo Trelles. 14 pisos con departamentos de 1 a 4 ambientes en una sola planta.",
-   caract:"Cocheras cubiertas y semicubiertas opcionales\nEspacio para bicicletas\nSUM con expansión al aire libre\nSolárium\nParrilla iluminada con mesada de preparación\nSector de pileta\nUbicado sobre arteria principal de CABA",
-   img1:"https://static.wixstatic.com/media/1de452_33f7d4845087414cbac77f2de2ccea84~mv2.jpg/v1/fit/w_1440,h_735,q_90,enc_avif,quality_auto/1de452_33f7d4845087414cbac77f2de2ccea84~mv2.jpg",
-   img2:"https://static.wixstatic.com/media/1de452_a470aa5c309a41409ea8e160791a75d4~mv2.jpg/v1/fit/w_960,h_718,q_90,enc_avif,quality_auto/1de452_a470aa5c309a41409ea8e160791a75d4~mv2.jpg",
-   img3:"https://static.wixstatic.com/media/1de452_0d2602df6f6c4e9aba0582dd650c5214~mv2.jpg/v1/fit/w_1400,h_789,q_90,enc_avif,quality_auto/1de452_0d2602df6f6c4e9aba0582dd650c5214~mv2.jpg",
-   mapsQuery:"Av.+Gaona+2466+Villa+del+Parque+Buenos+Aires"}
-];
-
-window.seedProjects = async function() {
-  const btn = document.getElementById('seedBtn');
-  const msg = document.getElementById('seedMsg');
-  btn.disabled = true;
-  let i = 0;
-  try {
-    for (const p of SEED_DATA) {
-      i++;
-      btn.textContent = `Cargando ${i}/5...`;
-      msg.textContent = `Guardando: ${p.nombre}`;
-      await addDoc(collection(db, "proyectos"), p);
-    }
-    msg.textContent = '✓ 5 proyectos cargados correctamente.';
-    msg.className = 'form-msg ok';
-    btn.textContent = '✓ Listo';
-    showToast('Proyectos cargados. Ya aparecen en el sitio.', true);
-    await loadProjects();
-    setTimeout(()=>{ document.getElementById('seedCard').style.display='none'; }, 3000);
-  } catch(e) {
-    msg.textContent = 'Error: '+e.message+'. Verificá las reglas de Firestore.';
-    btn.textContent = 'Reintentar'; btn.disabled = false;
-  }
-};
-
-function renderTable() {
-  const tbody = document.getElementById('projTableBody');
-  if (!projects.length) { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--gray3)">No hay proyectos. Creá el primero.</td></tr>'; return; }
-  tbody.innerHTML = projects.map(p => `
-    <tr>
-      <td><img class="proj-thumb" src="${p.img1||''}" onerror="this.style.display='none'" alt="${p.nombre}"/></td>
+function renderTable(){
+  const tbody=document.getElementById('projTableBody');
+  if(!projects.length){tbody.innerHTML='<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--gray3)">No hay proyectos.</td></tr>';return;}
+  tbody.innerHTML=projects.map(p=>{
+    const imgs=p.imagenes||[];
+    const thumb=imgs[0]||(p.img1||'');
+    return `<tr>
+      <td>${thumb?`<img class="proj-thumb" src="${thumb}" onerror="this.style.display='none'" alt="${p.nombre}"/>`:'—'}</td>
       <td class="proj-name-cell">${p.nombre}</td>
       <td>${p.barrio||'—'}</td>
       <td><span class="badge ${p.estado==='Terminado'?'badge-gray':'badge-red'}">${p.estado}</span></td>
-      <td>${p.pisos||'—'}</td>
-      <td>${p.unidades||'—'}</td>
+      <td style="color:var(--gray4)">${imgs.length||'—'} foto${imgs.length!==1?'s':''}</td>
       <td>
-        <button class="action-btn" onclick="editProject('${p.id}')">Editar</button>
-        <button class="action-btn danger" onclick="confirmDelete('${p.id}','${p.nombre.replace(/'/g,"\\'")}')">Eliminar</button>
+        <button class="abtn" onclick="editProject('${p.id}')">Editar</button>
+        <button class="abtn danger" onclick="confirmDelete('${p.id}','${p.nombre.replace(/'/g,"\\'")}')">Eliminar</button>
       </td>
-    </tr>`).join('');
+    </tr>`;
+  }).join('');
 }
 
-function updateDashboard() {
-  document.getElementById('dashTotal').textContent = projects.length;
-  document.getElementById('dashEn').textContent = projects.filter(p=>p.estado==='En Construcción').length;
-  document.getElementById('dashTerm').textContent = projects.filter(p=>p.estado==='Terminado').length;
+function updateDashboard(){
+  document.getElementById('dashTotal').textContent=projects.length;
+  document.getElementById('dashEn').textContent=projects.filter(p=>p.estado==='En Construcción').length;
+  document.getElementById('dashTerm').textContent=projects.filter(p=>p.estado==='Terminado').length;
+  document.getElementById('dashContacts').textContent=contacts.length;
 }
 
-// --- SAVE PROJECT ---
-window.saveProject = async function() {
-  const docId = document.getElementById('editDocId').value;
-  const data = {
-    nombre: document.getElementById('pNombre').value.trim(),
-    barrio: document.getElementById('pBarrio').value.trim(),
-    estado: document.getElementById('pEstado').value,
-    fecha: document.getElementById('pFecha').value.trim(),
-    pisos: document.getElementById('pPisos').value.trim(),
-    unidades: document.getElementById('pUnidades').value.trim(),
-    superficie: document.getElementById('pSup').value.trim(),
-    orden: parseInt(document.getElementById('pOrden').value)||99,
-    desc: document.getElementById('pDesc').value.trim(),
-    caract: document.getElementById('pCaracts').value.trim(),
-    img1: document.getElementById('pImg1').value.trim(),
-    img2: document.getElementById('pImg2').value.trim(),
-    img3: document.getElementById('pImg3').value.trim(),
-    mapsQuery: document.getElementById('pMaps').value.trim(),
-  };
-  if (!data.nombre || !data.barrio) { document.getElementById('formMsg').textContent = 'Nombre y barrio son requeridos.'; return; }
-  const btn = document.querySelector('.save-btn');
-  btn.textContent = 'Guardando...'; btn.disabled = true;
-  try {
-    if (docId) {
-      await updateDoc(doc(db,"proyectos",docId), data);
-      showToast('Proyecto actualizado correctamente', true);
-    } else {
-      await addDoc(collection(db,"proyectos"), data);
-      showToast('Proyecto creado correctamente', true);
-    }
-    clearForm();
-    await loadProjects();
-    showPanel('listaProyectos', null);
-  } catch(e) {
-    document.getElementById('formMsg').textContent = 'Error: '+e.message;
+// ═══════════════════ GALERÍA ═══════════════════
+window.handleFiles = async function(files){
+  const prog=document.getElementById('uploadProgress');
+  const bar=document.getElementById('uploadBar');
+  prog.style.display='block';
+  for(let i=0;i<files.length;i++){
+    const file=files[i];
+    if(file.size>5*1024*1024){showToast('Imagen demasiado grande (máx 5MB): '+file.name);continue;}
+    bar.style.width=Math.round((i/files.length)*100)+'%';
+    // Preview inmediato antes de subir
+    const localUrl=URL.createObjectURL(file);
+    imagenesActuales.push({url:localUrl,storagePath:null,file:file,uploading:true});
+    renderGalleryPreviews();
   }
-  btn.textContent = 'Guardar proyecto'; btn.disabled = false;
+  prog.style.display='none';
+  bar.style.width='0%';
 };
 
-// --- EDIT ---
-window.editProject = function(id) {
-  const p = projects.find(x=>x.id===id); if(!p) return;
-  document.getElementById('editDocId').value = p.id;
-  document.getElementById('formPanelTitle').textContent = 'Editar Proyecto';
-  document.getElementById('pNombre').value = p.nombre||'';
-  document.getElementById('pBarrio').value = p.barrio||'';
-  document.getElementById('pEstado').value = p.estado||'En Construcción';
-  document.getElementById('pFecha').value = p.fecha||'';
-  document.getElementById('pPisos').value = p.pisos||'';
-  document.getElementById('pUnidades').value = p.unidades||'';
-  document.getElementById('pSup').value = p.superficie||'';
-  document.getElementById('pOrden').value = p.orden||'';
-  document.getElementById('pDesc').value = p.desc||'';
-  document.getElementById('pCaracts').value = p.caract||'';
-  document.getElementById('pImg1').value = p.img1||''; previewImg({value:p.img1||''},'prev1');
-  document.getElementById('pImg2').value = p.img2||''; previewImg({value:p.img2||''},'prev2');
-  document.getElementById('pImg3').value = p.img3||''; previewImg({value:p.img3||''},'prev3');
-  document.getElementById('pMaps').value = p.mapsQuery||'';
-  showPanel('nuevoProyecto', null);
+function renderGalleryPreviews(){
+  const cont=document.getElementById('galleryPreviews');
+  const count=document.getElementById('galleryCount');
+  if(!imagenesActuales.length){cont.innerHTML='';count.textContent='';return;}
+  cont.innerHTML=imagenesActuales.map((img,i)=>`
+    <div class="gallery-item">
+      <img src="${img.url}" alt="Imagen ${i+1}" loading="lazy"/>
+      ${i===0?'<span class="gallery-item-main">Portada</span>':''}
+      ${img.uploading?'<span style="position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;font-size:.65rem;color:white">Pendiente</span>':''}
+      <button class="gallery-item-del" onclick="removeImage(${i})">✕</button>
+    </div>`).join('');
+  count.textContent=`${imagenesActuales.length} imagen${imagenesActuales.length!==1?'es':''} · La primera es la portada`;
+}
+
+window.removeImage = function(i){
+  imagenesActuales.splice(i,1);
+  renderGalleryPreviews();
+};
+
+async function uploadPendingImages(proyectoId){
+  const bar=document.getElementById('uploadBar');
+  const prog=document.getElementById('uploadProgress');
+  const pending=imagenesActuales.filter(img=>img.uploading&&img.file);
+  if(!pending.length) return;
+  prog.style.display='block';
+  for(let i=0;i<pending.length;i++){
+    const img=pending[i];
+    bar.style.width=Math.round((i/pending.length)*100)+'%';
+    try{
+      const path=`proyectos/${proyectoId}/${Date.now()}_${img.file.name}`;
+      const storRef=ref(storage,path);
+      await uploadBytesResumable(storRef,img.file);
+      const url=await getDownloadURL(storRef);
+      // Reemplazar en imagenesActuales
+      const idx=imagenesActuales.findIndex(x=>x===img);
+      if(idx>-1){ imagenesActuales[idx]={url,storagePath:path,uploading:false,file:null}; }
+    }catch(e){showToast('Error subiendo imagen: '+e.message);}
+  }
+  bar.style.width='100%';
+  setTimeout(()=>{prog.style.display='none';bar.style.width='0%';},600);
+}
+
+// ═══════════════════ SAVE PROJECT ═══════════════════
+window.saveProject = async function(){
+  const docId=document.getElementById('editDocId').value;
+  if(!document.getElementById('pNombre').value.trim()||!document.getElementById('pBarrio').value.trim()){
+    document.getElementById('formMsg').textContent='Nombre y barrio son requeridos.';return;
+  }
+  const btn=document.querySelector('#panel-nuevoProyecto .save-btn');
+  btn.textContent='Guardando...';btn.disabled=true;
+  const finalId=docId||('proj_'+Date.now());
+  // Subir imágenes pendientes
+  await uploadPendingImages(finalId);
+  const urlsArray=imagenesActuales.filter(i=>!i.uploading).map(i=>i.url);
+  const data={
+    nombre:document.getElementById('pNombre').value.trim(),
+    barrio:document.getElementById('pBarrio').value.trim(),
+    estado:document.getElementById('pEstado').value,
+    fecha:document.getElementById('pFecha').value.trim(),
+    pisos:document.getElementById('pPisos').value.trim(),
+    unidades:document.getElementById('pUnidades').value.trim(),
+    superficie:document.getElementById('pSup').value.trim(),
+    orden:parseInt(document.getElementById('pOrden').value)||99,
+    desc:document.getElementById('pDesc').value.trim(),
+    caract:document.getElementById('pCaracts').value.trim(),
+    mapsQuery:document.getElementById('pMaps').value.trim(),
+    imagenes:urlsArray,
+    // compatibilidad con versión anterior
+    img1:urlsArray[0]||'',
+    img2:urlsArray[1]||'',
+    img3:urlsArray[2]||'',
+  };
+  try{
+    if(docId){ await updateDoc(doc(db,"proyectos",docId),data); showToast('Proyecto actualizado ✓',true); }
+    else{ await setDoc(doc(db,"proyectos",finalId),data); showToast('Proyecto creado ✓',true); }
+    clearForm(); await loadProjects(); showPanel('listaProyectos',null);
+  }catch(e){ document.getElementById('formMsg').textContent='Error: '+e.message; }
+  btn.textContent='Guardar proyecto';btn.disabled=false;
+};
+
+window.editProject = function(id){
+  const p=projects.find(x=>x.id===id);if(!p)return;
+  document.getElementById('editDocId').value=p.id;
+  document.getElementById('formPanelTitle').textContent='Editar Proyecto';
+  document.getElementById('pNombre').value=p.nombre||'';
+  document.getElementById('pBarrio').value=p.barrio||'';
+  document.getElementById('pEstado').value=p.estado||'En Construcción';
+  document.getElementById('pFecha').value=p.fecha||'';
+  document.getElementById('pPisos').value=p.pisos||'';
+  document.getElementById('pUnidades').value=p.unidades||'';
+  document.getElementById('pSup').value=p.superficie||'';
+  document.getElementById('pOrden').value=p.orden||'';
+  document.getElementById('pDesc').value=p.desc||'';
+  document.getElementById('pCaracts').value=p.caract||'';
+  document.getElementById('pMaps').value=p.mapsQuery||'';
+  // Cargar imágenes existentes
+  const imgs=p.imagenes||(p.img1?[p.img1,p.img2,p.img3].filter(Boolean):[]);
+  imagenesActuales=imgs.map(url=>({url,storagePath:null,uploading:false,file:null}));
+  renderGalleryPreviews();
+  showPanel('nuevoProyecto',null);
   window.scrollTo(0,0);
 };
 
-// --- DELETE ---
-let pendingDeleteId = null;
-window.confirmDelete = function(id, nombre) {
-  pendingDeleteId = id;
-  document.getElementById('confirmMsg').textContent = `¿Eliminar el proyecto "${nombre}"? Esta acción no se puede deshacer.`;
+window.clearForm = function(){
+  document.getElementById('editDocId').value='';
+  document.getElementById('formPanelTitle').textContent='Nuevo Proyecto';
+  ['pNombre','pBarrio','pFecha','pPisos','pUnidades','pSup','pOrden','pDesc','pCaracts','pMaps'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.value='';
+  });
+  document.getElementById('pEstado').value='En Construcción';
+  imagenesActuales=[];
+  renderGalleryPreviews();
+  document.getElementById('formMsg').textContent='';
+};
+
+let pendingDeleteId=null;
+window.confirmDelete=function(id,nombre){
+  pendingDeleteId=id;
+  document.getElementById('confirmMsg').textContent=`¿Eliminar "${nombre}"? No se puede deshacer.`;
   document.getElementById('confirmOverlay').classList.add('open');
-  document.getElementById('confirmOk').onclick = async () => {
+  document.getElementById('confirmOk').onclick=async()=>{
     closeConfirm();
-    try {
-      await deleteDoc(doc(db,"proyectos",id));
-      showToast('Proyecto eliminado', true);
-      await loadProjects();
-    } catch(e) { showToast('Error al eliminar: '+e.message); }
+    try{ await deleteDoc(doc(db,"proyectos",id)); showToast('Eliminado ✓',true); await loadProjects(); }
+    catch(e){showToast('Error: '+e.message);}
   };
 };
-window.closeConfirm = function() { document.getElementById('confirmOverlay').classList.remove('open'); };
+window.closeConfirm=()=>document.getElementById('confirmOverlay').classList.remove('open');
 
-// --- CONTACT ---
-async function loadContact() {
-  try {
-    const d = await getDoc(doc(db,"config","contacto"));
-    if (d.exists()) {
-      const c = d.data();
-      document.getElementById('cTel1').value = c.tel1||'';
-      document.getElementById('cTel2').value = c.tel2||'';
-      document.getElementById('cEmail').value = c.email||'';
-      document.getElementById('cWa').value = c.whatsapp||'';
-      document.getElementById('cDir').value = c.direccion||'';
-      document.getElementById('cIg').value = c.instagram||'';
-      document.getElementById('cFb').value = c.facebook||'';
+// ═══════════════════ SEED ═══════════════════
+const SEED_DATA=[
+  {orden:1,nombre:"Humahuaca 4628",barrio:"Almagro",estado:"En Construcción",fecha:"En obra",pisos:"7",unidades:"21",superficie:"Desde 35m²",desc:"Ubicado entre Av. Estado de Israel y Lambaré, en el corazón de Almagro. Edificio de 7 pisos, 3 departamentos por piso con excelentes terminaciones. SUM con patio, 2 cocheras, bicicletero y bauleras.",caract:"SUM en PB con patio\nBauleras y Bicicleteros en subsuelo\n2 cocheras en PB\nTermotanques eléctricos individuales\nPre-instalación Aire Ac en todos los ambientes\nPlacards completos en melamina 18mm\nMuebles de cocina en melamina con vidrio y aluminio\nArtefactos y grifería de 1ª marcas\nPisos living Porcelanato · Dormitorios SPC\nArtefactos cocina eléctricos (horno y anafe)\nVentanas línea Módena\n1 ascensor automático de acero con espejo",imagenes:["https://static.wixstatic.com/media/1de452_ce498208050e4765951c5a414013425d~mv2.jpg/v1/fit/w_1440,h_735,q_90,enc_avif,quality_auto/1de452_ce498208050e4765951c5a414013425d~mv2.jpg","https://static.wixstatic.com/media/1de452_a0ae189cfa3747d0b0240b3278fcdb3d~mv2.jpg/v1/fit/w_960,h_607,q_90,enc_avif,quality_auto/1de452_a0ae189cfa3747d0b0240b3278fcdb3d~mv2.jpg","https://static.wixstatic.com/media/1de452_a2f32bdcea774cf6a07f61264384865d~mv2.png/v1/fit/w_480,h_655,q_90,enc_avif,quality_auto/1de452_a2f32bdcea774cf6a07f61264384865d~mv2.png"],img1:"https://static.wixstatic.com/media/1de452_ce498208050e4765951c5a414013425d~mv2.jpg/v1/fit/w_1440,h_735,q_90,enc_avif,quality_auto/1de452_ce498208050e4765951c5a414013425d~mv2.jpg",mapsQuery:"Humahuaca+4628+Almagro+Buenos+Aires"},
+  {orden:2,nombre:"Nicolás Repeto 1506",barrio:"Villa Crespo",estado:"En Construcción",fecha:"En obra",pisos:"7",unidades:"21",superficie:"Desde 35m²",desc:"Entre Galicia y Tres Arroyos en Villa Crespo. Venta de pozo. Edificio de 7 pisos, 3 deptos por piso, ascensor, local comercial en PB, bicicletero y bauleras.",caract:"Local comercial en PB\nTermotanques eléctricos individuales\nPre-instalación Aire Ac en todos los ambientes\nPlacards completos en melamina 18mm\nMuebles de cocina en melamina con vidrio y aluminio\nArtefactos y grifería de 1ª marcas\nPisos living Porcelanato · Dormitorios SPC\nArtefactos cocina eléctricos (horno y anafe)\nVentanas línea Módena\n1 ascensor automático de acero con espejo",imagenes:["https://static.wixstatic.com/media/1de452_e3e7e5572d7f4ba0b3105b666fc1fa8b~mv2.jpg/v1/fit/w_1032,h_527,q_90,enc_avif,quality_auto/1de452_e3e7e5572d7f4ba0b3105b666fc1fa8b~mv2.jpg","https://static.wixstatic.com/media/1de452_8bce47c65cfd44f5b392ecacec2f42f8~mv2.jpg/v1/fit/w_480,h_745,q_90,enc_avif,quality_auto/1de452_8bce47c65cfd44f5b392ecacec2f42f8~mv2.jpg","https://static.wixstatic.com/media/1de452_35edea14416049cf8fe3927ed1008078~mv2.jpg/v1/fit/w_1440,h_798,q_90,enc_avif,quality_auto/1de452_35edea14416049cf8fe3927ed1008078~mv2.jpg"],img1:"https://static.wixstatic.com/media/1de452_e3e7e5572d7f4ba0b3105b666fc1fa8b~mv2.jpg/v1/fit/w_1032,h_527,q_90,enc_avif,quality_auto/1de452_e3e7e5572d7f4ba0b3105b666fc1fa8b~mv2.jpg",mapsQuery:"Nicolas+Repeto+1506+Villa+Crespo+Buenos+Aires"},
+  {orden:3,nombre:"Bogado 4461",barrio:"Almagro",estado:"En Construcción",fecha:"En obra",pisos:"7",unidades:"28",superficie:"Desde 30m²",desc:"Entre Yatay y Pringles, Almagro. Sobre lote 8,66 x 19,15. Edificio de 7 pisos, 4 departamentos por piso, ascensor, 2 cocheras, bicicletero y bauleras.",caract:"Acceso en PB con bauleras, bicicleteros y cocheras\nTermotanques eléctricos individuales\nPre-instalación Aire Ac en todos los ambientes\nPlacards completos en melamina 18mm\nMuebles de cocina en melamina con vidrio y aluminio\nArtefactos y grifería de 1ª marcas\nPisos living Porcelanato · Dormitorios SPC\nArtefactos cocina eléctricos (horno y anafe)\nVentanas línea Módena\n1 ascensor automático de acero con espejo",imagenes:["https://static.wixstatic.com/media/1de452_632152097b4041518c4cb8cad9251bad~mv2.jpg/v1/fit/w_1440,h_735,q_90,enc_avif,quality_auto/1de452_632152097b4041518c4cb8cad9251bad~mv2.jpg","https://static.wixstatic.com/media/1de452_7034a253ce064dd0aaca3dc42235293d~mv2.jpg/v1/fit/w_960,h_1323,q_90,enc_avif,quality_auto/1de452_7034a253ce064dd0aaca3dc42235293d~mv2.jpg"],img1:"https://static.wixstatic.com/media/1de452_632152097b4041518c4cb8cad9251bad~mv2.jpg/v1/fit/w_1440,h_735,q_90,enc_avif,quality_auto/1de452_632152097b4041518c4cb8cad9251bad~mv2.jpg",mapsQuery:"Bogado+4461+Almagro+Buenos+Aires"},
+  {orden:4,nombre:"Estado de Israel 4334",barrio:"Palermo",estado:"Terminado",fecha:"Entregado Marzo 2024",pisos:"14",unidades:"50+",superficie:"1 a 4 ambientes",desc:"Entre Pringles y Yatay. Importante edificio de 14 pisos distribuidos en 1, 2, 3 y 4 ambientes sobre una de las arterias principales de CABA.",caract:"Cocheras individuales cubiertas y semicubiertas opcionales\nEspacio para bicicletas\nHall de acceso con finas terminaciones\nEstacionamiento de cortesía\nParrilla al carbón\nToilette para uso común\nFuturo SUM en vivienda de encargado\nDucha exterior en terraza\nPiscina con deck de madera perimetral\nSolárium",imagenes:["https://static.wixstatic.com/media/1de452_cdaa8021c10f4bc38ce2f4d3e2a639bf~mv2.jpg/v1/fit/w_326,h_500,q_90,enc_avif,quality_auto/1de452_cdaa8021c10f4bc38ce2f4d3e2a639bf~mv2.jpg","https://static.wixstatic.com/media/1de452_1781ef305bf74a59a9d70bc56cc3b7c3~mv2.jpg/v1/fit/w_1440,h_914,q_90,enc_avif,quality_auto/1de452_1781ef305bf74a59a9d70bc56cc3b7c3~mv2.jpg","https://static.wixstatic.com/media/1de452_643820c7135d49eba75f637c58655ea5~mv2.jpg/v1/fit/w_1440,h_914,q_90,enc_avif,quality_auto/1de452_643820c7135d49eba75f637c58655ea5~mv2.jpg"],img1:"https://static.wixstatic.com/media/1de452_cdaa8021c10f4bc38ce2f4d3e2a639bf~mv2.jpg/v1/fit/w_326,h_500,q_90,enc_avif,quality_auto/1de452_cdaa8021c10f4bc38ce2f4d3e2a639bf~mv2.jpg",mapsQuery:"Av.+Estado+de+Israel+4334+Palermo+Buenos+Aires"},
+  {orden:5,nombre:"Avenida Gaona 2466",barrio:"Villa del Parque",estado:"Terminado",fecha:"Entregado Marzo 2020",pisos:"14",unidades:"50+",superficie:"1 a 4 ambientes",desc:"Gaona Park. Av. Gaona 2466 entre Terrero y Manuel Ricardo Trelles. 14 pisos con departamentos de 1 a 4 ambientes en una sola planta.",caract:"Cocheras cubiertas y semicubiertas opcionales\nEspacio para bicicletas\nSUM con expansión al aire libre\nSolárium\nParrilla iluminada con mesada de preparación\nSector de pileta\nUbicado sobre arteria principal de CABA",imagenes:["https://static.wixstatic.com/media/1de452_33f7d4845087414cbac77f2de2ccea84~mv2.jpg/v1/fit/w_1440,h_735,q_90,enc_avif,quality_auto/1de452_33f7d4845087414cbac77f2de2ccea84~mv2.jpg","https://static.wixstatic.com/media/1de452_a470aa5c309a41409ea8e160791a75d4~mv2.jpg/v1/fit/w_960,h_718,q_90,enc_avif,quality_auto/1de452_a470aa5c309a41409ea8e160791a75d4~mv2.jpg","https://static.wixstatic.com/media/1de452_0d2602df6f6c4e9aba0582dd650c5214~mv2.jpg/v1/fit/w_1400,h_789,q_90,enc_avif,quality_auto/1de452_0d2602df6f6c4e9aba0582dd650c5214~mv2.jpg"],img1:"https://static.wixstatic.com/media/1de452_33f7d4845087414cbac77f2de2ccea84~mv2.jpg/v1/fit/w_1440,h_735,q_90,enc_avif,quality_auto/1de452_33f7d4845087414cbac77f2de2ccea84~mv2.jpg",mapsQuery:"Av.+Gaona+2466+Villa+del+Parque+Buenos+Aires"}
+];
+
+window.seedProjects=async function(){
+  const btn=document.getElementById('seedBtn'),msg=document.getElementById('seedMsg');
+  btn.disabled=true;
+  try{
+    for(let i=0;i<SEED_DATA.length;i++){
+      btn.textContent=`Cargando ${i+1}/${SEED_DATA.length}...`;
+      msg.textContent='Guardando: '+SEED_DATA[i].nombre;
+      await addDoc(collection(db,"proyectos"),SEED_DATA[i]);
     }
-  } catch(e) { /* first time */ }
-}
-
-window.saveContact = async function() {
-  const data = {
-    tel1: document.getElementById('cTel1').value.trim(),
-    tel2: document.getElementById('cTel2').value.trim(),
-    email: document.getElementById('cEmail').value.trim(),
-    whatsapp: document.getElementById('cWa').value.trim(),
-    direccion: document.getElementById('cDir').value.trim(),
-    instagram: document.getElementById('cIg').value.trim(),
-    facebook: document.getElementById('cFb').value.trim(),
-  };
-  try {
-    await setDoc(doc(db,"config","contacto"), data);
-    showToast('Contacto actualizado correctamente', true);
-    document.getElementById('contactMsg').textContent = '✓ Guardado';
-    document.getElementById('contactMsg').className = 'form-msg ok';
-    setTimeout(()=>document.getElementById('contactMsg').textContent='',3000);
-  } catch(e) {
-    showToast('Error: '+e.message);
+    msg.textContent='✓ 5 proyectos cargados.'; msg.className='fmsg ok';
+    showToast('Proyectos cargados correctamente',true);
+    await loadProjects();
+    setTimeout(()=>document.getElementById('seedCard').style.display='none',3000);
+  }catch(e){
+    msg.textContent='Error: '+e.message+'. Verificá reglas de Firestore.';
+    btn.textContent='Reintentar';btn.disabled=false;
   }
 };
+
+// ═══════════════════ CONTACTOS ═══════════════════
+async function loadContacts(){
+  try{
+    const q=query(collection(db,"contactos"),orderBy("fecha","desc"));
+    const snap=await getDocs(q);
+    contacts=snap.docs.map(d=>({id:d.id,...d.data()}));
+    renderContacts();
+    updateDashboard();
+    // Badge sin leer
+    const unread=contacts.filter(c=>c.estado==='nuevo').length;
+    const badge=document.getElementById('unreadCount');
+    if(unread>0){badge.style.display='inline-block';badge.textContent=unread;}
+    else badge.style.display='none';
+  }catch(e){console.error(e);}
+}
+
+function renderContacts(){
+  const cont=document.getElementById('contactsList');
+  let list=contacts;
+  if(contactFilter!=='all') list=contacts.filter(c=>c.estado===contactFilter);
+  if(!list.length){cont.innerHTML='<p style="color:var(--gray3);font-size:.85rem;padding:2rem 0">No hay consultas en esta categoría.</p>';return;}
+  cont.innerHTML=`
+    <div class="contact-row">
+      <span>Nombre</span><span>Email / Tel</span><span>Interés</span><span>Fecha</span><span></span>
+    </div>`+
+    list.map(c=>{
+      const fecha=c.fecha?.toDate?c.fecha.toDate().toLocaleDateString('es-AR'):c.fecha||'—';
+      return `
+        <div class="contact-row" id="crow_${c.id}">
+          <span class="c-name">${c.estado==='nuevo'?'<span class="unread-dot"></span>':''}${c.nombre||'—'}</span>
+          <span style="font-size:.75rem;color:var(--gray4)">${c.email||'—'}<br/>${c.telefono||''}</span>
+          <span class="c-interes">${c.interes||'—'}</span>
+          <span class="c-date">${fecha}</span>
+          <button class="contact-expand" onclick="toggleContact('${c.id}')" title="Ver mensaje">▾</button>
+        </div>
+        <div class="contact-msg-row" id="cmsg_${c.id}">
+          <p class="contact-msg-text">${c.mensaje||'(sin mensaje)'}</p>
+          <div style="display:flex;gap:.8rem;margin-top:.8rem;flex-wrap:wrap">
+            <a href="mailto:${c.email}?subject=Re: Consulta AGF Desarrollos" class="abtn" style="text-decoration:none">Responder por email →</a>
+            ${c.telefono?`<a href="https://wa.me/54${c.telefono.replace(/\D/g,'')}" target="_blank" class="abtn">WhatsApp →</a>`:''}
+            ${c.estado==='nuevo'?`<button class="abtn ok" onclick="markRead('${c.id}')">Marcar como leída</button>`:''}
+          </div>
+        </div>`;
+    }).join('');
+}
+
+window.toggleContact=async function(id){
+  const msgRow=document.getElementById('cmsg_'+id);
+  const isOpen=msgRow.classList.contains('open');
+  document.querySelectorAll('.contact-msg-row.open').forEach(r=>r.classList.remove('open'));
+  if(!isOpen){
+    msgRow.classList.add('open');
+    // Marcar como leído al abrir
+    const c=contacts.find(x=>x.id===id);
+    if(c&&c.estado==='nuevo') await markRead(id,true);
+  }
+};
+
+window.markRead=async function(id,silent=false){
+  try{
+    await updateDoc(doc(db,"contactos",id),{estado:'leído'});
+    const c=contacts.find(x=>x.id===id);
+    if(c) c.estado='leído';
+    renderContacts();
+    if(!silent) showToast('Marcado como leído',true);
+  }catch(e){showToast('Error: '+e.message);}
+};
+
+window.filterContacts=function(f,btn){
+  contactFilter=f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderContacts();
+};
+
+window.exportCSV=function(){
+  if(!contacts.length){showToast('No hay contactos para exportar');return;}
+  const headers=['Nombre','Email','Teléfono','Interés','Mensaje','Estado','Fecha'];
+  const rows=contacts.map(c=>{
+    const fecha=c.fecha?.toDate?c.fecha.toDate().toLocaleDateString('es-AR'):c.fecha||'';
+    return [c.nombre,c.email,c.telefono,c.interes,(c.mensaje||'').replace(/,/g,' ').replace(/\n/g,' '),c.estado,fecha].map(v=>`"${v||''}"`).join(',');
+  });
+  const csv=[headers.join(','),...rows].join('\n');
+  const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download='contactos_agf_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+  showToast('CSV descargado ✓',true);
+};
+
+// ═══════════════════ SECCIONES EDITABLES ═══════════════════
+async function loadAllSections(){
+  try{
+    const heroDoc=await getDoc(doc(db,"config","hero"));
+    if(heroDoc.exists()){
+      const d=heroDoc.data();
+      document.getElementById('hTag').value=d.tag||'';
+      document.getElementById('hT1').value=d.t1||'';
+      document.getElementById('hT2').value=d.t2||'';
+      document.getElementById('hT3').value=d.t3||'';
+      document.getElementById('hSub').value=d.sub||'';
+      document.getElementById('hBtn1').value=d.btn1||'';
+      document.getElementById('hBtn2').value=d.btn2||'';
+    }
+    const nosDoc=await getDoc(doc(db,"config","nosotros"));
+    if(nosDoc.exists()){
+      const d=nosDoc.data();
+      document.getElementById('nP1').value=d.p1||'';
+      document.getElementById('nP2').value=d.p2||'';
+      document.getElementById('nP3').value=d.p3||'';
+      document.getElementById('nChips').value=(d.chips||[]).join(', ');
+      document.getElementById('paso1t').value=d.paso1t||'';document.getElementById('paso1d').value=d.paso1d||'';
+      document.getElementById('paso2t').value=d.paso2t||'';document.getElementById('paso2d').value=d.paso2d||'';
+      document.getElementById('paso3t').value=d.paso3t||'';document.getElementById('paso3d').value=d.paso3d||'';
+    }
+    const testDoc=await getDoc(doc(db,"config","testimonios"));
+    if(testDoc.exists()){
+      const d=testDoc.data();
+      document.getElementById('test1t').value=d.t1||'';document.getElementById('test1a').value=d.a1||'';
+      document.getElementById('test2t').value=d.t2||'';document.getElementById('test2a').value=d.a2||'';
+      document.getElementById('test3t').value=d.t3||'';document.getElementById('test3a').value=d.a3||'';
+    }
+    const cDoc=await getDoc(doc(db,"config","contacto"));
+    if(cDoc.exists()){
+      const d=cDoc.data();
+      document.getElementById('cTel1').value=d.tel1||'';document.getElementById('cTel2').value=d.tel2||'';
+      document.getElementById('cEmail').value=d.email||'';document.getElementById('cWa').value=d.whatsapp||'';
+      document.getElementById('cDir').value=d.direccion||'';
+      document.getElementById('cIg').value=d.instagram||'';document.getElementById('cFb').value=d.facebook||'';
+      document.getElementById('cSecTitle').value=d.secTitle||'';document.getElementById('cSecDesc').value=d.secDesc||'';
+    }
+  }catch(e){console.error('loadSections:',e);}
+}
+
+window.saveSection=async function(section){
+  const msgId={hero:'heroMsg',nosotros:'nosotrosMsg',proceso:'procesoMsg',testimonios:'testimMsg',contactoInfo:'contactInfoMsg',contactoTextos:'contactTexMsg'}[section];
+  const msgEl=document.getElementById(msgId);
+  let data={};
+  if(section==='hero') data={tag:v('hTag'),t1:v('hT1'),t2:v('hT2'),t3:v('hT3'),sub:v('hSub'),btn1:v('hBtn1'),btn2:v('hBtn2')};
+  else if(section==='nosotros') data={p1:v('nP1'),p2:v('nP2'),p3:v('nP3'),chips:v('nChips').split(',').map(s=>s.trim()).filter(Boolean),paso1t:v('paso1t'),paso1d:v('paso1d'),paso2t:v('paso2t'),paso2d:v('paso2d'),paso3t:v('paso3t'),paso3d:v('paso3d')};
+  else if(section==='proceso') data={paso1t:v('paso1t'),paso1d:v('paso1d'),paso2t:v('paso2t'),paso2d:v('paso2d'),paso3t:v('paso3t'),paso3d:v('paso3d')};
+  else if(section==='testimonios') data={t1:v('test1t'),a1:v('test1a'),t2:v('test2t'),a2:v('test2a'),t3:v('test3t'),a3:v('test3a')};
+  else if(section==='contactoInfo') data={tel1:v('cTel1'),tel2:v('cTel2'),email:v('cEmail'),whatsapp:v('cWa'),direccion:v('cDir'),instagram:v('cIg'),facebook:v('cFb')};
+  else if(section==='contactoTextos') data={secTitle:v('cSecTitle'),secDesc:v('cSecDesc')};
+  const docName={hero:'hero',nosotros:'nosotros',proceso:'nosotros',testimonios:'testimonios',contactoInfo:'contacto',contactoTextos:'contacto'}[section];
+  try{
+    await setDoc(doc(db,"config",docName),data,{merge:true});
+    msgEl.textContent='✓ Guardado correctamente';msgEl.className='fmsg ok';
+    showToast('Cambios guardados ✓',true);
+    setTimeout(()=>msgEl.textContent='',3000);
+  }catch(e){msgEl.textContent='Error: '+e.message;msgEl.className='fmsg';}
+};
+function v(id){return document.getElementById(id)?.value?.trim()||'';}
+
+// ═══════════════════ DRAG & DROP ═══════════════════
+const dz=document.getElementById('dropZone');
+dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('dragover');});
+dz.addEventListener('dragleave',()=>dz.classList.remove('dragover'));
+dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('dragover');window.handleFiles(e.dataTransfer.files);});
+
+// ═══════════════════ UTILS ═══════════════════
+function showToast(msg,ok=false){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast show'+(ok?' ok':'');
+  setTimeout(()=>t.classList.remove('show'),3500);
+}
+
 </script>
 
 <script>
-// PANEL NAV
-function showPanel(id, btn) {
+function showPanel(id,btn){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.getElementById('panel-'+id).classList.add('active');
-  if (btn) { document.querySelectorAll('.sidebar-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); }
-}
-
-// CLEAR FORM
-function clearForm() {
-  document.getElementById('editDocId').value = '';
-  document.getElementById('formPanelTitle').textContent = 'Nuevo Proyecto';
-  ['pNombre','pBarrio','pFecha','pPisos','pUnidades','pSup','pOrden','pDesc','pCaracts','pImg1','pImg2','pImg3','pMaps'].forEach(id=>{
-    const el=document.getElementById(id); if(el) el.value='';
-  });
-  document.getElementById('pEstado').value='En Construcción';
-  ['prev1','prev2','prev3'].forEach(id=>{ const el=document.getElementById(id); if(el){el.src='';el.classList.remove('show');} });
-  document.getElementById('formMsg').textContent='';
-}
-
-// IMAGE PREVIEW
-function previewImg(input, previewId) {
-  const url = typeof input === 'string' ? input : input.value;
-  const img = document.getElementById(previewId);
-  if (url && url.startsWith('http')) { img.src=url; img.classList.add('show'); }
-  else { img.src=''; img.classList.remove('show'); }
-}
-
-// TOAST
-function showToast(msg, ok=false) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'toast show' + (ok?' ok':'');
-  setTimeout(()=>t.classList.remove('show'),3500);
+  if(btn){document.querySelectorAll('.sbtn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
 }
 </script>
 </body>
