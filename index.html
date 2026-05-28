@@ -236,11 +236,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .btn-red:hover{background:var(--red2);transform:translateY(-2px)}
 .btn-ghost{padding:13px 35px;background:transparent;color:var(--white2);border:1px solid var(--gray2);font-family:'Outfit',sans-serif;font-size:.72rem;font-weight:400;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);transition:border-color .2s,color .2s;display:inline-block;}
 .btn-ghost:hover{border-color:var(--red);color:var(--red)}
-.hero-stats{position:absolute;bottom:3rem;right:3rem;z-index:2;display:flex;gap:3rem;}
-.hero-stat{text-align:right}
-.hero-stat-num{font-family:'Rajdhani',sans-serif;font-size:2.5rem;font-weight:700;color:var(--white);line-height:1;}
-.hero-stat-num span{color:var(--red)}
-.hero-stat-label{font-size:.65rem;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--gray4)}
+
 
 /* MARQUEE */
 .marquee-wrap{background:var(--red);padding:10px 0;overflow:hidden;position:relative;z-index:3;}
@@ -426,7 +422,6 @@ footer{background:var(--black2);border-top:1px solid rgba(217,43,43,.15);padding
   .nav-links.open{display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:var(--black2);padding:2rem;border-top:1px solid var(--gray);gap:1.5rem;}
   section{padding:5rem 1.5rem}
   #hero{padding:100px 1.5rem 80px}
-  .hero-stats{display:none}
   .about-grid,.contact-grid{grid-template-columns:1fr;gap:3rem}
   .testi-grid{grid-template-columns:1fr}
   .proj-grid{grid-template-columns:1fr}
@@ -447,17 +442,17 @@ footer{background:var(--black2);border-top:1px solid rgba(217,43,43,.15);padding
 }
 
 /* CAROUSEL */
-.modal-carousel{position:relative;width:100%;background:var(--black);overflow:hidden;aspect-ratio:16/7;max-height:400px;}
-.car-track{display:flex;height:100%;transition:transform .4s cubic-bezier(.4,0,.2,1);}
-.car-slide{flex:0 0 100%;height:100%;}
-.car-slide img{width:100%;height:100%;object-fit:cover;filter:brightness(.9);}
-.car-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.6);border:none;color:var(--white);font-size:1.8rem;width:44px;height:44px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;z-index:5;}
-.car-btn:hover{background:var(--red)}
-.car-prev{left:0}.car-next{right:0}
-.car-dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:5;}
-.car-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.4);cursor:pointer;transition:background .2s;}
-.car-dot.active{background:var(--red)}
-.car-count{position:absolute;bottom:10px;right:12px;font-size:.65rem;font-weight:600;letter-spacing:.1em;color:rgba(255,255,255,.7);background:rgba(0,0,0,.5);padding:2px 8px;z-index:5;}
+.modal-carousel{position:relative;width:100%;background:var(--black);overflow:hidden;height:400px;}
+.car-track{display:flex;height:100%;transition:transform .4s cubic-bezier(.4,0,.2,1);will-change:transform;}
+.car-slide{flex:0 0 100%;height:100%;min-width:100%;}
+.car-slide img{width:100%;height:100%;object-fit:cover;filter:brightness(.9);display:block;}
+.car-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.65);border:1px solid rgba(255,255,255,.1);color:var(--white);font-size:2rem;width:48px;height:48px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;z-index:10;line-height:1;}
+.car-btn:hover{background:var(--red);border-color:var(--red)}
+.car-prev{left:8px}.car-next{right:8px}
+.car-dots{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:10;}
+.car-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35);cursor:pointer;transition:background .2s,transform .2s;border:none;}
+.car-dot.active{background:var(--red);transform:scale(1.2)}
+.car-count{position:absolute;bottom:12px;right:14px;font-size:.65rem;font-weight:600;letter-spacing:.08em;color:rgba(255,255,255,.8);background:rgba(0,0,0,.6);padding:3px 9px;z-index:10;border-radius:10px;}
 </style>
 </head>
 <body>
@@ -513,11 +508,7 @@ footer{background:var(--black2);border-top:1px solid rgba(217,43,43,.15);padding
       <a href="#contacto" class="btn-ghost">Hablar con un asesor</a>
     </div>
   </div>
-  <div class="hero-stats reveal">
-    <div class="hero-stat"><p class="hero-stat-num" id="statNum">5<span>+</span></p><p class="hero-stat-label">Proyectos</p></div>
-    <div class="hero-stat"><p class="hero-stat-num">14<span>P</span></p><p class="hero-stat-label">Pisos máx.</p></div>
-    <div class="hero-stat"><p class="hero-stat-num">CABA</p><p class="hero-stat-label">Buenos Aires</p></div>
-  </div>
+
 </section>
 
 <!-- MARQUEE -->
@@ -741,7 +732,16 @@ async function loadProjects(){
 
 function renderProjects(){
   const grid=document.getElementById('projGrid');
-  const list=currentFilter==='all'?allProjects:allProjects.filter(p=>p.estado===currentFilter);
+  let list=currentFilter==='all'?[...allProjects]:allProjects.filter(p=>p.estado===currentFilter);
+  // Ordenar: En Construcción arriba, Terminados abajo, dentro de cada grupo por orden numérico
+  if(currentFilter==='all'){
+    list.sort((a,b)=>{
+      const stateOrder={'En Construcción':0,'Terminado':1};
+      const sa=stateOrder[a.estado]??0, sb=stateOrder[b.estado]??0;
+      if(sa!==sb) return sa-sb;
+      return (a.orden||99)-(b.orden||99);
+    });
+  }
   if(!list.length){grid.innerHTML='<p style="grid-column:1/-1;padding:3rem;text-align:center;color:var(--gray3);font-size:.85rem">No hay proyectos en esta categoría.</p>';return;}
   grid.innerHTML=list.map(p=>{
     const done=p.estado==='Terminado';
@@ -769,22 +769,30 @@ function renderFooterProjects(){
 window._openModal=function(id){
   const p=allProjects.find(x=>x.id===id); if(!p) return;
   const done=p.estado==='Terminado';
-  const imgs=(p.imagenes&&p.imagenes.length)?p.imagenes:[p.img1,p.img2,p.img3].filter(Boolean);
+  // Soporte para array imagenes[] (nuevo) y campos img1/img2/img3 (legacy)
+  let imgs=[];
+  if(p.imagenes&&Array.isArray(p.imagenes)&&p.imagenes.length) imgs=p.imagenes.filter(Boolean);
+  else imgs=[p.img1,p.img2,p.img3].filter(Boolean);
   const zona=ZONA_INFO[p.barrio]||{desc:`Excelente ubicación en ${p.barrio}, CABA.`,tags:[p.barrio,'CABA']};
   const mapsQ=p.mapsQuery||(p.nombre.replace(/ /g,'+')+'+Buenos+Aires');
   const mapsEmbed=`https://maps.google.com/maps?q=${mapsQ}&output=embed&hl=es&z=16`;
-  // Galería carousel para múltiples imágenes
-  const galHtml = imgs.length===0 ? '' :
-    imgs.length===1 ? `<div class="modal-gallery one-img"><img class="img-main" src="${imgs[0]}" alt="${p.nombre}"/></div>` :
-    `<div class="modal-carousel" id="car_${id}">
-      <div class="car-track" id="carTrack_${id}">
+  // Usamos índice numérico para el carousel (evita problemas con IDs de Firestore)
+  const carIdx = allProjects.findIndex(x=>x.id===id);
+  window._activeCarousel = {idx:0, total:imgs.length, projIdx:carIdx};
+  let galHtml='';
+  if(imgs.length===1){
+    galHtml=`<div class="modal-carousel"><div class="car-track" id="activeCarTrack"><div class="car-slide"><img src="${imgs[0]}" alt="${p.nombre}" loading="eager"/></div></div></div>`;
+  } else if(imgs.length>1){
+    galHtml=`<div class="modal-carousel">
+      <div class="car-track" id="activeCarTrack">
         ${imgs.map((src,i)=>`<div class="car-slide"><img src="${src}" alt="${p.nombre} ${i+1}" loading="${i===0?'eager':'lazy'}"/></div>`).join('')}
       </div>
-      <button class="car-btn car-prev" onclick="carMove('${id}',-1)">‹</button>
-      <button class="car-btn car-next" onclick="carMove('${id}',1)">›</button>
-      <div class="car-dots">${imgs.map((_,i)=>`<span class="car-dot ${i===0?'active':''}" onclick="carGo('${id}',${i})"></span>`).join('')}</div>
-      <span class="car-count"><span id="carIdx_${id}">1</span>/${imgs.length}</span>
+      <button class="car-btn car-prev" onclick="carMove(-1)">&#8249;</button>
+      <button class="car-btn car-next" onclick="carMove(1)">&#8250;</button>
+      <div class="car-dots" id="activeCarDots">${imgs.map((_,i)=>`<button class="car-dot ${i===0?'active':''}" onclick="carGo(${i})"></button>`).join('')}</div>
+      <span class="car-count"><span id="activeCarIdx">1</span>/${imgs.length}</span>
     </div>`;
+  }
   document.getElementById('modal-content').innerHTML=galHtml+`
     <div class="modal-body">
       <span class="modal-badge ${done?'done':''}">${p.estado}</span>
@@ -870,28 +878,28 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 const burger=document.getElementById('burger'),navLinks=document.getElementById('navLinks');
 burger.addEventListener('click',()=>navLinks.classList.toggle('open'));
 function closeMenu(){navLinks.classList.remove('open');}
-// CAROUSEL
-const carStates = {};
-window.carMove = function(id, dir) {
-  const imgs = allProjects.find(x=>x.id===id);
-  const total = (imgs?.imagenes?.length)||(imgs?[imgs.img1,imgs.img2,imgs.img3].filter(Boolean).length:0)||1;
-  if(!carStates[id]) carStates[id]=0;
-  carStates[id] = (carStates[id]+dir+total)%total;
-  applyCar(id,total);
+// CAROUSEL — usa un único carousel activo por modal
+window._activeCarousel = {idx:0, total:0};
+window.carMove = function(dir){
+  const c=window._activeCarousel;
+  if(!c||c.total<=1) return;
+  c.idx=(c.idx+dir+c.total)%c.total;
+  applyActiveCar();
 };
-window.carGo = function(id, idx) {
-  const imgs = allProjects.find(x=>x.id===id);
-  const total = (imgs?.imagenes?.length)||1;
-  carStates[id]=idx;
-  applyCar(id,total);
+window.carGo = function(idx){
+  const c=window._activeCarousel;
+  if(!c) return;
+  c.idx=idx;
+  applyActiveCar();
 };
-function applyCar(id,total){
-  const i=carStates[id]||0;
-  const track=document.getElementById('carTrack_'+id);
-  if(track) track.style.transform=`translateX(-${i*100}%)`;
-  document.querySelectorAll(`#car_${id} .car-dot`).forEach((d,idx)=>d.classList.toggle('active',idx===i));
-  const idxEl=document.getElementById('carIdx_'+id);
-  if(idxEl) idxEl.textContent=i+1;
+function applyActiveCar(){
+  const c=window._activeCarousel;
+  const track=document.getElementById('activeCarTrack');
+  if(track) track.style.transform=`translateX(-${c.idx*100}%)`;
+  const dots=document.querySelectorAll('#activeCarDots .car-dot');
+  dots.forEach((d,i)=>d.classList.toggle('active',i===c.idx));
+  const idxEl=document.getElementById('activeCarIdx');
+  if(idxEl) idxEl.textContent=c.idx+1;
 }
 
 </script>
