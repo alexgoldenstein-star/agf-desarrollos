@@ -208,6 +208,27 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
           <div class="stat-card"><p class="stat-num" id="dashTerm">—</p><p class="stat-lbl">Terminados</p></div>
           <div class="stat-card"><p class="stat-num"><span>✓</span></p><p class="stat-lbl">Firebase activo</p></div>
         </div>
+
+        <!-- CARGA INICIAL -->
+        <div class="form-card" id="seedCard">
+          <p class="form-card-title">⚡ Carga <span>inicial de proyectos</span></p>
+          <p style="font-size:.82rem;color:var(--gray4);font-weight:300;line-height:1.7;margin-bottom:1.2rem">
+            Firestore está vacío. Hacé clic para cargar los <strong style="color:var(--white2)">5 proyectos reales de AGF</strong> con toda la información completa. Después podés editarlos uno por uno desde el panel.
+          </p>
+          <div style="background:var(--black3);border:1px solid var(--gray2);padding:1rem 1.2rem;margin-bottom:1.2rem;font-size:.78rem;color:var(--gray4)">
+            <strong style="color:var(--white2);display:block;margin-bottom:.5rem">Se van a cargar:</strong>
+            1. Humahuaca 4628 — Almagro (En Construcción)<br>
+            2. Nicolás Repeto 1506 — Villa Crespo (En Construcción)<br>
+            3. Bogado 4461 — Almagro (En Construcción)<br>
+            4. Estado de Israel 4334 — Palermo (Terminado)<br>
+            5. Avenida Gaona 2466 — Villa del Parque (Terminado)
+          </div>
+          <div style="display:flex;gap:.8rem;align-items:center;flex-wrap:wrap">
+            <button class="save-btn" id="seedBtn" onclick="seedProjects()">Cargar los 5 proyectos →</button>
+            <span class="form-msg" id="seedMsg"></span>
+          </div>
+        </div>
+
         <div class="form-card">
           <p class="form-card-title">Acceso rápido</p>
           <div style="display:flex;gap:.8rem;flex-wrap:wrap">
@@ -419,8 +440,77 @@ async function loadProjects() {
     projects = snap.docs.map(d => ({id:d.id,...d.data()}));
     renderTable();
     updateDashboard();
+    // Mostrar/ocultar card de carga inicial
+    const seedCard = document.getElementById('seedCard');
+    if (seedCard) seedCard.style.display = projects.length === 0 ? 'block' : 'none';
   } catch(e) { showToast('Error cargando proyectos: '+e.message); }
 }
+
+const SEED_DATA = [
+  {orden:1,nombre:"Humahuaca 4628",barrio:"Almagro",estado:"En Construcción",fecha:"En obra",pisos:"7",unidades:"21",superficie:"Desde 35m²",
+   desc:"Ubicado entre Av. Estado de Israel y Lambaré, en el corazón de Almagro. Edificio de 7 pisos, 3 departamentos por piso con excelentes terminaciones. SUM con patio, 2 cocheras, bicicletero y bauleras.",
+   caract:"SUM en PB con patio\nBauleras y Bicicleteros en subsuelo\n2 cocheras en PB\nTermotanques eléctricos individuales\nPre-instalación Aire Ac en todos los ambientes\nPlacards completos en melamina 18mm\nMuebles de cocina en melamina con vidrio y aluminio\nArtefactos y grifería de 1ª marcas\nPisos living Porcelanato · Dormitorios SPC\nArtefactos cocina eléctricos (horno y anafe)\nVentanas línea Módena\n1 ascensor automático de acero con espejo",
+   img1:"https://static.wixstatic.com/media/1de452_ce498208050e4765951c5a414013425d~mv2.jpg/v1/fit/w_1440,h_735,q_90,enc_avif,quality_auto/1de452_ce498208050e4765951c5a414013425d~mv2.jpg",
+   img2:"https://static.wixstatic.com/media/1de452_a0ae189cfa3747d0b0240b3278fcdb3d~mv2.jpg/v1/fit/w_960,h_607,q_90,enc_avif,quality_auto/1de452_a0ae189cfa3747d0b0240b3278fcdb3d~mv2.jpg",
+   img3:"https://static.wixstatic.com/media/1de452_a2f32bdcea774cf6a07f61264384865d~mv2.png/v1/fit/w_480,h_655,q_90,enc_avif,quality_auto/1de452_a2f32bdcea774cf6a07f61264384865d~mv2.png",
+   mapsQuery:"Humahuaca+4628+Almagro+Buenos+Aires"},
+
+  {orden:2,nombre:"Nicolás Repeto 1506",barrio:"Villa Crespo",estado:"En Construcción",fecha:"En obra",pisos:"7",unidades:"21",superficie:"Desde 35m²",
+   desc:"Entre Galicia y Tres Arroyos en Villa Crespo. Venta de pozo. Edificio de 7 pisos, 3 deptos por piso, ascensor, local comercial en PB, bicicletero y bauleras.",
+   caract:"Local comercial en PB\nTermotanques eléctricos individuales\nPre-instalación Aire Ac en todos los ambientes\nPlacards completos en melamina 18mm\nMuebles de cocina en melamina con vidrio y aluminio\nArtefactos y grifería de 1ª marcas\nPisos living Porcelanato · Dormitorios SPC\nArtefactos cocina eléctricos (horno y anafe)\nVentanas línea Módena\n1 ascensor automático de acero con espejo",
+   img1:"https://static.wixstatic.com/media/1de452_e3e7e5572d7f4ba0b3105b666fc1fa8b~mv2.jpg/v1/fit/w_1032,h_527,q_90,enc_avif,quality_auto/1de452_e3e7e5572d7f4ba0b3105b666fc1fa8b~mv2.jpg",
+   img2:"https://static.wixstatic.com/media/1de452_8bce47c65cfd44f5b392ecacec2f42f8~mv2.jpg/v1/fit/w_480,h_745,q_90,enc_avif,quality_auto/1de452_8bce47c65cfd44f5b392ecacec2f42f8~mv2.jpg",
+   img3:"https://static.wixstatic.com/media/1de452_35edea14416049cf8fe3927ed1008078~mv2.jpg/v1/fit/w_1440,h_798,q_90,enc_avif,quality_auto/1de452_35edea14416049cf8fe3927ed1008078~mv2.jpg",
+   mapsQuery:"Nicolas+Repeto+1506+Villa+Crespo+Buenos+Aires"},
+
+  {orden:3,nombre:"Bogado 4461",barrio:"Almagro",estado:"En Construcción",fecha:"En obra",pisos:"7",unidades:"28",superficie:"Desde 30m²",
+   desc:"Entre Yatay y Pringles, Almagro. Sobre lote 8,66 x 19,15. Edificio de 7 pisos, 4 departamentos por piso, ascensor, 2 cocheras, bicicletero y bauleras.",
+   caract:"Acceso en PB con bauleras, bicicleteros y cocheras\nTermotanques eléctricos individuales\nPre-instalación Aire Ac en todos los ambientes\nPlacards completos en melamina 18mm\nMuebles de cocina en melamina con vidrio y aluminio\nArtefactos y grifería de 1ª marcas\nPisos living Porcelanato · Dormitorios SPC\nArtefactos cocina eléctricos (horno y anafe)\nVentanas línea Módena\n1 ascensor automático de acero con espejo",
+   img1:"https://static.wixstatic.com/media/1de452_632152097b4041518c4cb8cad9251bad~mv2.jpg/v1/fit/w_1440,h_735,q_90,enc_avif,quality_auto/1de452_632152097b4041518c4cb8cad9251bad~mv2.jpg",
+   img2:"https://static.wixstatic.com/media/1de452_7034a253ce064dd0aaca3dc42235293d~mv2.jpg/v1/fit/w_960,h_1323,q_90,enc_avif,quality_auto/1de452_7034a253ce064dd0aaca3dc42235293d~mv2.jpg",
+   img3:"",
+   mapsQuery:"Bogado+4461+Almagro+Buenos+Aires"},
+
+  {orden:4,nombre:"Estado de Israel 4334",barrio:"Palermo",estado:"Terminado",fecha:"Entregado Marzo 2024",pisos:"14",unidades:"50+",superficie:"1 a 4 ambientes",
+   desc:"Entre Pringles y Yatay. Importante edificio de 14 pisos distribuidos en 1, 2, 3 y 4 ambientes sobre una de las arterias principales de CABA.",
+   caract:"Cocheras individuales cubiertas y semicubiertas opcionales\nEspacio para bicicletas\nHall de acceso con finas terminaciones\nEstacionamiento de cortesía\nParrilla al carbón\nToilette para uso común\nFuturo SUM en vivienda de encargado\nDucha exterior en terraza\nPiscina con deck de madera perimetral\nSolárium",
+   img1:"https://static.wixstatic.com/media/1de452_cdaa8021c10f4bc38ce2f4d3e2a639bf~mv2.jpg/v1/fit/w_326,h_500,q_90,enc_avif,quality_auto/1de452_cdaa8021c10f4bc38ce2f4d3e2a639bf~mv2.jpg",
+   img2:"https://static.wixstatic.com/media/1de452_1781ef305bf74a59a9d70bc56cc3b7c3~mv2.jpg/v1/fit/w_1440,h_914,q_90,enc_avif,quality_auto/1de452_1781ef305bf74a59a9d70bc56cc3b7c3~mv2.jpg",
+   img3:"https://static.wixstatic.com/media/1de452_643820c7135d49eba75f637c58655ea5~mv2.jpg/v1/fit/w_1440,h_914,q_90,enc_avif,quality_auto/1de452_643820c7135d49eba75f637c58655ea5~mv2.jpg",
+   mapsQuery:"Av.+Estado+de+Israel+4334+Palermo+Buenos+Aires"},
+
+  {orden:5,nombre:"Avenida Gaona 2466",barrio:"Villa del Parque",estado:"Terminado",fecha:"Entregado Marzo 2020",pisos:"14",unidades:"50+",superficie:"1 a 4 ambientes",
+   desc:"Gaona Park. Av. Gaona 2466 entre Terrero y Manuel Ricardo Trelles. 14 pisos con departamentos de 1 a 4 ambientes en una sola planta.",
+   caract:"Cocheras cubiertas y semicubiertas opcionales\nEspacio para bicicletas\nSUM con expansión al aire libre\nSolárium\nParrilla iluminada con mesada de preparación\nSector de pileta\nUbicado sobre arteria principal de CABA",
+   img1:"https://static.wixstatic.com/media/1de452_33f7d4845087414cbac77f2de2ccea84~mv2.jpg/v1/fit/w_1440,h_735,q_90,enc_avif,quality_auto/1de452_33f7d4845087414cbac77f2de2ccea84~mv2.jpg",
+   img2:"https://static.wixstatic.com/media/1de452_a470aa5c309a41409ea8e160791a75d4~mv2.jpg/v1/fit/w_960,h_718,q_90,enc_avif,quality_auto/1de452_a470aa5c309a41409ea8e160791a75d4~mv2.jpg",
+   img3:"https://static.wixstatic.com/media/1de452_0d2602df6f6c4e9aba0582dd650c5214~mv2.jpg/v1/fit/w_1400,h_789,q_90,enc_avif,quality_auto/1de452_0d2602df6f6c4e9aba0582dd650c5214~mv2.jpg",
+   mapsQuery:"Av.+Gaona+2466+Villa+del+Parque+Buenos+Aires"}
+];
+
+window.seedProjects = async function() {
+  const btn = document.getElementById('seedBtn');
+  const msg = document.getElementById('seedMsg');
+  btn.disabled = true;
+  let i = 0;
+  try {
+    for (const p of SEED_DATA) {
+      i++;
+      btn.textContent = `Cargando ${i}/5...`;
+      msg.textContent = `Guardando: ${p.nombre}`;
+      await addDoc(collection(db, "proyectos"), p);
+    }
+    msg.textContent = '✓ 5 proyectos cargados correctamente.';
+    msg.className = 'form-msg ok';
+    btn.textContent = '✓ Listo';
+    showToast('Proyectos cargados. Ya aparecen en el sitio.', true);
+    await loadProjects();
+    setTimeout(()=>{ document.getElementById('seedCard').style.display='none'; }, 3000);
+  } catch(e) {
+    msg.textContent = 'Error: '+e.message+'. Verificá las reglas de Firestore.';
+    btn.textContent = 'Reintentar'; btn.disabled = false;
+  }
+};
 
 function renderTable() {
   const tbody = document.getElementById('projTableBody');
