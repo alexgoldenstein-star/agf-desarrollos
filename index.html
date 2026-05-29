@@ -745,9 +745,6 @@ async function loadProjects(){
   }
 }
 
-function toSlug(n){
-  return n.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-');
-}
 function renderProjects(){
   const grid=document.getElementById('projGrid');
   let list=currentFilter==='all'?[...allProjects]:allProjects.filter(p=>p.estado===currentFilter);
@@ -765,7 +762,7 @@ function renderProjects(){
     const done=p.estado==='Terminado';
     const feats=(p.caract||'').split('\n').filter(Boolean).slice(0,4);
     const thumb=(p.imagenes&&p.imagenes[0])||p.img1||'';
-    return `<div class="proj-card" onclick="window.location.href='proyecto.html?id='+toSlug(p.nombre)">
+    return `<div class="proj-card" onclick="goToProject('${p.nombre.replace(/'/g,"\\'")}')" style="cursor:pointer">
       ${thumb?`<img src="${thumb}" alt="${p.nombre}" loading="lazy"/>`:'<div style="width:100%;height:100%;background:var(--black4)"></div>'}
       <div class="proj-overlay">
         <span class="proj-status ${done?'done':''}">${p.estado}</span>
@@ -857,6 +854,13 @@ loadProjects();
 </script>
 
 <script>
+// Global helpers (accessible from HTML onclick)
+function toSlug(n){
+  return n.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-');
+}
+function goToProject(nombre){
+  window.location.href = 'proyecto.html?id=' + toSlug(nombre);
+}
 function filterProjects(f,btn){window._filterProjects&&window._filterProjects(f,btn);}
 function closeModal(){document.getElementById('modal').classList.remove('open');document.body.style.overflow='';}
 function handleModalBg(e){if(e.target===document.getElementById('modal'))closeModal();}
