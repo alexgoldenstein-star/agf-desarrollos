@@ -19,7 +19,10 @@ const ADMIN_EMAILS = ['alex@nivikostore.com', 'brian@iuraba.com.ar'];
 
 module.exports = async (req, res) => {
   // CORS
-  res.setHeader('Access-Control-Allow-Origin', 'https://www.agfdesarrollos.com');
+  const allowedOrigins = ['https://www.agfdesarrollos.com','https://agfdesarrollos.com','https://alexgoldenstein-star.github.io'];
+  const origin = req.headers.origin;
+  if(allowedOrigins.includes(origin)) res.setHeader('Access-Control-Allow-Origin', origin);
+  else res.setHeader('Access-Control-Allow-Origin', 'https://www.agfdesarrollos.com');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
