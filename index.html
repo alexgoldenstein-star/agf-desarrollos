@@ -630,14 +630,22 @@ window.doLogin = async function() {
   btn.textContent='Ingresando...';btn.disabled=true;err.textContent='';
   try{ await signInWithEmailAndPassword(auth,email,pwd); }
   catch(e){
-    err.textContent = e.code==='auth/too-many-requests'?'Demasiados intentos.':'Credenciales incorrectas.';
+    const msgs = {'auth/wrong-password':'Contraseña incorrecta.','auth/user-not-found':'Email no registrado.','auth/invalid-credential':'Email o contraseña incorrectos.','auth/too-many-requests':'Demasiados intentos. Esperá unos minutos.'};
+    err.textContent = msgs[e.code]||'Error: '+e.message;
     btn.textContent='Ingresar al panel';btn.disabled=false;
   }
 };
 window.doLogout = async()=>{ await signOut(auth); };
 
+const ADMIN_EMAILS = ['alex@nivikostore.com','brian@iuraba.com.ar'];
+
 onAuthStateChanged(auth, user => {
   if(user){
+    if(!ADMIN_EMAILS.includes(user.email)){
+      // Inversor trying to access admin — redirect to dashboard
+      signOut(auth).then(()=>{ window.location.href='../portal.html'; });
+      return;
+    }
     document.getElementById('loginWrap').style.display='none';
     document.getElementById('app').style.display='block';
     document.getElementById('userBadge').textContent=user.email;
@@ -918,7 +926,8 @@ async function renderInversoresTable(){
       <td><span class="badge ${pendientes>0?'badge-red':'badge-gray'}">${pendientes} pendiente${pendientes!==1?'s':''}</span></td>
       <td>
         <button class="abtn" onclick="editInversor('${inv.uid}')">Editar</button>
-        <a class="abtn" href="https://wa.me/${inv.telefono?.replace(/\D/g,'')||''}" target="_blank" style="text-decoration:none">WA</a>
+        <button class="abtn" onclick="sendResetLink('${inv.email}')" title="Enviar link de acceso">🔑 Link</button>
+        <a class="abtn" href="https://wa.me/${inv.telefono?.replace(/[^0-9]/g,'')||''}" target="_blank" style="text-decoration:none">WA</a>
       </td>
     </tr>`;
   }).join('');
@@ -972,72 +981,107 @@ window.editInversor = async function(uid){
   window.scrollTo(0,0);
 };
 
+const API_URL = 'https://agf-desarrollos.vercel.app/api/create-user';
+
 window.saveInversor = async function(){
   const uid = document.getElementById('invEditUid').value;
   const inversionId = document.getElementById('invEditInversionId').value;
   const nombre = document.getElementById('invNombre').value.trim();
   const email = document.getElementById('invEmail').value.trim();
-  if(!nombre||!email){document.getElementById('invMsg').textContent='Nombre y email son requeridos.';return;}
+  const msg = document.getElementById('invMsg');
+  if(!nombre||!email){msg.textContent='Nombre y email son requeridos.';return;}
   const btn=document.querySelector('#panel-nuevoInversor .save-btn');
-  btn.textContent='Guardando...';btn.disabled=true;
+  btn.textContent='Guardando...';btn.disabled=true;msg.textContent='';
 
-  const inversData = {
-    nombre, email,
-    telefono:document.getElementById('invTel').value.trim(),
-    dni:document.getElementById('invDni').value.trim(),
-    updatedAt: serverTimestamp()
-  };
-  const inversionData = {
-    inversorId: uid||'pending_'+Date.now(),
-    proyectoId: document.getElementById('invProyecto').value,
-    unidad: document.getElementById('invUnidad').value.trim(),
-    piso: document.getElementById('invPiso').value.trim(),
-    m2: document.getElementById('invM2').value.trim(),
-    ambientes: document.getElementById('invAmbientes').value.trim(),
-    orientacion: document.getElementById('invOrientacion').value.trim(),
-    avanceObra: parseInt(document.getElementById('invAvance').value)||0,
-    montoTotal: parseFloat(document.getElementById('invMontoTotal').value)||0,
-    moneda: document.getElementById('invMoneda').value,
-    montoSena: parseFloat(document.getElementById('invSena').value)||0,
-    cantCuotas: parseInt(document.getElementById('invCantCuotas').value)||0,
-    fechaIngreso: document.getElementById('invFechaIngreso').value,
-    notas: document.getElementById('invNotas').value.trim(),
-    estado: document.getElementById('invEstadoInv').value,
-  };
+  let finalUid = uid;
 
   try{
-    // Save inversor profile
-    if(uid){
-      await setDoc(doc(db,'inversores',uid), inversData, {merge:true});
-    } else {
-      // Create placeholder — uid will be set when user logs in via Firebase Auth
-      const newRef = doc(collection(db,'inversores'));
-      await setDoc(newRef, {...inversData, pendingEmail:email, createdAt:serverTimestamp()});
-      inversionData.inversorId = newRef.id;
-    }
-    // Save inversion
-    const finalInvId = inversionId || 'inv_'+Date.now();
-    await setDoc(doc(db,'inversiones',finalInvId), inversionData, {merge:true});
-    // Save cuotas
-    for(const c of cuotasEditor){
-      if(c.id){
-        await setDoc(doc(db,'cuotas',c.id),{...c,inversionId:finalInvId},{merge:true});
-      } else {
-        await addDoc(collection(db,'cuotas'),{...c,inversionId:finalInvId});
+    // Si es usuario nuevo, crearlo via Vercel API
+    if(!uid){
+      btn.textContent='Creando usuario...';
+      const idToken = await auth.currentUser.getIdToken();
+      const res = await fetch(API_URL, {
+        method:'POST',
+        headers:{'Content-Type':'application/json','Authorization':'Bearer '+idToken},
+        body: JSON.stringify({action:'create', email, nombre})
+      });
+      const data = await res.json();
+      if(!res.ok) throw new Error(data.error||'Error al crear usuario');
+      finalUid = data.uid;
+      // Show reset link to copy
+      if(data.resetLink){
+        msg.innerHTML = `✓ Usuario creado. <a href="${data.resetLink}" target="_blank" style="color:var(--red)">Link de acceso inicial →</a><br><small style="color:var(--gray3)">Enviá este link al inversor para que establezca su contraseña.</small>`;
+        msg.className='fmsg ok';
       }
     }
-    showToast('Inversor guardado correctamente ✓',true);
+
+    // Save inversor profile in Firestore
+    const inversData = {
+      nombre, email,
+      telefono:document.getElementById('invTel').value.trim(),
+      dni:document.getElementById('invDni').value.trim(),
+      updatedAt: serverTimestamp()
+    };
+    await setDoc(doc(db,'inversores',finalUid), inversData, {merge:true});
+
+    // Save inversion
+    const inversionData = {
+      inversorId: finalUid,
+      proyectoId: document.getElementById('invProyecto').value,
+      unidad: document.getElementById('invUnidad').value.trim(),
+      piso: document.getElementById('invPiso').value.trim(),
+      m2: document.getElementById('invM2').value.trim(),
+      ambientes: document.getElementById('invAmbientes').value.trim(),
+      orientacion: document.getElementById('invOrientacion').value.trim(),
+      avanceObra: parseInt(document.getElementById('invAvance').value)||0,
+      montoTotal: parseFloat(document.getElementById('invMontoTotal').value)||0,
+      moneda: document.getElementById('invMoneda').value,
+      montoSena: parseFloat(document.getElementById('invSena').value)||0,
+      cantCuotas: parseInt(document.getElementById('invCantCuotas').value)||0,
+      fechaIngreso: document.getElementById('invFechaIngreso').value,
+      notas: document.getElementById('invNotas').value.trim(),
+      estado: document.getElementById('invEstadoInv').value,
+    };
+    const finalInvId = inversionId || 'inv_'+finalUid;
+    await setDoc(doc(db,'inversiones',finalInvId), inversionData, {merge:true});
+
+    // Save cuotas
+    for(const c of cuotasEditor){
+      const cuotaData = {...c, inversionId:finalInvId};
+      delete cuotaData.id;
+      if(c.id){ await setDoc(doc(db,'cuotas',c.id), cuotaData, {merge:true}); }
+      else { await addDoc(collection(db,'cuotas'), cuotaData); }
+    }
+
+    showToast(uid?'Inversor actualizado ✓':'Inversor creado ✓',true);
+    if(uid){ msg.textContent='✓ Guardado correctamente'; msg.className='fmsg ok'; }
     cuotasEditor=[];
-    document.getElementById('invMsg').textContent='';
     document.getElementById('invEditUid').value='';
     document.getElementById('invEditInversionId').value='';
     document.getElementById('invFormTitle').textContent='Nuevo Inversor';
     await loadInversores();
-    showPanel('inversores',null);
+
   }catch(e){
-    document.getElementById('invMsg').textContent='Error: '+e.message;
+    msg.textContent='Error: '+e.message;
+    msg.className='fmsg';
   }
   btn.textContent='Guardar inversor';btn.disabled=false;
+};
+
+window.sendResetLink = async function(email){
+  try{
+    const idToken = await auth.currentUser.getIdToken();
+    const res = await fetch(API_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+idToken},
+      body:JSON.stringify({action:'reset',email})
+    });
+    const data = await res.json();
+    if(data.resetLink){
+      prompt('Copiá este link y enviáselo al inversor:',data.resetLink);
+    }
+    showToast('Link de recuperación generado ✓',true);
+  }catch(e){ showToast('Error: '+e.message); }
 };
 
 // Cuotas editor

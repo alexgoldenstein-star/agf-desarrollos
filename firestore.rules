@@ -1,0 +1,81 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Proyectos: lectura pública, escritura solo admin ──────────────────
+    match /proyectos/{doc} {
+      allow read: if true;
+      allow write: if request.auth != null
+                   && request.auth.token.email in [
+                     'alex@nivikostore.com',
+                     'brian@iuraba.com.ar'
+                   ];
+    }
+
+    // ── Config del sitio (hero, nosotros, testimonios, contacto) ──────────
+    match /config/{doc} {
+      allow read: if true;
+      allow write: if request.auth != null
+                   && request.auth.token.email in [
+                     'alex@nivikostore.com',
+                     'brian@iuraba.com.ar'
+                   ];
+    }
+
+    // ── Contactos: formulario público crea, solo admin lee/edita/borra ────
+    match /contactos/{doc} {
+      allow create: if true;
+      allow read, update, delete: if request.auth != null
+                                  && request.auth.token.email in [
+                                    'alex@nivikostore.com',
+                                    'brian@iuraba.com.ar'
+                                  ];
+    }
+
+    // ── Inversores: el propio usuario lee su perfil, admin gestiona todo ──
+    match /inversores/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow write: if request.auth != null
+                   && request.auth.token.email in [
+                     'alex@nivikostore.com',
+                     'brian@iuraba.com.ar'
+                   ];
+    }
+
+    // ── Inversiones: el inversor lee las suyas, admin gestiona ────────────
+    match /inversiones/{doc} {
+      allow read: if request.auth != null
+                  && (resource.data.inversorId == request.auth.uid
+                      || request.auth.token.email in [
+                        'alex@nivikostore.com',
+                        'brian@iuraba.com.ar'
+                      ]);
+      allow write: if request.auth != null
+                   && request.auth.token.email in [
+                     'alex@nivikostore.com',
+                     'brian@iuraba.com.ar'
+                   ];
+    }
+
+    // ── Cuotas: el inversor lee las de su inversión, admin gestiona ───────
+    match /cuotas/{doc} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null
+                   && request.auth.token.email in [
+                     'alex@nivikostore.com',
+                     'brian@iuraba.com.ar'
+                   ];
+    }
+
+    // ── Actualizaciones de obra: lectura para inversores auth, admin escribe
+    match /actualizaciones/{doc} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null
+                   && request.auth.token.email in [
+                     'alex@nivikostore.com',
+                     'brian@iuraba.com.ar'
+                   ];
+    }
+
+  }
+}
