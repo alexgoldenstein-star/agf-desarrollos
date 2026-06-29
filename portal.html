@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Portal Inversores | AGF Desarrollos</title>
+<meta name="robots" content="noindex,nofollow"/>
+<link rel="icon" type="image/png" href="logo.png"/>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--red:#D92B2B;--red2:#FF3C3C;--black:#080808;--black2:#0F0F0F;--black3:#181818;--gray:#2A2A2A;--gray2:#3A3A3A;--gray3:#555;--gray4:#888;--white:#F5F5F5;--white2:#E0E0E0;}
+html,body{height:100%;font-family:'Outfit',sans-serif;background:var(--black);color:var(--white);overflow:hidden;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(212,44,44,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(212,44,44,.05) 1px,transparent 1px);background-size:60px 60px;}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.025) 2px,rgba(0,0,0,.025) 4px);}
+
+.page{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;}
+
+/* LEFT SIDE */
+.left{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:3rem;}
+.left-bg{position:absolute;inset:0;background:url('https://static.wixstatic.com/media/1de452_a0ae189cfa3747d0b0240b3278fcdb3d~mv2.jpg') center/cover no-repeat;filter:brightness(.2) saturate(.4);}
+.left-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,.98) 0%,rgba(8,8,8,.4) 100%);}
+.left-content{position:relative;z-index:2;}
+.left-tag{font-size:.62rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--red);margin-bottom:1.2rem;display:flex;align-items:center;gap:.6rem;}
+.left-tag::before{content:'';width:20px;height:1px;background:var(--red)}
+.left-title{font-family:'Rajdhani',sans-serif;font-size:2.8rem;font-weight:700;color:var(--white);line-height:1;margin-bottom:1rem;}
+.left-title span{color:var(--red)}
+.left-sub{font-size:.85rem;font-weight:300;color:var(--gray4);line-height:1.75;max-width:340px;margin-bottom:2rem;}
+.left-features{display:flex;flex-direction:column;gap:.7rem;}
+.left-feat{display:flex;align-items:center;gap:.8rem;font-size:.78rem;font-weight:300;color:var(--gray4);}
+.left-feat::before{content:'';width:6px;height:6px;background:var(--red);border-radius:50%;flex-shrink:0;}
+.site-link{position:absolute;top:2rem;left:2rem;z-index:10;display:flex;align-items:center;gap:.6rem;text-decoration:none;}
+.site-link img{height:30px;width:auto;}
+.site-link-txt{font-family:'Rajdhani',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.1em;color:var(--white2);}
+
+/* RIGHT SIDE */
+.right{display:flex;align-items:center;justify-content:center;padding:3rem;position:relative;z-index:1;}
+.login-box{width:100%;max-width:400px;}
+.login-title{font-family:'Rajdhani',sans-serif;font-size:1.8rem;font-weight:700;color:var(--white);margin-bottom:.4rem;}
+.login-title em{color:var(--red);font-style:normal}
+.login-sub{font-size:.82rem;font-weight:300;color:var(--gray4);margin-bottom:2.5rem;line-height:1.6;}
+.form-group{display:flex;flex-direction:column;gap:5px;margin-bottom:1rem;}
+.form-label{font-size:.63rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gray3);}
+.form-input{background:var(--black3);border:1px solid var(--gray2);color:var(--white);padding:13px 15px;font-family:'Outfit',sans-serif;font-size:.9rem;font-weight:300;outline:none;transition:border-color .2s;width:100%;}
+.form-input:focus{border-color:var(--red)}
+.form-input::placeholder{color:var(--gray3)}
+.form-error{font-size:.73rem;color:var(--red);min-height:1rem;margin-bottom:.5rem;}
+.btn-login{width:100%;padding:14px;background:var(--red);color:var(--white);border:none;font-family:'Outfit',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);transition:background .2s;margin-bottom:1.5rem;}
+.btn-login:hover{background:var(--red2)}
+.btn-login:disabled{background:var(--gray2);cursor:not-allowed}
+.forgot-link{display:block;text-align:center;font-size:.73rem;color:var(--gray4);cursor:pointer;transition:color .2s;background:none;border:none;font-family:'Outfit',sans-serif;width:100%;}
+.forgot-link:hover{color:var(--red)}
+.back-link{display:flex;align-items:center;justify-content:center;gap:.4rem;margin-top:2rem;text-decoration:none;font-size:.7rem;color:var(--gray3);transition:color .2s;letter-spacing:.06em;}
+.back-link:hover{color:var(--red)}
+.back-link svg{width:12px;height:12px;fill:currentColor}
+.reset-msg{font-size:.78rem;color:var(--red);text-align:center;padding:.8rem;border:1px solid rgba(217,43,43,.2);background:rgba(217,43,43,.05);display:none;}
+.reset-msg.ok{color:#4CAF50;border-color:rgba(76,175,80,.2);background:rgba(76,175,80,.05)}
+
+@media(max-width:768px){
+  .page{grid-template-columns:1fr;}
+  .left{display:none;}
+  .right{padding:2rem 1.5rem;align-items:flex-start;padding-top:6rem;}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="left">
+    <div class="left-bg"></div>
+    <div class="left-overlay"></div>
+    <a href="index.html" class="site-link">
+      <img src="logo.png" alt="AGF"/>
+      <span class="site-link-txt">AGF DESARROLLOS</span>
+    </a>
+    <div class="left-content">
+      <p class="left-tag">Portal Exclusivo</p>
+      <h1 class="left-title">Tu inversión,<br/>en <span>tiempo real</span></h1>
+      <p class="left-sub">Seguí el avance de tu proyecto, el estado de tus pagos y las últimas novedades desde un solo lugar.</p>
+      <div class="left-features">
+        <p class="left-feat">Estado actualizado de tu unidad</p>
+        <p class="left-feat">Seguimiento de cuotas y pagos</p>
+        <p class="left-feat">Fotos y avance de obra en vivo</p>
+        <p class="left-feat">Novedades y comunicados exclusivos</p>
+      </div>
+    </div>
+  </div>
+  <div class="right">
+    <div class="login-box">
+      <p class="login-title">Ingresá a tu <em>portal</em></p>
+      <p class="login-sub">Accedé con el email y contraseña que te asignó AGF Desarrollos.</p>
+      <div id="loginForm">
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input class="form-input" type="email" id="loginEmail" placeholder="tu@email.com" autocomplete="email"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Contraseña</label>
+          <input class="form-input" type="password" id="loginPwd" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"/>
+        </div>
+        <p class="form-error" id="loginError"></p>
+        <button class="btn-login" id="loginBtn" onclick="doLogin()">Ingresar al portal</button>
+        <button class="forgot-link" onclick="showReset()">¿Olvidaste tu contraseña?</button>
+      </div>
+      <div id="resetForm" style="display:none">
+        <p style="font-size:.82rem;color:var(--gray4);margin-bottom:1.2rem;line-height:1.65">Ingresá tu email y te enviamos un link para restablecer tu contraseña.</p>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input class="form-input" type="email" id="resetEmail" placeholder="tu@email.com"/>
+        </div>
+        <p class="form-error" id="resetError"></p>
+        <div class="reset-msg" id="resetMsg"></div>
+        <button class="btn-login" id="resetBtn" onclick="doReset()" style="margin-top:.5rem">Enviar link de recuperación</button>
+        <button class="forgot-link" onclick="showLogin()" style="margin-top:.5rem">← Volver al login</button>
+      </div>
+      <a href="index.html" class="back-link">
+        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        Volver al sitio principal
+      </a>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+
+const fbConfig = {
+  apiKey:"AIzaSyA6g3Zyj8J5mQCxt3vd-LcmlmugkpurnMo",
+  authDomain:"agf-desarrollos.firebaseapp.com",
+  projectId:"agf-desarrollos",
+  storageBucket:"agf-desarrollos.firebasestorage.app",
+  messagingSenderId:"589200838716",
+  appId:"1:589200838716:web:2a5f01ca043d29b66bf339"
+};
+const app = initializeApp(fbConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// Check if already logged in
+onAuthStateChanged(auth, async user => {
+  if(!user) return;
+  // Check if investor (not admin)
+  const adminEmails = ['alex@nivikostore.com','brian@iuraba.com.ar'];
+  if(adminEmails.includes(user.email)){
+    window.location.href='admin/';
+    return;
+  }
+  window.location.href='dashboard.html';
+});
+
+window.doLogin = async function(){
+  const email = document.getElementById('loginEmail').value.trim();
+  const pwd = document.getElementById('loginPwd').value;
+  const err = document.getElementById('loginError');
+  const btn = document.getElementById('loginBtn');
+  if(!email||!pwd){err.textContent='Completá email y contraseña.';return;}
+  btn.textContent='Ingresando...';btn.disabled=true;err.textContent='';
+  try{
+    await signInWithEmailAndPassword(auth, email, pwd);
+    // onAuthStateChanged handles redirect
+  }catch(e){
+    const msgs = {
+      'auth/wrong-password':'Contraseña incorrecta.',
+      'auth/user-not-found':'Email no registrado.',
+      'auth/invalid-credential':'Email o contraseña incorrectos.',
+      'auth/too-many-requests':'Demasiados intentos. Esperá unos minutos.',
+    };
+    err.textContent = msgs[e.code]||'Error al ingresar. Intentá de nuevo.';
+    btn.textContent='Ingresar al portal';btn.disabled=false;
+  }
+};
+
+window.doReset = async function(){
+  const email = document.getElementById('resetEmail').value.trim();
+  const err = document.getElementById('resetError');
+  const msg = document.getElementById('resetMsg');
+  const btn = document.getElementById('resetBtn');
+  if(!email){err.textContent='Ingresá tu email.';return;}
+  btn.textContent='Enviando...';btn.disabled=true;err.textContent='';
+  try{
+    await sendPasswordResetEmail(auth, email);
+    msg.textContent='✓ Te enviamos un email con el link de recuperación. Revisá tu bandeja.';
+    msg.className='reset-msg ok';msg.style.display='block';
+  }catch(e){
+    err.textContent='Email no encontrado o error al enviar.';
+  }
+  btn.textContent='Enviar link de recuperación';btn.disabled=false;
+};
+
+window.showReset = function(){
+  document.getElementById('loginForm').style.display='none';
+  document.getElementById('resetForm').style.display='block';
+};
+window.showLogin = function(){
+  document.getElementById('resetForm').style.display='none';
+  document.getElementById('loginForm').style.display='block';
+};
+</script>
+</body>
+</html>

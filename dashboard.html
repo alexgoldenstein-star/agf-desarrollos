@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Mi Portal | AGF Desarrollos</title>
+<meta name="robots" content="noindex,nofollow"/>
+<link rel="icon" type="image/png" href="logo.png"/>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--red:#D92B2B;--red2:#FF3C3C;--black:#080808;--black2:#0F0F0F;--black3:#181818;--black4:#222;--gray:#2A2A2A;--gray2:#3A3A3A;--gray3:#555;--gray4:#888;--gray5:#AAAAAA;--white:#F5F5F5;--white2:#E0E0E0;--green:#4CAF50;--yellow:#F5A623;--orange:#E67E22;}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--black);color:var(--white);min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(212,44,44,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(212,44,44,.04) 1px,transparent 1px);background-size:60px 60px;}
+
+/* TOPBAR */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:100;height:60px;background:rgba(8,8,8,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(217,43,43,.18);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;}
+.tb-logo{display:flex;align-items:center;gap:.6rem;text-decoration:none;}
+.tb-logo img{height:30px;width:auto;}
+.tb-logo-txt{font-family:'Rajdhani',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.1em;color:var(--white);}
+.tb-right{display:flex;align-items:center;gap:1rem;}
+.tb-user{font-size:.75rem;color:var(--gray4);font-weight:300;}
+.tb-user strong{color:var(--white2);font-weight:500}
+.tb-btn{padding:7px 16px;background:none;border:1px solid var(--gray2);color:var(--gray4);font-family:'Outfit',sans-serif;font-size:.65rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);transition:all .2s;text-decoration:none;}
+.tb-btn:hover{border-color:var(--red);color:var(--red)}
+
+/* LAYOUT */
+.layout{display:grid;grid-template-columns:220px 1fr;min-height:100vh;padding-top:60px;}
+
+/* SIDEBAR */
+.sidebar{background:var(--black2);border-right:1px solid var(--gray);position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;z-index:50;}
+.sb-investor{padding:1.5rem;border-bottom:1px solid var(--gray);}
+.sb-avatar{width:44px;height:44px;background:var(--red);clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:.8rem;}
+.sb-name{font-size:.9rem;font-weight:500;color:var(--white2);margin-bottom:.2rem;}
+.sb-email{font-size:.7rem;color:var(--gray4);font-weight:300;}
+.sb-nav{padding:.8rem 0;}
+.sb-section{font-size:.58rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gray3);padding:.5rem 1.5rem;margin-top:.5rem;}
+.sb-item{display:flex;align-items:center;gap:.7rem;width:100%;padding:.8rem 1.5rem;background:none;border:none;cursor:pointer;font-family:'Outfit',sans-serif;font-size:.82rem;font-weight:400;color:var(--gray4);text-align:left;transition:all .2s;border-left:2px solid transparent;text-decoration:none;}
+.sb-item:hover{background:var(--black3);color:var(--white)}
+.sb-item.active{background:var(--black3);color:var(--red);border-color:var(--red)}
+.sb-item svg{width:14px;height:14px;fill:currentColor;flex-shrink:0}
+.sb-badge{margin-left:auto;background:var(--red);color:var(--white);font-size:.58rem;font-weight:700;padding:2px 6px;border-radius:8px;min-width:18px;text-align:center;}
+
+/* MAIN */
+.main{padding:2.5rem;position:relative;z-index:1;}
+.panel{display:none;}
+.panel.active{display:block;}
+.panel-title{font-family:'Rajdhani',sans-serif;font-size:1.8rem;font-weight:700;color:var(--white);margin-bottom:.3rem;}
+.panel-sub{font-size:.82rem;font-weight:300;color:var(--gray4);margin-bottom:2rem;}
+
+/* CARDS */
+.cards-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-bottom:2rem;}
+.kpi{background:var(--black2);padding:1.4rem 1.6rem;border-top:2px solid var(--gray);}
+.kpi.red{border-color:var(--red)}
+.kpi.green{border-color:var(--green)}
+.kpi.yellow{border-color:var(--yellow)}
+.kpi-val{font-family:'Rajdhani',sans-serif;font-size:1.8rem;font-weight:700;color:var(--white);line-height:1;}
+.kpi-val em{color:var(--red);font-style:normal}
+.kpi-lbl{font-size:.62rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--gray4);margin-top:4px;}
+
+/* SECTION CARDS */
+.section-card{background:var(--black2);border:1px solid var(--gray2);padding:1.8rem;margin-bottom:1.5rem;}
+.sc-title{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:1.2rem;padding-bottom:.8rem;border-bottom:1px solid var(--gray);display:flex;align-items:center;justify-content:space-between;}
+.sc-title em{color:var(--red);font-style:normal}
+.sc-tag{font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:3px 10px;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);}
+.tag-green{background:rgba(76,175,80,.15);color:var(--green);border:1px solid rgba(76,175,80,.3);}
+.tag-yellow{background:rgba(245,166,35,.12);color:var(--yellow);border:1px solid rgba(245,166,35,.3);}
+.tag-red{background:rgba(217,43,43,.12);color:var(--red);border:1px solid rgba(217,43,43,.3);}
+.tag-gray{background:var(--black3);color:var(--gray5);border:1px solid var(--gray2);}
+
+/* PROGRESS BAR */
+.progress-wrap{margin-bottom:1.5rem;}
+.progress-label{display:flex;justify-content:space-between;margin-bottom:.5rem;}
+.progress-label span{font-size:.75rem;color:var(--gray4);font-weight:300;}
+.progress-label strong{font-family:'Rajdhani',sans-serif;font-size:.9rem;color:var(--white);font-weight:700;}
+.progress-bar{height:6px;background:var(--black4);overflow:hidden;}
+.progress-fill{height:100%;background:var(--red);transition:width 1s ease;}
+
+/* SPECS GRID */
+.specs-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;}
+.spec-item{padding:.9rem 1rem;background:var(--black3);}
+.spec-lbl{font-size:.62rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--gray3);margin-bottom:3px;}
+.spec-val{font-size:.9rem;font-weight:400;color:var(--white2);}
+.specs-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;}
+
+/* CUOTAS TABLE */
+.cuotas-table{width:100%;border-collapse:collapse;}
+.cuotas-table th{font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gray3);padding:.7rem 1rem;border-bottom:1px solid var(--gray);text-align:left;background:var(--black3);}
+.cuotas-table td{padding:.85rem 1rem;border-bottom:1px solid rgba(42,42,42,.5);font-size:.82rem;font-weight:300;color:var(--gray4);vertical-align:middle;}
+.cuotas-table tr:hover td{background:var(--black3)}
+.cuotas-table tr.paid td{color:var(--gray5)}
+.cuota-num{font-family:'Rajdhani',sans-serif;font-size:.9rem;font-weight:600;color:var(--white2);}
+.cuota-monto{font-family:'Rajdhani',sans-serif;font-size:.9rem;font-weight:600;color:var(--white);}
+.overdue-alert{background:rgba(217,43,43,.08);border:1px solid rgba(217,43,43,.25);padding:1rem 1.2rem;margin-bottom:1.2rem;display:flex;align-items:center;gap:.8rem;font-size:.82rem;color:var(--red);}
+.overdue-alert svg{width:16px;height:16px;fill:var(--red);flex-shrink:0}
+
+/* UPDATES */
+.update-item{padding:1.4rem;background:var(--black3);border-left:3px solid var(--gray2);margin-bottom:1px;transition:border-color .2s;}
+.update-item:hover{border-color:var(--red)}
+.update-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.6rem;gap:1rem;}
+.update-title{font-size:.9rem;font-weight:500;color:var(--white2);}
+.update-date{font-size:.68rem;color:var(--gray3);white-space:nowrap;}
+.update-text{font-size:.8rem;font-weight:300;color:var(--gray4);line-height:1.7;margin-bottom:.8rem;}
+.update-avance{display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;font-weight:600;color:var(--red);letter-spacing:.06em;}
+.update-avance::before{content:'';width:8px;height:8px;background:var(--red);border-radius:50%;}
+.update-photos{display:flex;gap:4px;flex-wrap:wrap;margin-top:.8rem;}
+.update-photo{width:70px;height:52px;object-fit:cover;cursor:pointer;filter:brightness(.8);transition:filter .2s;}
+.update-photo:hover{filter:brightness(1)}
+
+/* PROJECTS LIST */
+.proj-list-item{display:grid;grid-template-columns:80px 1fr auto;gap:1.2rem;align-items:center;padding:1.2rem;background:var(--black3);margin-bottom:1px;cursor:pointer;transition:background .2s;text-decoration:none;}
+.proj-list-item:hover{background:var(--black4)}
+.proj-list-thumb{width:80px;height:56px;object-fit:cover;filter:brightness(.7);}
+.proj-list-name{font-size:.9rem;font-weight:500;color:var(--white2);margin-bottom:.2rem;}
+.proj-list-loc{font-size:.73rem;color:var(--gray4);}
+.proj-list-avance{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;color:var(--red);text-align:right;}
+.proj-list-avance-lbl{font-size:.6rem;color:var(--gray3);text-align:right;}
+
+/* PHOTO LIGHTBOX */
+#lightbox{position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.95);display:none;align-items:center;justify-content:center;}
+#lightbox.open{display:flex;}
+#lightbox img{max-width:90vw;max-height:90vh;object-fit:contain;}
+#lightbox-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--white);font-size:2rem;cursor:pointer;opacity:.7;transition:opacity .2s;}
+#lightbox-close:hover{opacity:1}
+
+/* LOADER */
+.page-loader{position:fixed;inset:0;z-index:500;background:var(--black);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;}
+.loader-logo{font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:700;color:var(--white);letter-spacing:.1em;}
+.loader-logo span{color:var(--red)}
+.loader-bar{width:160px;height:2px;background:var(--gray2);overflow:hidden;}
+.loader-fill{height:100%;background:var(--red);animation:lbar 1s ease-in-out infinite;}
+@keyframes lbar{0%{width:0%;margin-left:0}50%{width:60%;margin-left:20%}100%{width:0%;margin-left:100%}}
+
+.empty-state{text-align:center;padding:3rem;color:var(--gray3);font-size:.85rem;font-weight:300;}
+
+@media(max-width:900px){
+  .layout{grid-template-columns:1fr;}
+  .sidebar{display:none;}
+  .cards-row{grid-template-columns:1fr 1fr;}
+  .specs-grid,.specs-grid-3{grid-template-columns:1fr;}
+  .main{padding:1.5rem;}
+}
+</style>
+</head>
+<body>
+
+<div class="page-loader" id="pageLoader">
+  <div class="loader-logo">AGF <span>PORTAL</span></div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+</div>
+
+<div id="lightbox" onclick="closeLightbox()">
+  <button id="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="Foto"/>
+</div>
+
+<div id="appWrap" style="display:none">
+<div class="topbar">
+  <a href="index.html" class="tb-logo">
+    <img src="logo.png" alt="AGF"/>
+    <span class="tb-logo-txt">AGF DESARROLLOS</span>
+  </a>
+  <div class="tb-right">
+    <span class="tb-user">Bienvenido, <strong id="tbName">—</strong></span>
+    <button class="tb-btn" onclick="doLogout()">Cerrar sesión</button>
+  </div>
+</div>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sb-investor">
+      <div class="sb-avatar" id="sbAvatar">?</div>
+      <p class="sb-name" id="sbName">—</p>
+      <p class="sb-email" id="sbEmail">—</p>
+    </div>
+    <nav class="sb-nav">
+      <p class="sb-section">Mi Portal</p>
+      <button class="sb-item active" onclick="showPanel('resumen',this)">
+        <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>Resumen
+      </button>
+      <button class="sb-item" onclick="showPanel('miInversion',this)">
+        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg>Mi inversión
+      </button>
+      <button class="sb-item" onclick="showPanel('pagos',this)" id="sbPagos">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>Mis pagos
+        <span class="sb-badge" id="sbPagosBadge" style="display:none">!</span>
+      </button>
+      <button class="sb-item" onclick="showPanel('novedades',this)">
+        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>Novedades
+      </button>
+      <p class="sb-section">Proyectos</p>
+      <button class="sb-item" onclick="showPanel('proyectos',this)">
+        <svg viewBox="0 0 24 24"><path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm0 5h-2V5h2v3z"/></svg>Todos los proyectos
+      </button>
+      <p class="sb-section">Soporte</p>
+      <a class="sb-item" href="https://wa.me/5491150614489" target="_blank">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413C18.042 14.58 17.77 14.531 17.472 14.382zM12 0C5.373 0 0 5.373 0 12c0 2.117.549 4.107 1.51 5.838L0 24l6.335-1.652A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>Contactar a AGF
+      </a>
+    </nav>
+  </aside>
+
+  <main class="main">
+
+    <!-- RESUMEN -->
+    <div class="panel active" id="panel-resumen">
+      <p class="panel-title">Bienvenido, <span id="welcomeName" style="color:var(--red)">—</span></p>
+      <p class="panel-sub">Resumen de tu inversión en AGF Desarrollos</p>
+      <div class="cards-row" id="kpiRow">
+        <div class="kpi red"><p class="kpi-val" id="kpiProj">—</p><p class="kpi-lbl">Proyecto</p></div>
+        <div class="kpi"><p class="kpi-val" id="kpiUnidad">—</p><p class="kpi-lbl">Unidad</p></div>
+        <div class="kpi green"><p class="kpi-val" id="kpiAvance">—<em>%</em></p><p class="kpi-lbl">Avance de obra</p></div>
+        <div class="kpi yellow"><p class="kpi-val" id="kpiCuotas">—</p><p class="kpi-lbl">Cuotas pendientes</p></div>
+      </div>
+      <div class="section-card">
+        <p class="sc-title">Progreso de obra <em id="scAvancePct"></em></p>
+        <div class="progress-wrap">
+          <div class="progress-label"><span id="progLabel">Avance actual</span><strong id="progPct">0%</strong></div>
+          <div class="progress-bar"><div class="progress-fill" id="progFill" style="width:0%"></div></div>
+        </div>
+      </div>
+      <div class="section-card" id="alertCard" style="display:none">
+        <div class="overdue-alert">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+          <span id="alertMsg">Tenés cuotas vencidas. Contactate con AGF para regularizar.</span>
+        </div>
+      </div>
+      <div class="section-card">
+        <p class="sc-title">Última novedad</p>
+        <div id="ultimaNovedad"><p class="empty-state">Sin novedades recientes.</p></div>
+      </div>
+    </div>
+
+    <!-- MI INVERSIÓN -->
+    <div class="panel" id="panel-miInversion">
+      <p class="panel-title">Mi <span style="color:var(--red)">inversión</span></p>
+      <p class="panel-sub">Detalle completo de tu unidad y proyecto</p>
+      <div id="inversionDetail"><p class="empty-state">Cargando...</p></div>
+    </div>
+
+    <!-- PAGOS -->
+    <div class="panel" id="panel-pagos">
+      <p class="panel-title">Mis <span style="color:var(--red)">pagos</span></p>
+      <p class="panel-sub">Estado de cuotas y pagos de tu inversión</p>
+      <div id="pagosDetail"><p class="empty-state">Cargando...</p></div>
+    </div>
+
+    <!-- NOVEDADES -->
+    <div class="panel" id="panel-novedades">
+      <p class="panel-title">Novedades <span style="color:var(--red)">del proyecto</span></p>
+      <p class="panel-sub">Actualizaciones de obra y comunicados de AGF</p>
+      <div id="novedadesDetail"><p class="empty-state">Cargando...</p></div>
+    </div>
+
+    <!-- PROYECTOS -->
+    <div class="panel" id="panel-proyectos">
+      <p class="panel-title">Todos los <span style="color:var(--red)">proyectos</span></p>
+      <p class="panel-sub">Conocé todos los desarrollos activos de AGF</p>
+      <div id="proyectosDetail"><p class="empty-state">Cargando...</p></div>
+    </div>
+
+  </main>
+</div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+import { getFirestore, collection, getDocs, doc, getDoc, query, where, orderBy } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+
+const fbConfig = {
+  apiKey:"AIzaSyA6g3Zyj8J5mQCxt3vd-LcmlmugkpurnMo",
+  authDomain:"agf-desarrollos.firebaseapp.com",
+  projectId:"agf-desarrollos",
+  storageBucket:"agf-desarrollos.firebasestorage.app",
+  messagingSenderId:"589200838716",
+  appId:"1:589200838716:web:2a5f01ca043d29b66bf339"
+};
+const app = initializeApp(fbConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const ADMIN_EMAILS = ['alex@nivikostore.com','brian@iuraba.com.ar'];
+
+let inversor = null, inversion = null, cuotas = [], actualizaciones = [], allProjects = [];
+
+onAuthStateChanged(auth, async user => {
+  if(!user){ window.location.href='portal.html'; return; }
+  if(ADMIN_EMAILS.includes(user.email)){ window.location.href='admin/'; return; }
+  await loadAll(user);
+});
+
+async function loadAll(user){
+  try{
+    // Inversor profile
+    const invDoc = await getDoc(doc(db,'inversores',user.uid));
+    if(invDoc.exists()) inversor = {uid:user.uid,...invDoc.data()};
+    else inversor = {uid:user.uid, nombre:user.displayName||user.email.split('@')[0], email:user.email};
+
+    // Inversion
+    const invQ = query(collection(db,'inversiones'),where('inversorId','==',user.uid));
+    const invSnap = await getDocs(invQ);
+    if(!invSnap.empty) inversion = {id:invSnap.docs[0].id,...invSnap.docs[0].data()};
+
+    // Cuotas
+    if(inversion){
+      const cQ = query(collection(db,'cuotas'),where('inversionId','==',inversion.id),orderBy('numero','asc'));
+      const cSnap = await getDocs(cQ);
+      cuotas = cSnap.docs.map(d=>({id:d.id,...d.data()}));
+    }
+
+    // Actualizaciones (del proyecto del inversor o generales)
+    const aQ = query(collection(db,'actualizaciones'),orderBy('fecha','desc'));
+    const aSnap = await getDocs(aQ);
+    actualizaciones = aSnap.docs.map(d=>({id:d.id,...d.data()}));
+
+    // All projects
+    const pSnap = await getDocs(collection(db,'proyectos'));
+    allProjects = pSnap.docs.map(d=>({id:d.id,...d.data()}));
+
+    setupUI();
+  }catch(e){
+    console.error(e);
+    document.getElementById('pageLoader').innerHTML='<p style="color:var(--red);font-size:.85rem">Error al cargar datos: '+e.message+'</p>';
+  }
+}
+
+function setupUI(){
+  const nombre = inversor?.nombre || 'Inversor';
+  const inicial = nombre.charAt(0).toUpperCase();
+
+  // Topbar & sidebar
+  document.getElementById('tbName').textContent = nombre.split(' ')[0];
+  document.getElementById('sbName').textContent = nombre;
+  document.getElementById('sbEmail').textContent = inversor?.email||'';
+  document.getElementById('sbAvatar').textContent = inicial;
+  document.getElementById('welcomeName').textContent = nombre.split(' ')[0];
+
+  // KPIs
+  const proyecto = inversion ? (allProjects.find(p=>p.id===inversion.proyectoId)||{nombre:'—'}) : {nombre:'—'};
+  const avance = inversion?.avanceObra||0;
+  const pendientes = cuotas.filter(c=>c.estado==='pendiente'||c.estado==='vencida').length;
+  const vencidas = cuotas.filter(c=>c.estado==='vencida').length;
+
+  document.getElementById('kpiProj').textContent = inversion ? proyecto.nombre.split(' ').slice(0,2).join(' ') : '—';
+  document.getElementById('kpiUnidad').textContent = inversion?.unidad||'—';
+  document.getElementById('kpiAvance').innerHTML = avance+'<em>%</em>';
+  document.getElementById('kpiCuotas').textContent = pendientes||'0';
+
+  // Progress
+  document.getElementById('progFill').style.width = avance+'%';
+  document.getElementById('progPct').textContent = avance+'%';
+  setTimeout(()=>document.getElementById('progFill').style.width=avance+'%',200);
+
+  // Alert
+  if(vencidas>0){
+    document.getElementById('alertCard').style.display='block';
+    document.getElementById('alertMsg').textContent = `Tenés ${vencidas} cuota${vencidas>1?'s':''} vencida${vencidas>1?'s':''}. Contactate con AGF para regularizar.`;
+    const badge=document.getElementById('sbPagosBadge');
+    badge.style.display='inline-block';badge.textContent=vencidas;
+  }
+
+  // Última novedad
+  const filtradas = inversion ? actualizaciones.filter(a=>!a.proyectoId||a.proyectoId===inversion.proyectoId) : actualizaciones;
+  if(filtradas.length>0){
+    const n=filtradas[0];
+    document.getElementById('ultimaNovedad').innerHTML=`
+      <div class="update-item">
+        <div class="update-header">
+          <p class="update-title">${n.titulo||'Actualización'}</p>
+          <span class="update-date">${formatDate(n.fecha)}</span>
+        </div>
+        <p class="update-text">${n.descripcion||''}</p>
+        ${n.avance?`<span class="update-avance">Avance: ${n.avance}%</span>`:''}
+      </div>`;
+  }
+
+  // Mi inversión
+  renderInversion(proyecto);
+
+  // Pagos
+  renderPagos();
+
+  // Novedades
+  renderNovedades(filtradas);
+
+  // Proyectos
+  renderProyectos();
+
+  document.getElementById('pageLoader').style.display='none';
+  document.getElementById('appWrap').style.display='block';
+}
+
+function renderInversion(proyecto){
+  const el=document.getElementById('inversionDetail');
+  if(!inversion){el.innerHTML='<div class="empty-state">No tenés inversiones registradas. Contactate con AGF.</div>';return;}
+  const imgs=(proyecto.imagenes&&proyecto.imagenes.length)?proyecto.imagenes:[proyecto.img1].filter(Boolean);
+  el.innerHTML=`
+    <div class="section-card">
+      <p class="sc-title">Proyecto <em>${proyecto.nombre}</em></p>
+      ${imgs[0]?`<img src="${imgs[0]}" style="width:100%;height:220px;object-fit:cover;filter:brightness(.8);margin-bottom:1.2rem;" alt="${proyecto.nombre}"/>`:''}
+      <div class="progress-wrap" style="margin-bottom:1.5rem">
+        <div class="progress-label"><span>Avance de obra</span><strong>${inversion.avanceObra||0}%</strong></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${inversion.avanceObra||0}%"></div></div>
+      </div>
+      <div class="specs-grid">
+        <div class="spec-item"><p class="spec-lbl">Estado proyecto</p><p class="spec-val">${proyecto.estado||'—'}</p></div>
+        <div class="spec-item"><p class="spec-lbl">Barrio</p><p class="spec-val">${proyecto.barrio||'—'}</p></div>
+        <div class="spec-item"><p class="spec-lbl">Entrega estimada</p><p class="spec-val">${proyecto.fecha||'—'}</p></div>
+        <div class="spec-item"><p class="spec-lbl">Pisos</p><p class="spec-val">${proyecto.pisos||'—'}</p></div>
+      </div>
+    </div>
+    <div class="section-card">
+      <p class="sc-title">Mi <em>unidad</em></p>
+      <div class="specs-grid-3">
+        <div class="spec-item"><p class="spec-lbl">Unidad</p><p class="spec-val">${inversion.unidad||'—'}</p></div>
+        <div class="spec-item"><p class="spec-lbl">Piso</p><p class="spec-val">${inversion.piso||'—'}</p></div>
+        <div class="spec-item"><p class="spec-lbl">Superficie</p><p class="spec-val">${inversion.m2||'—'}</p></div>
+        <div class="spec-item"><p class="spec-lbl">Ambientes</p><p class="spec-val">${inversion.ambientes||'—'}</p></div>
+        <div class="spec-item"><p class="spec-lbl">Orientación</p><p class="spec-val">${inversion.orientacion||'—'}</p></div>
+        <div class="spec-item"><p class="spec-lbl">Estado</p><p class="spec-val">${inversion.estadoUnidad||'En proceso'}</p></div>
+      </div>
+    </div>
+    <div class="section-card">
+      <p class="sc-title">Resumen <em>financiero</em></p>
+      <div class="specs-grid">
+        <div class="spec-item"><p class="spec-lbl">Monto total</p><p class="spec-val">${formatMoney(inversion.montoTotal,inversion.moneda)}</p></div>
+        <div class="spec-item"><p class="spec-lbl">Seña / Anticipo</p><p class="spec-val">${formatMoney(inversion.montoSena,inversion.moneda)}</p></div>
+        <div class="spec-item"><p class="spec-lbl">Cuotas</p><p class="spec-val">${inversion.cantCuotas||'—'}</p></div>
+        <div class="spec-item"><p class="spec-lbl">Fecha de ingreso</p><p class="spec-val">${formatDate(inversion.fechaIngreso)}</p></div>
+      </div>
+      ${inversion.notas?`<p style="font-size:.78rem;color:var(--gray4);font-weight:300;line-height:1.7;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--gray)">${inversion.notas}</p>`:''}
+    </div>`;
+}
+
+function renderPagos(){
+  const el=document.getElementById('pagosDetail');
+  if(!cuotas.length){el.innerHTML='<div class="empty-state">Sin cuotas registradas.</div>';return;}
+  const pagadas=cuotas.filter(c=>c.estado==='pagada').length;
+  const totalCuotas=cuotas.length;
+  const vencidas=cuotas.filter(c=>c.estado==='vencida');
+  el.innerHTML=`
+    ${vencidas.length?`<div class="overdue-alert"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg><span>${vencidas.length} cuota${vencidas.length>1?'s':''} vencida${vencidas.length>1?'s':''}. Por favor contactate con AGF para regularizar.</span></div>`:''}
+    <div class="section-card">
+      <p class="sc-title">Estado de cuotas <em>${pagadas}/${totalCuotas} pagadas</em></p>
+      <div class="progress-wrap">
+        <div class="progress-label"><span>Progreso de pago</span><strong>${Math.round((pagadas/totalCuotas)*100)}%</strong></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${Math.round((pagadas/totalCuotas)*100)}%"></div></div>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="cuotas-table">
+          <thead><tr><th>N°</th><th>Vencimiento</th><th>Monto</th><th>Estado</th><th>Fecha pago</th></tr></thead>
+          <tbody>
+            ${cuotas.map(c=>`
+              <tr class="${c.estado==='pagada'?'paid':''}">
+                <td><span class="cuota-num">Cuota ${c.numero}</span></td>
+                <td>${formatDate(c.fechaVencimiento)}</td>
+                <td><span class="cuota-monto">${formatMoney(c.monto,c.moneda||inversion?.moneda)}</span></td>
+                <td><span class="sc-tag ${c.estado==='pagada'?'tag-green':c.estado==='vencida'?'tag-red':c.estado==='pendiente'?'tag-yellow':'tag-gray'}">${c.estado?.toUpperCase()||'—'}</span></td>
+                <td>${c.fechaPago?formatDate(c.fechaPago):'—'}</td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+function renderNovedades(lista){
+  const el=document.getElementById('novedadesDetail');
+  if(!lista.length){el.innerHTML='<div class="empty-state">Sin novedades publicadas aún.</div>';return;}
+  el.innerHTML=lista.map(n=>`
+    <div class="update-item">
+      <div class="update-header">
+        <p class="update-title">${n.titulo||'Actualización'}</p>
+        <span class="update-date">${formatDate(n.fecha)}</span>
+      </div>
+      ${n.avance?`<span class="update-avance" style="display:inline-flex;margin-bottom:.6rem">Avance de obra: ${n.avance}%</span>`:''}
+      <p class="update-text">${n.descripcion||''}</p>
+      ${n.fotos&&n.fotos.length?`<div class="update-photos">${n.fotos.map(f=>`<img src="${f}" class="update-photo" onclick="openLightbox('${f}')" alt="Foto de obra" loading="lazy"/>`).join('')}</div>`:''}
+    </div>`).join('');
+}
+
+function renderProyectos(){
+  const el=document.getElementById('proyectosDetail');
+  if(!allProjects.length){el.innerHTML='<div class="empty-state">Sin proyectos.</div>';return;}
+  const sorted=[...allProjects].sort((a,b)=>{
+    if(a.estado==='En Construcción'&&b.estado!=='En Construcción') return -1;
+    if(b.estado==='En Construcción'&&a.estado!=='En Construcción') return 1;
+    return (a.orden||99)-(b.orden||99);
+  });
+  el.innerHTML=sorted.map(p=>{
+    const imgs=(p.imagenes&&p.imagenes.length)?p.imagenes:[p.img1].filter(Boolean);
+    const avance=p.avanceObra||'—';
+    return `<a href="proyecto.html?id=${slug(p.nombre)}" class="proj-list-item">
+      ${imgs[0]?`<img class="proj-list-thumb" src="${imgs[0]}" alt="${p.nombre}" loading="lazy"/>`:'<div class="proj-list-thumb" style="background:var(--black4)"></div>'}
+      <div>
+        <p class="proj-list-name">${p.nombre}</p>
+        <p class="proj-list-loc">${p.barrio} · ${p.pisos} pisos · ${p.estado}</p>
+      </div>
+      <div>
+        <p class="proj-list-avance">${typeof avance==='number'?avance+'%':avance}</p>
+        <p class="proj-list-avance-lbl">avance</p>
+      </div>
+    </a>`;
+  }).join('');
+}
+
+// Utils
+function formatDate(val){
+  if(!val) return '—';
+  if(val?.toDate) val=val.toDate();
+  if(typeof val==='string') val=new Date(val);
+  if(!(val instanceof Date)||isNaN(val)) return String(val);
+  return val.toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit',year:'numeric'});
+}
+function formatMoney(val,moneda){
+  if(!val) return '—';
+  const sym = moneda==='USD'?'USD ':moneda==='ARS'?'$ ':'';
+  return sym+Number(val).toLocaleString('es-AR');
+}
+function slug(n){
+  return n.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-');
+}
+
+window.doLogout = async()=>{ await signOut(auth); window.location.href='portal.html'; };
+window.openLightbox = function(src){ document.getElementById('lightbox-img').src=src; document.getElementById('lightbox').classList.add('open'); };
+window.closeLightbox = function(){ document.getElementById('lightbox').classList.remove('open'); };
+</script>
+
+<script>
+function showPanel(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  if(btn){ document.querySelectorAll('.sb-item').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); }
+}
+</script>
+</body>
+</html>
